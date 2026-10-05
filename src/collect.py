@@ -1,6 +1,7 @@
 import csv
 import json
 import re
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlparse
@@ -21,13 +22,14 @@ SEARCH_TERMS = [
     "cloud",
 ]
 
-# Workday normally returns at most 20 rows per page.
 WORKDAY_PAGE_SIZE = 20
 
-# Safety cap while we build/test the system.
-# 5 pages = max 100 rows per keyword per employer.
-WORKDAY_MAX_PAGES_PER_TERM = 5
+# Workday's public CXS endpoint is happiest at 20 rows/page.
+# Ten pages gives us a 200-row safety window per keyword.
+WORKDAY_MAX_PAGES_PER_TERM = 10
 
+REQUEST_TIMEOUT_SECONDS = 30
+DETAIL_RETRY_STATUSES = {429, 500, 502, 503, 504}
 
 HEADERS = {
     "User-Agent": (
@@ -39,7 +41,6 @@ HEADERS = {
     "Accept-Language": "en-US,en;q=0.9",
 }
 
-
 RELEVANT_TITLE_PATTERN = re.compile(
     r"\b("
     r"software|engineer|developer|backend|back-end|java|jvm|"
@@ -47,6 +48,40 @@ RELEVANT_TITLE_PATTERN = re.compile(
     r")\b",
     re.IGNORECASE,
 )
+
+US_COUNTRY_NAMES = {
+    "US",
+    "USA",
+    "U.S.",
+    "U.S.A.",
+    "UNITED STATES",
+    "UNITED STATES OF AMERICA",
+}
+
+# Used only as a fallback for string-only additional locations.
+# IN and OR are intentionally omitted because they are common English tokens
+# and can create false positives when country metadata is missing.
+US_STATE_ABBREVIATIONS_SAFE = {
+    "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+    "HI", "ID", "IL", "IA", "KS", "KY", "LA", "ME", "MD", "MA",
+    "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM",
+    "NY", "NC", "ND", "OH", "OK", "PA", "RI", "SC", "SD", "TN",
+    "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC",
+}
+
+US_STATE_NAMES = {
+    "ALABAMA", "ALASKA", "ARIZONA", "ARKANSAS", "CALIFORNIA",
+    "COLORADO", "CONNECTICUT", "DELAWARE", "FLORIDA", "GEORGIA",
+    "HAWAII", "IDAHO", "ILLINOIS", "INDIANA", "IOWA", "KANSAS",
+    "KENTUCKY", "LOUISIANA", "MAINE", "MARYLAND", "MASSACHUSETTS",
+    "MICHIGAN", "MINNESOTA", "MISSISSIPPI", "MISSOURI", "MONTANA",
+    "NEBRASKA", "NEVADA", "NEW HAMPSHIRE", "NEW JERSEY",
+    "NEW MEXICO", "NEW YORK", "NORTH CAROLINA", "NORTH DAKOTA",
+    "OHIO", "OKLAHOMA", "OREGON", "PENNSYLVANIA", "RHODE ISLAND",
+    "SOUTH CAROLINA", "SOUTH DAKOTA", "TENNESSEE", "TEXAS", "UTAH",
+    "VERMONT", "VIRGINIA", "WASHINGTON", "WEST VIRGINIA",
+    "WISCONSIN", "WYOMING", "DISTRICT OF COLUMBIA",
+}
 
 
 def load_employers():
@@ -179,7 +214,7 @@ def collect_oracle_cx(employer):
                 api_url,
                 headers=HEADERS,
                 params=params,
-                timeout=30,
+                timeout=REQUEST_TIMEOUT_SECONDS,
             )
 
             print(
@@ -327,7 +362,7 @@ def parse_workday_identifier(employer):
     return tenant.strip(), site.strip()
 
 
-def workday_api_url(employer):
+def workday_api_base(employer):
     tenant, site = parse_workday_identifier(
         employer
     )
@@ -339,8 +374,30 @@ def workday_api_url(employer):
 
     return (
         f"{parsed.scheme}://{parsed.netloc}"
-        f"/wday/cxs/{tenant}/{site}/jobs"
+        f"/wday/cxs/{tenant}/{site}"
     )
+
+
+def workday_api_url(employer):
+    base = workday_api_base(employer)
+
+    if not base:
+        return None
+
+    return f"{base}/jobs"
+
+
+def workday_detail_url(
+    employer,
+    external_path,
+):
+    base = workday_api_base(employer)
+
+    if not base or not external_path:
+        return None
+
+    # externalPath starts with /job/...
+    return f"{base}{external_path}"
 
 
 def workday_public_job_url(
@@ -405,6 +462,330 @@ def normalize_workday_posted_date(
     return None
 
 
+def country_descriptor_is_us(value):
+    if not value:
+        return False
+
+    return value.strip().upper() in US_COUNTRY_NAMES
+
+
+def looks_explicitly_us_location(text):
+    """
+    Conservative fallback used only when Workday did not provide
+    structured country metadata for an additional location.
+    False negatives are preferable to admitting a non-US job.
+    """
+    if not text:
+        return False
+
+    original = str(text).strip()
+    upper = original.upper()
+
+    if any(
+        name in upper
+        for name in (
+            "UNITED STATES OF AMERICA",
+            "UNITED STATES",
+            " U.S.A.",
+            " U.S. ",
+            " USA",
+        )
+    ):
+        return True
+
+    for state_name in US_STATE_NAMES:
+        if re.search(
+            rf"\b{re.escape(state_name)}\b",
+            upper,
+        ):
+            return True
+
+    # Common Workday US formats:
+    # "TX - Work from home", "Austin, TX", "TX - Irving"
+    match = re.search(
+        r"(?:^|,\s*|\s)"
+        r"([A-Z]{2})"
+        r"(?:\s+-|,|$)",
+        original,
+    )
+
+    if (
+        match
+        and match.group(1)
+        in US_STATE_ABBREVIATIONS_SAFE
+    ):
+        return True
+
+    return False
+
+
+def normalized_location_text(value):
+    if isinstance(value, str):
+        return value.strip() or None
+
+    if isinstance(value, dict):
+        return (
+            value.get("descriptor")
+            or value.get("location")
+            or value.get("name")
+        )
+
+    return None
+
+
+def workday_detail_is_us(job_info):
+    """
+    Returns (is_us, detected_us_locations).
+
+    Primary decision uses Workday's structured ISO alpha-2 country code.
+    If the primary location is outside the US, we also inspect additional
+    locations so a multi-country posting that genuinely includes a US
+    location can still be kept.
+    """
+    if not isinstance(job_info, dict):
+        return False, []
+
+    us_locations = []
+
+    requisition_location = (
+        job_info.get("jobRequisitionLocation")
+        or {}
+    )
+
+    primary_country = (
+        requisition_location.get("country")
+        or {}
+    )
+
+    primary_code = (
+        primary_country.get("alpha2Code")
+        or ""
+    ).strip().upper()
+
+    primary_descriptor = (
+        primary_country.get("descriptor")
+        or ""
+    ).strip()
+
+    top_country = (
+        job_info.get("country")
+        or {}
+    )
+
+    top_country_descriptor = ""
+
+    if isinstance(top_country, dict):
+        top_country_descriptor = (
+            top_country.get("descriptor")
+            or ""
+        ).strip()
+
+    primary_location = (
+        job_info.get("location")
+        or requisition_location.get("descriptor")
+        or ""
+    )
+
+    primary_is_us = (
+        primary_code == "US"
+        or country_descriptor_is_us(
+            primary_descriptor
+        )
+        or country_descriptor_is_us(
+            top_country_descriptor
+        )
+    )
+
+    if primary_is_us:
+        if primary_location:
+            us_locations.append(
+                str(primary_location).strip()
+            )
+        return True, us_locations
+
+    additional_locations = (
+        job_info.get("additionalLocations")
+        or []
+    )
+
+    for item in additional_locations:
+        if isinstance(item, dict):
+            item_country = (
+                item.get("country")
+                or {}
+            )
+
+            item_code = (
+                item_country.get("alpha2Code")
+                or ""
+            ).strip().upper()
+
+            item_descriptor = (
+                item_country.get("descriptor")
+                or ""
+            ).strip()
+
+            location_text = (
+                normalized_location_text(item)
+            )
+
+            if (
+                item_code == "US"
+                or country_descriptor_is_us(
+                    item_descriptor
+                )
+                or looks_explicitly_us_location(
+                    location_text
+                )
+            ):
+                if location_text:
+                    us_locations.append(
+                        location_text
+                    )
+
+        elif isinstance(item, str):
+            if looks_explicitly_us_location(
+                item
+            ):
+                us_locations.append(
+                    item.strip()
+                )
+
+    if us_locations:
+        return True, us_locations
+
+    # Last-resort fallback only when Workday omitted structured country data.
+    if (
+        not primary_code
+        and not primary_descriptor
+        and not top_country_descriptor
+        and looks_explicitly_us_location(
+            primary_location
+        )
+    ):
+        if primary_location:
+            us_locations.append(
+                str(primary_location).strip()
+            )
+        return True, us_locations
+
+    return False, []
+
+
+def fetch_workday_detail(
+    employer,
+    external_path,
+):
+    detail_url = workday_detail_url(
+        employer,
+        external_path,
+    )
+
+    if not detail_url:
+        return None
+
+    detail_headers = dict(HEADERS)
+    detail_headers["Accept"] = "application/json"
+    detail_headers["Referer"] = (
+        employer["careers_url"]
+    )
+
+    for attempt in range(1, 4):
+        try:
+            response = requests.get(
+                detail_url,
+                headers=detail_headers,
+                timeout=REQUEST_TIMEOUT_SECONDS,
+            )
+
+        except requests.RequestException as exc:
+            if attempt == 3:
+                print(
+                    "        Detail request error: "
+                    f"{exc}"
+                )
+                return None
+
+            time.sleep(0.5 * attempt)
+            continue
+
+        if response.status_code == 200:
+            try:
+                data = response.json()
+            except ValueError:
+                print(
+                    "        Detail response was not JSON"
+                )
+                return None
+
+            info = data.get(
+                "jobPostingInfo"
+            )
+
+            if isinstance(info, dict):
+                return info
+
+            print(
+                "        Detail JSON missing "
+                "jobPostingInfo"
+            )
+            return None
+
+        if (
+            response.status_code
+            in DETAIL_RETRY_STATUSES
+            and attempt < 3
+        ):
+            time.sleep(0.5 * attempt)
+            continue
+
+        print(
+            "        Detail HTTP "
+            f"{response.status_code}: "
+            f"{response.text[:200]}"
+        )
+        return None
+
+    return None
+
+
+def workday_display_location(
+    job_info,
+    posting,
+    us_locations,
+):
+    requisition_location = (
+        job_info.get("jobRequisitionLocation")
+        or {}
+    )
+
+    primary_country = (
+        requisition_location.get("country")
+        or {}
+    )
+
+    primary_code = (
+        primary_country.get("alpha2Code")
+        or ""
+    ).strip().upper()
+
+    primary_location = (
+        job_info.get("location")
+        or requisition_location.get("descriptor")
+    )
+
+    if primary_code == "US" and primary_location:
+        return primary_location
+
+    if us_locations:
+        return us_locations[0]
+
+    if primary_location:
+        return primary_location
+
+    return posting.get("locationsText")
+
+
 def collect_workday(employer, run_time):
     tenant, site = parse_workday_identifier(
         employer
@@ -424,10 +805,17 @@ def collect_workday(employer, run_time):
     print(f"      API: {api_url}")
 
     collected = {}
+    detail_cache = {}
+
+    skipped_non_us = 0
+    skipped_unverified = 0
 
     workday_headers = dict(HEADERS)
     workday_headers["Content-Type"] = (
         "application/json"
+    )
+    workday_headers["Referer"] = (
+        employer["careers_url"]
     )
 
     for keyword in SEARCH_TERMS:
@@ -436,6 +824,7 @@ def collect_workday(employer, run_time):
         )
 
         offset = 0
+        expected_total = None
 
         for page_number in range(
             1,
@@ -453,7 +842,7 @@ def collect_workday(employer, run_time):
                     api_url,
                     headers=workday_headers,
                     json=payload,
-                    timeout=30,
+                    timeout=REQUEST_TIMEOUT_SECONDS,
                 )
 
             except requests.RequestException as exc:
@@ -487,11 +876,15 @@ def collect_workday(employer, run_time):
                 or []
             )
 
-            total = data.get("total")
+            if page_number == 1:
+                raw_total = data.get("total")
+                if isinstance(raw_total, int):
+                    expected_total = raw_total
 
             print(
                 f"        Rows: {len(postings)} "
-                f"Total: {total}"
+                f"Total(first page): "
+                f"{expected_total}"
             )
 
             if not postings:
@@ -518,41 +911,110 @@ def collect_workday(employer, run_time):
                 ):
                     continue
 
-                job_id = workday_job_id(
-                    external_path
+                if external_path in detail_cache:
+                    job_info = detail_cache[
+                        external_path
+                    ]
+                else:
+                    job_info = fetch_workday_detail(
+                        employer,
+                        external_path,
+                    )
+                    detail_cache[
+                        external_path
+                    ] = job_info
+
+                if not job_info:
+                    skipped_unverified += 1
+                    continue
+
+                can_apply = job_info.get(
+                    "canApply"
                 )
 
-                posted_text = posting.get(
-                    "postedOn"
+                if can_apply is False:
+                    continue
+
+                is_us, us_locations = (
+                    workday_detail_is_us(
+                        job_info
+                    )
+                )
+
+                if not is_us:
+                    skipped_non_us += 1
+                    continue
+
+                job_id = str(
+                    job_info.get("jobReqId")
+                    or workday_job_id(
+                        external_path
+                    )
+                    or ""
+                ).strip()
+
+                if not job_id:
+                    continue
+
+                posted_text = (
+                    job_info.get("postedOn")
+                    or posting.get("postedOn")
+                )
+
+                posted_date = (
+                    job_info.get("startDate")
+                    or normalize_workday_posted_date(
+                        posted_text,
+                        run_time,
+                    )
+                )
+
+                job_url = (
+                    job_info.get("externalUrl")
+                    or workday_public_job_url(
+                        employer,
+                        site,
+                        external_path,
+                    )
+                )
+
+                location = (
+                    workday_display_location(
+                        job_info,
+                        posting,
+                        us_locations,
+                    )
                 )
 
                 job = {
                     "company": employer["company"],
-                    "title": title,
+                    "title": (
+                        job_info.get("title")
+                        or title
+                    ),
                     "job_id": job_id,
                     "requisition_number": job_id,
-                    "location": posting.get(
+                    "location": location,
+                    "locations_summary": posting.get(
                         "locationsText"
                     ),
                     "country": "US",
-                    "posted_date": (
-                        normalize_workday_posted_date(
-                            posted_text,
-                            run_time,
-                        )
-                    ),
+                    "country_verified": True,
+                    "posted_date": posted_date,
                     "posted_date_text": posted_text,
                     "posting_end_date": None,
-                    "job_type": None,
+                    "job_type": job_info.get(
+                        "timeType"
+                    ),
                     "job_schedule": None,
                     "job_function": None,
                     "organization": None,
-                    "short_description": None,
-                    "url": workday_public_job_url(
-                        employer,
-                        site,
-                        external_path,
+                    "remote_type": job_info.get(
+                        "remoteType"
                     ),
+                    "can_apply": can_apply,
+                    "short_description": None,
+                    "url": job_url,
                     "ats_type": "workday",
                     "source": (
                         "official_workday_api"
@@ -562,9 +1024,7 @@ def collect_workday(employer, run_time):
 
                 key = (
                     employer["company"].lower(),
-                    job_id.lower()
-                    if job_id
-                    else external_path.lower(),
+                    job_id.lower(),
                 )
 
                 collected[key] = job
@@ -572,8 +1032,8 @@ def collect_workday(employer, run_time):
             offset += len(postings)
 
             if (
-                isinstance(total, int)
-                and offset >= total
+                expected_total is not None
+                and offset >= expected_total
             ):
                 break
 
@@ -587,8 +1047,16 @@ def collect_workday(employer, run_time):
             )
 
     print(
-        f"      Unique Workday jobs: "
+        f"      Unique Workday US jobs: "
         f"{len(collected)}"
+    )
+    print(
+        f"      Non-US rows skipped: "
+        f"{skipped_non_us}"
+    )
+    print(
+        f"      Unverified detail rows skipped: "
+        f"{skipped_unverified}"
     )
 
     return list(collected.values())
