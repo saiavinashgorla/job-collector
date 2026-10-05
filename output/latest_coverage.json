@@ -1,8 +1,10 @@
 {
-  "run_time_utc": "2026-10-05T13:41:27.646306+00:00",
+  "run_time_utc": "2026-10-05T13:51:10.085757+00:00",
   "employers_total": 7,
   "reachable": 7,
   "failed_or_unverified": 0,
+  "employers_with_supported_adapter": 2,
+  "candidate_jobs_collected": 0,
   "employers": [
     {
       "company": "Walmart",
@@ -11,7 +13,8 @@
       "status": "reachable",
       "http_status": 200,
       "final_url": "https://careers.walmart.com/us/en/home",
-      "error": null
+      "error": null,
+      "jobs_found": 0
     },
     {
       "company": "Target",
@@ -20,25 +23,28 @@
       "status": "reachable",
       "http_status": 200,
       "final_url": "https://corporate.target.com/careers",
-      "error": null
+      "error": null,
+      "jobs_found": 0
     },
     {
       "company": "Oracle",
-      "careers_url": "https://careers.oracle.com/",
-      "ats_type": "oracle",
+      "careers_url": "https://careers.oracle.com/en/sites/jobsearch",
+      "ats_type": "oracle_cx",
       "status": "reachable",
       "http_status": 200,
       "final_url": "https://careers.oracle.com/en/sites/jobsearch",
-      "error": null
+      "error": null,
+      "jobs_found": 0
     },
     {
       "company": "CVS Health",
       "careers_url": "https://jobs.cvshealth.com/",
-      "ats_type": "unknown",
+      "ats_type": "workday",
       "status": "reachable",
       "http_status": 200,
       "final_url": "https://jobs.cvshealth.com/us/en/home",
-      "error": null
+      "error": null,
+      "jobs_found": 0
     },
     {
       "company": "Humana",
@@ -47,7 +53,8 @@
       "status": "reachable",
       "http_status": 200,
       "final_url": "https://careers.humana.com/us/en",
-      "error": null
+      "error": null,
+      "jobs_found": 0
     },
     {
       "company": "Samsung",
@@ -56,16 +63,18 @@
       "status": "reachable",
       "http_status": 200,
       "final_url": "https://www.samsung.com/us/careers/",
-      "error": null
+      "error": null,
+      "jobs_found": 0
     },
     {
       "company": "Macy's",
-      "careers_url": "https://www.macysjobs.com/",
-      "ats_type": "unknown",
+      "careers_url": "https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001",
+      "ats_type": "oracle_cx",
       "status": "reachable",
       "http_status": 200,
-      "final_url": "https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/",
-      "error": null
+      "final_url": "https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001",
+      "error": null,
+      "jobs_found": 0
     }
   ]
 }
