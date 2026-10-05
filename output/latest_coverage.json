@@ -1,10 +1,10 @@
 {
-  "run_time_utc": "2026-10-05T13:51:10.085757+00:00",
+  "run_time_utc": "2026-10-05T13:56:03.546729+00:00",
   "employers_total": 7,
   "reachable": 7,
   "failed_or_unverified": 0,
   "employers_with_supported_adapter": 2,
-  "candidate_jobs_collected": 0,
+  "candidate_jobs_collected": 116,
   "employers": [
     {
       "company": "Walmart",
@@ -28,13 +28,13 @@
     },
     {
       "company": "Oracle",
-      "careers_url": "https://careers.oracle.com/en/sites/jobsearch",
+      "careers_url": "https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch",
       "ats_type": "oracle_cx",
       "status": "reachable",
       "http_status": 200,
-      "final_url": "https://careers.oracle.com/en/sites/jobsearch",
+      "final_url": "https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch",
       "error": null,
-      "jobs_found": 0
+      "jobs_found": 110
     },
     {
       "company": "CVS Health",
@@ -74,7 +74,7 @@
       "http_status": 200,
       "final_url": "https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001",
       "error": null,
-      "jobs_found": 0
+      "jobs_found": 6
     }
   ]
 }
