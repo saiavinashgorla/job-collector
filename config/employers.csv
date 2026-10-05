@@ -1,8 +1,8 @@
 company,careers_url,ats_type,ats_identifier,enabled,notes
 Walmart,https://careers.walmart.com/,unknown,,true,
 Target,https://corporate.target.com/careers,unknown,,true,
-Oracle,https://careers.oracle.com/,oracle,,true,
-CVS Health,https://jobs.cvshealth.com/,unknown,,true,
+Oracle,https://careers.oracle.com/en/sites/jobsearch,oracle_cx,jobsearch,true,
+CVS Health,https://jobs.cvshealth.com/,workday,,true,Workday identified - adapter not built yet
 Humana,https://careers.humana.com/,unknown,,true,
 Samsung,https://www.samsung.com/us/careers/,unknown,,true,
-Macy's,https://www.macysjobs.com/,unknown,,true,
+Macy's,https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001,oracle_cx,CX_1001,true,
