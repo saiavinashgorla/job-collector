@@ -1,6 +1,6 @@
 {
-  "run_time_utc": "2026-10-05T14:03:05.397286+00:00",
-  "candidate_count": 116,
+  "run_time_utc": "2026-10-05T14:12:03.508016+00:00",
+  "candidate_count": 115,
   "jobs": [
     {
       "company": "Oracle",
@@ -910,25 +910,6 @@
       "organization": null,
       "short_description": "Designs, implements, and optimizes components in distributed systems with an emphasis on scalability, resiliency, and operability.",
       "url": "https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch/job/346308",
-      "ats_type": "oracle_cx",
-      "source": "official_oracle_recruiting_api",
-      "matched_keyword": "distributed systems"
-    },
-    {
-      "company": "Oracle",
-      "title": "Principal Software Engineer, Core Infrastructure",
-      "job_id": "342987",
-      "requisition_number": null,
-      "location": "Santa Clara, CA, United States",
-      "country": "US",
-      "posted_date": "2026-09-29",
-      "posting_end_date": null,
-      "job_type": null,
-      "job_schedule": null,
-      "job_function": null,
-      "organization": null,
-      "short_description": "Leads development and begins architecting components of scalable, elastic distributed systems.",
-      "url": "https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch/job/342987",
       "ats_type": "oracle_cx",
       "source": "official_oracle_recruiting_api",
       "matched_keyword": "distributed systems"
