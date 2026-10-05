@@ -3,10 +3,9 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlencode, urljoin
+from urllib.parse import urlparse
 
 import requests
-from bs4 import BeautifulSoup
 
 
 EMPLOYERS_FILE = Path("config/employers.csv")
@@ -17,23 +16,24 @@ HEADERS = {
         "Mozilla/5.0 (X11; Linux x86_64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
         "Chrome/129.0 Safari/537.36"
-    )
+    ),
+    "Accept": "application/json,text/plain,*/*",
 }
 
 SEARCH_TERMS = [
+    "java",
     "software engineer",
     "backend",
-    "java",
     "platform",
     "distributed systems",
-    "cloud engineer",
     "api",
+    "cloud",
 ]
 
 RELEVANT_TITLE_PATTERN = re.compile(
     r"\b("
-    r"software|backend|back-end|java|jvm|platform|"
-    r"distributed|cloud|api|application|developer"
+    r"software|engineer|developer|backend|back-end|java|jvm|"
+    r"platform|distributed|cloud|api|application"
     r")\b",
     re.IGNORECASE,
 )
@@ -113,102 +113,224 @@ def check_employer(employer):
     return result
 
 
-def oracle_search_url(employer, keyword):
-    base = employer["careers_url"].rstrip("/")
+def oracle_api_url(employer):
+    parsed = urlparse(employer["careers_url"])
 
-    params = {
-        "keyword": keyword,
-        "sortBy": "POSTING_DATES_DESC",
-    }
+    return (
+        f"{parsed.scheme}://{parsed.netloc}"
+        "/hcmRestApi/resources/latest/"
+        "recruitingCEJobRequisitions"
+    )
 
-    return f"{base}/jobs?{urlencode(params)}"
 
-
-def extract_oracle_job_links(html, page_url):
-    soup = BeautifulSoup(html, "html.parser")
-
-    jobs = {}
-
-    for anchor in soup.find_all("a", href=True):
-        href = anchor.get("href", "").strip()
-
-        if "/job/" not in href:
-            continue
-
-        title = " ".join(
-            anchor.get_text(" ", strip=True).split()
-        )
-
-        if not title:
-            continue
-
-        if not RELEVANT_TITLE_PATTERN.search(title):
-            continue
-
-        full_url = urljoin(page_url, href)
-
-        # Remove tracking/query parameters for deduplication.
-        clean_url = full_url.split("?")[0].rstrip("/")
-
-        jobs[clean_url] = {
-            "title": title,
-            "url": clean_url,
-        }
-
-    return list(jobs.values())
+def build_oracle_job_url(employer, job_id):
+    return (
+        employer["careers_url"].rstrip("/")
+        + f"/job/{job_id}"
+    )
 
 
 def collect_oracle_cx(employer):
+    site_number = employer["ats_identifier"]
+
+    if not site_number:
+        print("      ERROR: missing Oracle site number")
+        return []
+
+    api_url = oracle_api_url(employer)
+
     collected = {}
 
     for keyword in SEARCH_TERMS:
-        search_url = oracle_search_url(
-            employer,
-            keyword,
+        finder = (
+            "findReqs;"
+            f"siteNumber={site_number},"
+            f"keyword={keyword},"
+            "limit=50,"
+            "offset=0,"
+            "sortBy=POSTING_DATES_DESC"
         )
 
-        print(f"      Search: {keyword}")
+        params = {
+            "onlyData": "true",
+            "expand": "requisitionList",
+            "finder": finder,
+        }
+
+        print(f"      Searching API: {keyword}")
 
         try:
             response = requests.get(
-                search_url,
+                api_url,
                 headers=HEADERS,
+                params=params,
                 timeout=30,
-                allow_redirects=True,
+            )
+
+            print(
+                f"        HTTP status: "
+                f"{response.status_code}"
             )
 
             if response.status_code >= 400:
                 print(
-                    f"        HTTP {response.status_code}"
+                    "        API request failed: "
+                    + response.text[:300]
                 )
                 continue
 
-            jobs = extract_oracle_job_links(
-                response.text,
-                response.url,
-            )
+            try:
+                data = response.json()
+            except ValueError:
+                print(
+                    "        ERROR: response was not JSON"
+                )
+                print(response.text[:300])
+                continue
+
+            parents = data.get("items", [])
 
             print(
-                f"        Relevant links found: {len(jobs)}"
+                f"        API parent records: "
+                f"{len(parents)}"
             )
 
-            for job in jobs:
-                job["company"] = employer["company"]
-                job["ats_type"] = "oracle_cx"
-                job["source"] = "official_career_site"
+            jobs_this_search = 0
 
-                collected[job["url"]] = job
+            for parent in parents:
+                total_jobs = parent.get(
+                    "TotalJobsCount"
+                )
+
+                if total_jobs is not None:
+                    print(
+                        f"        TotalJobsCount: "
+                        f"{total_jobs}"
+                    )
+
+                requisitions = parent.get(
+                    "requisitionList"
+                ) or []
+
+                print(
+                    f"        Requisition rows: "
+                    f"{len(requisitions)}"
+                )
+
+                for req in requisitions:
+                    title = (
+                        req.get("Title") or ""
+                    ).strip()
+
+                    if not title:
+                        continue
+
+                    if not RELEVANT_TITLE_PATTERN.search(
+                        title
+                    ):
+                        continue
+
+                    country = (
+                        req.get(
+                            "PrimaryLocationCountry"
+                        )
+                        or ""
+                    ).strip()
+
+                    # Our search is focused on US roles.
+                    # Keep rows with no country because some
+                    # Oracle boards omit this field.
+                    if (
+                        country
+                        and country.upper()
+                        not in {"US", "USA"}
+                    ):
+                        continue
+
+                    job_id = str(
+                        req.get("Id")
+                        or req.get("RequisitionId")
+                        or ""
+                    ).strip()
+
+                    if not job_id:
+                        continue
+
+                    job_url = build_oracle_job_url(
+                        employer,
+                        job_id,
+                    )
+
+                    job = {
+                        "company": employer["company"],
+                        "title": title,
+                        "job_id": job_id,
+                        "requisition_number": (
+                            req.get(
+                                "RequisitionNumber"
+                            )
+                        ),
+                        "location": req.get(
+                            "PrimaryLocation"
+                        ),
+                        "country": country or None,
+                        "posted_date": req.get(
+                            "PostedDate"
+                        ),
+                        "posting_end_date": req.get(
+                            "PostingEndDate"
+                        ),
+                        "job_type": req.get(
+                            "JobType"
+                        ),
+                        "job_schedule": req.get(
+                            "JobSchedule"
+                        ),
+                        "job_function": req.get(
+                            "JobFunction"
+                        ),
+                        "organization": req.get(
+                            "Organization"
+                        ),
+                        "short_description": req.get(
+                            "ShortDescriptionStr"
+                        ),
+                        "url": job_url,
+                        "ats_type": "oracle_cx",
+                        "source": (
+                            "official_oracle_recruiting_api"
+                        ),
+                        "matched_keyword": keyword,
+                    }
+
+                    key = (
+                        employer["company"].lower(),
+                        job_id.lower(),
+                    )
+
+                    collected[key] = job
+                    jobs_this_search += 1
+
+            print(
+                f"        Matching jobs this search: "
+                f"{jobs_this_search}"
+            )
 
         except requests.RequestException as exc:
-            print(f"        Search failed: {exc}")
+            print(
+                f"        API request error: {exc}"
+            )
+
+    print(
+        f"      Unique Oracle jobs collected: "
+        f"{len(collected)}"
+    )
 
     return list(collected.values())
 
 
 def collect_jobs(employer):
-    ats_type = employer["ats_type"]
-
-    if ats_type == "oracle_cx":
+    if employer["ats_type"] == "oracle_cx":
         return collect_oracle_cx(employer)
 
     return []
@@ -221,6 +343,7 @@ def main():
     )
 
     employers = load_employers()
+
     run_time = datetime.now(
         timezone.utc
     ).isoformat()
@@ -233,10 +356,12 @@ def main():
         start=1,
     ):
         print()
+        print("=" * 60)
         print(
             f"[{index}/{len(employers)}] "
             f"{employer['company']}"
         )
+        print("=" * 60)
 
         result = check_employer(employer)
 
@@ -249,13 +374,17 @@ def main():
         jobs = []
 
         if result["status"] == "reachable":
+
             if employer["ats_type"] == "oracle_cx":
-                print("    Running Oracle CX collector")
+                print(
+                    "    Adapter: Oracle Recruiting Cloud"
+                )
+
                 jobs = collect_jobs(employer)
 
             else:
                 print(
-                    f"    No adapter yet for "
+                    f"    Adapter not built yet: "
                     f"{employer['ats_type']}"
                 )
 
@@ -264,8 +393,9 @@ def main():
         for job in jobs:
             key = (
                 job["company"].lower(),
-                job["url"].lower(),
+                job["job_id"].lower(),
             )
+
             all_jobs[key] = job
 
         coverage_results.append(result)
@@ -294,9 +424,11 @@ def main():
 
     jobs.sort(
         key=lambda item: (
+            item.get("posted_date") or "",
             item["company"].lower(),
             item["title"].lower(),
-        )
+        ),
+        reverse=True,
     )
 
     coverage = {
@@ -342,9 +474,9 @@ def main():
         )
 
     print()
-    print("==========================")
+    print("=" * 60)
     print("COLLECTION COMPLETE")
-    print("==========================")
+    print("=" * 60)
     print(
         f"Employers configured: {len(employers)}"
     )
