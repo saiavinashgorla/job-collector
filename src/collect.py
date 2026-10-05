@@ -1,7 +1,7 @@
 import csv
 import json
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -10,15 +10,6 @@ import requests
 
 EMPLOYERS_FILE = Path("config/employers.csv")
 OUTPUT_DIR = Path("output")
-
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (X11; Linux x86_64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/129.0 Safari/537.36"
-    ),
-    "Accept": "application/json,text/plain,*/*",
-}
 
 SEARCH_TERMS = [
     "java",
@@ -29,6 +20,25 @@ SEARCH_TERMS = [
     "api",
     "cloud",
 ]
+
+# Workday normally returns at most 20 rows per page.
+WORKDAY_PAGE_SIZE = 20
+
+# Safety cap while we build/test the system.
+# 5 pages = max 100 rows per keyword per employer.
+WORKDAY_MAX_PAGES_PER_TERM = 5
+
+
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (X11; Linux x86_64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/129.0 Safari/537.36"
+    ),
+    "Accept": "application/json,text/plain,*/*",
+    "Accept-Language": "en-US,en;q=0.9",
+}
+
 
 RELEVANT_TITLE_PATTERN = re.compile(
     r"\b("
@@ -67,7 +77,9 @@ def load_employers():
                     "ats_identifier": row.get(
                         "ats_identifier", ""
                     ).strip(),
-                    "notes": row.get("notes", "").strip(),
+                    "notes": row.get(
+                        "notes", ""
+                    ).strip(),
                 }
             )
 
@@ -113,6 +125,10 @@ def check_employer(employer):
     return result
 
 
+# ============================================================
+# ORACLE RECRUITING CLOUD
+# ============================================================
+
 def oracle_api_url(employer):
     parsed = urlparse(employer["careers_url"])
 
@@ -138,7 +154,6 @@ def collect_oracle_cx(employer):
         return []
 
     api_url = oracle_api_url(employer)
-
     collected = {}
 
     for keyword in SEARCH_TERMS:
@@ -157,7 +172,7 @@ def collect_oracle_cx(employer):
             "finder": finder,
         }
 
-        print(f"      Searching API: {keyword}")
+        print(f"      Oracle search: {keyword}")
 
         try:
             response = requests.get(
@@ -174,7 +189,7 @@ def collect_oracle_cx(employer):
 
             if response.status_code >= 400:
                 print(
-                    "        API request failed: "
+                    "        API failed: "
                     + response.text[:300]
                 )
                 continue
@@ -185,36 +200,14 @@ def collect_oracle_cx(employer):
                 print(
                     "        ERROR: response was not JSON"
                 )
-                print(response.text[:300])
                 continue
 
             parents = data.get("items", [])
 
-            print(
-                f"        API parent records: "
-                f"{len(parents)}"
-            )
-
-            jobs_this_search = 0
-
             for parent in parents:
-                total_jobs = parent.get(
-                    "TotalJobsCount"
-                )
-
-                if total_jobs is not None:
-                    print(
-                        f"        TotalJobsCount: "
-                        f"{total_jobs}"
-                    )
-
-                requisitions = parent.get(
-                    "requisitionList"
-                ) or []
-
-                print(
-                    f"        Requisition rows: "
-                    f"{len(requisitions)}"
+                requisitions = (
+                    parent.get("requisitionList")
+                    or []
                 )
 
                 for req in requisitions:
@@ -237,9 +230,6 @@ def collect_oracle_cx(employer):
                         or ""
                     ).strip()
 
-                    # Our search is focused on US roles.
-                    # Keep rows with no country because some
-                    # Oracle boards omit this field.
                     if (
                         country
                         and country.upper()
@@ -255,11 +245,6 @@ def collect_oracle_cx(employer):
 
                     if not job_id:
                         continue
-
-                    job_url = build_oracle_job_url(
-                        employer,
-                        job_id,
-                    )
 
                     job = {
                         "company": employer["company"],
@@ -277,6 +262,7 @@ def collect_oracle_cx(employer):
                         "posted_date": req.get(
                             "PostedDate"
                         ),
+                        "posted_date_text": None,
                         "posting_end_date": req.get(
                             "PostingEndDate"
                         ),
@@ -295,7 +281,10 @@ def collect_oracle_cx(employer):
                         "short_description": req.get(
                             "ShortDescriptionStr"
                         ),
-                        "url": job_url,
+                        "url": build_oracle_job_url(
+                            employer,
+                            job_id,
+                        ),
                         "ats_type": "oracle_cx",
                         "source": (
                             "official_oracle_recruiting_api"
@@ -309,32 +298,324 @@ def collect_oracle_cx(employer):
                     )
 
                     collected[key] = job
-                    jobs_this_search += 1
-
-            print(
-                f"        Matching jobs this search: "
-                f"{jobs_this_search}"
-            )
 
         except requests.RequestException as exc:
             print(
-                f"        API request error: {exc}"
+                f"        Oracle request error: {exc}"
             )
 
     print(
-        f"      Unique Oracle jobs collected: "
+        f"      Unique Oracle jobs: "
         f"{len(collected)}"
     )
 
     return list(collected.values())
 
 
-def collect_jobs(employer):
-    if employer["ats_type"] == "oracle_cx":
+# ============================================================
+# WORKDAY
+# ============================================================
+
+def parse_workday_identifier(employer):
+    identifier = employer["ats_identifier"]
+
+    if "|" not in identifier:
+        return None, None
+
+    tenant, site = identifier.split("|", 1)
+
+    return tenant.strip(), site.strip()
+
+
+def workday_api_url(employer):
+    tenant, site = parse_workday_identifier(
+        employer
+    )
+
+    if not tenant or not site:
+        return None
+
+    parsed = urlparse(employer["careers_url"])
+
+    return (
+        f"{parsed.scheme}://{parsed.netloc}"
+        f"/wday/cxs/{tenant}/{site}/jobs"
+    )
+
+
+def workday_public_job_url(
+    employer,
+    site,
+    external_path,
+):
+    parsed = urlparse(employer["careers_url"])
+
+    return (
+        f"{parsed.scheme}://{parsed.netloc}"
+        f"/en-US/{site}"
+        f"{external_path}"
+    )
+
+
+def workday_job_id(external_path):
+    if not external_path:
+        return ""
+
+    last_segment = external_path.rstrip(
+        "/"
+    ).split("/")[-1]
+
+    if "_" in last_segment:
+        return last_segment.rsplit("_", 1)[-1]
+
+    return last_segment
+
+
+def normalize_workday_posted_date(
+    posted_text,
+    run_time,
+):
+    if not posted_text:
+        return None
+
+    text = posted_text.strip().lower()
+
+    if "today" in text:
+        return run_time.date().isoformat()
+
+    if "yesterday" in text:
+        return (
+            run_time.date()
+            - timedelta(days=1)
+        ).isoformat()
+
+    match = re.search(
+        r"(\d+)\s+day",
+        text,
+    )
+
+    if match:
+        days = int(match.group(1))
+
+        return (
+            run_time.date()
+            - timedelta(days=days)
+        ).isoformat()
+
+    return None
+
+
+def collect_workday(employer, run_time):
+    tenant, site = parse_workday_identifier(
+        employer
+    )
+
+    if not tenant or not site:
+        print(
+            "      ERROR: Workday ats_identifier "
+            "must be tenant|site"
+        )
+        return []
+
+    api_url = workday_api_url(employer)
+
+    print(f"      Tenant: {tenant}")
+    print(f"      Site: {site}")
+    print(f"      API: {api_url}")
+
+    collected = {}
+
+    workday_headers = dict(HEADERS)
+    workday_headers["Content-Type"] = (
+        "application/json"
+    )
+
+    for keyword in SEARCH_TERMS:
+        print(
+            f"      Workday search: {keyword}"
+        )
+
+        offset = 0
+
+        for page_number in range(
+            1,
+            WORKDAY_MAX_PAGES_PER_TERM + 1,
+        ):
+            payload = {
+                "appliedFacets": {},
+                "limit": WORKDAY_PAGE_SIZE,
+                "offset": offset,
+                "searchText": keyword,
+            }
+
+            try:
+                response = requests.post(
+                    api_url,
+                    headers=workday_headers,
+                    json=payload,
+                    timeout=30,
+                )
+
+            except requests.RequestException as exc:
+                print(
+                    f"        Request error: {exc}"
+                )
+                break
+
+            print(
+                f"        Page {page_number} "
+                f"HTTP {response.status_code}"
+            )
+
+            if response.status_code >= 400:
+                print(
+                    "        API failed: "
+                    + response.text[:300]
+                )
+                break
+
+            try:
+                data = response.json()
+            except ValueError:
+                print(
+                    "        ERROR: response was not JSON"
+                )
+                break
+
+            postings = (
+                data.get("jobPostings")
+                or []
+            )
+
+            total = data.get("total")
+
+            print(
+                f"        Rows: {len(postings)} "
+                f"Total: {total}"
+            )
+
+            if not postings:
+                break
+
+            for posting in postings:
+                title = (
+                    posting.get("title")
+                    or ""
+                ).strip()
+
+                external_path = (
+                    posting.get(
+                        "externalPath"
+                    )
+                    or ""
+                ).strip()
+
+                if not title or not external_path:
+                    continue
+
+                if not RELEVANT_TITLE_PATTERN.search(
+                    title
+                ):
+                    continue
+
+                job_id = workday_job_id(
+                    external_path
+                )
+
+                posted_text = posting.get(
+                    "postedOn"
+                )
+
+                job = {
+                    "company": employer["company"],
+                    "title": title,
+                    "job_id": job_id,
+                    "requisition_number": job_id,
+                    "location": posting.get(
+                        "locationsText"
+                    ),
+                    "country": "US",
+                    "posted_date": (
+                        normalize_workday_posted_date(
+                            posted_text,
+                            run_time,
+                        )
+                    ),
+                    "posted_date_text": posted_text,
+                    "posting_end_date": None,
+                    "job_type": None,
+                    "job_schedule": None,
+                    "job_function": None,
+                    "organization": None,
+                    "short_description": None,
+                    "url": workday_public_job_url(
+                        employer,
+                        site,
+                        external_path,
+                    ),
+                    "ats_type": "workday",
+                    "source": (
+                        "official_workday_api"
+                    ),
+                    "matched_keyword": keyword,
+                }
+
+                key = (
+                    employer["company"].lower(),
+                    job_id.lower()
+                    if job_id
+                    else external_path.lower(),
+                )
+
+                collected[key] = job
+
+            offset += len(postings)
+
+            if (
+                isinstance(total, int)
+                and offset >= total
+            ):
+                break
+
+            if len(postings) < WORKDAY_PAGE_SIZE:
+                break
+
+        else:
+            print(
+                "        WARNING: page safety cap "
+                f"reached for '{keyword}'"
+            )
+
+    print(
+        f"      Unique Workday jobs: "
+        f"{len(collected)}"
+    )
+
+    return list(collected.values())
+
+
+# ============================================================
+# ADAPTER ROUTING
+# ============================================================
+
+def collect_jobs(employer, run_time):
+    ats_type = employer["ats_type"]
+
+    if ats_type == "oracle_cx":
         return collect_oracle_cx(employer)
+
+    if ats_type == "workday":
+        return collect_workday(
+            employer,
+            run_time,
+        )
 
     return []
 
+
+# ============================================================
+# MAIN
+# ============================================================
 
 def main():
     OUTPUT_DIR.mkdir(
@@ -346,7 +627,7 @@ def main():
 
     run_time = datetime.now(
         timezone.utc
-    ).isoformat()
+    )
 
     coverage_results = []
     all_jobs = {}
@@ -375,12 +656,19 @@ def main():
 
         if result["status"] == "reachable":
 
-            if employer["ats_type"] == "oracle_cx":
+            if employer["ats_type"] in {
+                "oracle_cx",
+                "workday",
+            }:
                 print(
-                    "    Adapter: Oracle Recruiting Cloud"
+                    f"    Adapter: "
+                    f"{employer['ats_type']}"
                 )
 
-                jobs = collect_jobs(employer)
+                jobs = collect_jobs(
+                    employer,
+                    run_time,
+                )
 
             else:
                 print(
@@ -393,7 +681,10 @@ def main():
         for job in jobs:
             key = (
                 job["company"].lower(),
-                job["job_id"].lower(),
+                (
+                    job.get("job_id")
+                    or job["url"]
+                ).lower(),
             )
 
             all_jobs[key] = job
@@ -411,13 +702,20 @@ def main():
     )
 
     failed = (
-        len(coverage_results) - reachable
+        len(coverage_results)
+        - reachable
     )
+
+    supported_types = {
+        "oracle_cx",
+        "workday",
+    }
 
     supported = sum(
         1
         for employer in employers
-        if employer["ats_type"] == "oracle_cx"
+        if employer["ats_type"]
+        in supported_types
     )
 
     jobs = list(all_jobs.values())
@@ -432,23 +730,30 @@ def main():
     )
 
     coverage = {
-        "run_time_utc": run_time,
+        "run_time_utc": (
+            run_time.isoformat()
+        ),
         "employers_total": len(employers),
         "reachable": reachable,
         "failed_or_unverified": failed,
-        "employers_with_supported_adapter": supported,
+        "employers_with_supported_adapter": (
+            supported
+        ),
         "candidate_jobs_collected": len(jobs),
         "employers": coverage_results,
     }
 
     candidates = {
-        "run_time_utc": run_time,
+        "run_time_utc": (
+            run_time.isoformat()
+        ),
         "candidate_count": len(jobs),
         "jobs": jobs,
     }
 
     with (
-        OUTPUT_DIR / "latest_coverage.json"
+        OUTPUT_DIR
+        / "latest_coverage.json"
     ).open(
         "w",
         encoding="utf-8",
@@ -461,7 +766,8 @@ def main():
         )
 
     with (
-        OUTPUT_DIR / "latest_candidates.json"
+        OUTPUT_DIR
+        / "latest_candidates.json"
     ).open(
         "w",
         encoding="utf-8",
@@ -478,14 +784,19 @@ def main():
     print("COLLECTION COMPLETE")
     print("=" * 60)
     print(
-        f"Employers configured: {len(employers)}"
-    )
-    print(f"Reachable: {reachable}")
-    print(
-        f"Supported ATS employers: {supported}"
+        f"Employers configured: "
+        f"{len(employers)}"
     )
     print(
-        f"Candidate jobs collected: {len(jobs)}"
+        f"Reachable: {reachable}"
+    )
+    print(
+        f"Supported ATS employers: "
+        f"{supported}"
+    )
+    print(
+        f"Candidate jobs collected: "
+        f"{len(jobs)}"
     )
 
 
