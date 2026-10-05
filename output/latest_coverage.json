@@ -1,10 +1,10 @@
 {
-  "run_time_utc": "2026-10-05T14:18:29.392483+00:00",
+  "run_time_utc": "2026-10-05T14:37:48.900159+00:00",
   "employers_total": 936,
   "reachable": 7,
   "failed_or_unverified": 929,
   "employers_with_supported_adapter": 3,
-  "candidate_jobs_collected": 200,
+  "candidate_jobs_collected": 198,
   "employers": [
     {
       "company": "Walmart",
@@ -44,7 +44,7 @@
       "http_status": 200,
       "final_url": "https://cvshealth.wd1.myworkdayjobs.com/en-US/CVS_Health_Careers",
       "error": null,
-      "jobs_found": 85
+      "jobs_found": 83
     },
     {
       "company": "Humana",
