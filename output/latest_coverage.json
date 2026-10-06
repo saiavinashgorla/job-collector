@@ -1,5 +1,5 @@
 {
-  "run_time_utc": "2026-10-05T22:05:56.726329+00:00",
+  "run_time_utc": "2026-10-06T11:06:41.156634+00:00",
   "employers_total": 936,
   "reachable": 7,
   "failed_or_unverified": 929,
@@ -34,7 +34,7 @@
       "http_status": 200,
       "final_url": "https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch",
       "error": null,
-      "jobs_found": 110
+      "jobs_found": 113
     },
     {
       "company": "CVS Health",
@@ -44,7 +44,7 @@
       "http_status": 200,
       "final_url": "https://cvshealth.wd1.myworkdayjobs.com/en-US/CVS_Health_Careers",
       "error": null,
-      "jobs_found": 85
+      "jobs_found": 82
     },
     {
       "company": "Humana",
