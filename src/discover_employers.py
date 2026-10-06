@@ -81,7 +81,6 @@ OTHER_ATS = [
     (r"icims\.com", "iCIMS"),
     (r"jobvite\.com", "Jobvite"),
     (r"eightfold\.ai", "Eightfold"),
-    (r"phenompeople|phenom\.com", "Phenom front end"),
     (r"avature\.net", "Avature"),
     (r"brassring\.com|kenexa", "BrassRing"),
     (r"ultipro\.com|ukg\.com/careers", "UKG"),
@@ -91,6 +90,13 @@ OTHER_ATS = [
     (r"paylocity\.com", "Paylocity"),
     (r"dayforcehcm\.com", "Dayforce"),
     (r"adp\.com", "ADP"),
+]
+
+# These are commonly branded career-site layers in front of the real ATS.
+# Seeing one is a clue, not proof of the underlying ATS, so discovery must continue.
+FRONTENDS = [
+    (r"phenompeople|phenom\.com", "Phenom"),
+    (r"radancy\.com|tmp\.com", "Radancy"),
 ]
 
 WD_RE = re.compile(
@@ -207,6 +213,10 @@ def scan_text(text):
         if re.search(pattern, text, re.I):
             return ("other", name)
 
+    for pattern, name in FRONTENDS:
+        if re.search(pattern, text, re.I):
+            return ("frontend", name)
+
     return None
 
 
@@ -229,6 +239,8 @@ def scrape(company, careers_url, pause=0.15):
         urls.append(careers_url)
     urls.extend(guessed_career_urls(company))
 
+    frontend_hint = None
+
     for url in dict.fromkeys(urls):
         r = get(url)
         time.sleep(pause)
@@ -239,8 +251,19 @@ def scrape(company, careers_url, pause=0.15):
         # r.url is important because vanity URLs often redirect to the real ATS.
         text = r.url + "\n" + r.text[:400_000]
         hit = scan_text(text)
-        if hit:
-            return hit, r.url
+        if not hit:
+            continue
+
+        # Phenom/Radancy can sit in front of Workday, Oracle, etc.
+        # Record the clue but keep looking for the underlying ATS.
+        if hit[0] == "frontend":
+            frontend_hint = (hit, r.url)
+            continue
+
+        return hit, r.url
+
+    if frontend_hint:
+        return frontend_hint
 
     return None, None
 
@@ -492,9 +515,14 @@ def discover_one(row, args):
         pause=args.pause,
     )
 
-    if hit:
+    frontend_hint = None
+
+    if hit and hit[0] != "frontend":
         tag = apply_direct_hit(row, hit, source)
         return row["company"], tag, "direct"
+
+    if hit and hit[0] == "frontend":
+        frontend_hint = f"{hit[1]} front end at {source}"
 
     if args.probe_misses:
         probe = probe_workday(
@@ -504,15 +532,23 @@ def discover_one(row, args):
         )
         if probe:
             tag = apply_probe_hit(row, probe)
+            if frontend_hint:
+                row["notes"] = (
+                    row["notes"] + f" Front-end clue: {frontend_hint}."
+                )
             return row["company"], tag, "probe"
 
     # Preserve an existing failed mapping rather than silently erasing it.
-    row["notes"] = (
-        f"{row.get('notes', '').strip()} "
+    suffix = (
         f"Discovery {TODAY}: no alternate ATS portal found."
-    ).strip()
+        if not frontend_hint
+        else f"Discovery {TODAY}: saw {frontend_hint}, but underlying ATS remains unresolved."
+    )
+    row["notes"] = f"{row.get('notes', '').strip()} {suffix}".strip()
 
-    return row["company"], None, "miss"
+    return row["company"], (
+        f"frontend-only: {frontend_hint}" if frontend_hint else None
+    ), "miss"
 
 
 def offline_parser_tests():
@@ -528,6 +564,10 @@ def offline_parser_tests():
         (
             "https://job-boards.greenhouse.io/example",
             ("other", "Greenhouse"),
+        ),
+        (
+            "https://example.phenompeople.com/us/en",
+            ("frontend", "Phenom"),
         ),
     ]
 
