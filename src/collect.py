@@ -4,7 +4,7 @@ import re
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import parse_qs, urlparse
 
 import requests
 
@@ -27,6 +27,8 @@ WORKDAY_PAGE_SIZE = 20
 # Workday's public CXS endpoint is happiest at 20 rows/page.
 # Ten pages gives us a 200-row safety window per keyword.
 WORKDAY_MAX_PAGES_PER_TERM = 10
+
+GREENHOUSE_API_ROOT = "https://boards-api.greenhouse.io/v1/boards"
 
 REQUEST_TIMEOUT_SECONDS = 30
 DETAIL_RETRY_STATUSES = {429, 500, 502, 503, 504}
@@ -132,6 +134,38 @@ def check_employer(employer):
         "error": None,
         "jobs_found": 0,
     }
+
+    if employer["ats_type"] == "greenhouse":
+        board_token = greenhouse_board_token(employer)
+
+        if not board_token:
+            result["status"] = "missing_identifier"
+            result["error"] = (
+                "Greenhouse requires ats_identifier=board_token "
+                "or a recognizable Greenhouse board URL"
+            )
+            return result
+
+        api_url = greenhouse_api_url_from_token(board_token)
+
+        try:
+            response = requests.get(
+                api_url,
+                headers=HEADERS,
+                timeout=REQUEST_TIMEOUT_SECONDS,
+            )
+            result["http_status"] = response.status_code
+            result["final_url"] = response.url
+            result["status"] = (
+                "reachable"
+                if response.status_code < 400
+                else "http_error"
+            )
+        except requests.RequestException as exc:
+            result["status"] = "request_error"
+            result["error"] = str(exc)
+
+        return result
 
     if not employer["careers_url"]:
         result["status"] = "missing_url"
@@ -1063,6 +1097,394 @@ def collect_workday(employer, run_time):
 
 
 # ============================================================
+# GREENHOUSE JOB BOARD
+# ============================================================
+
+def greenhouse_board_token(employer):
+    """
+    Return the public Greenhouse board token.
+
+    Preferred config:
+        ats_type=greenhouse
+        ats_identifier=<board token>
+    """
+    identifier = (
+        employer.get("ats_identifier")
+        or ""
+    ).strip()
+
+    if identifier:
+        if "://" not in identifier:
+            return identifier.strip("/")
+
+        candidate_url = identifier
+    else:
+        candidate_url = (
+            employer.get("careers_url")
+            or ""
+        ).strip()
+
+    if not candidate_url:
+        return None
+
+    try:
+        parsed = urlparse(candidate_url)
+    except ValueError:
+        return None
+
+    host = parsed.netloc.lower()
+    path_parts = [
+        part
+        for part in parsed.path.split("/")
+        if part
+    ]
+
+    if host in {
+        "boards.greenhouse.io",
+        "job-boards.greenhouse.io",
+    }:
+        if path_parts:
+            return path_parts[0]
+
+        query = parse_qs(parsed.query)
+        board_for = query.get("for")
+        if board_for:
+            return board_for[0]
+
+    if host == "boards-api.greenhouse.io":
+        try:
+            boards_index = path_parts.index("boards")
+            return path_parts[boards_index + 1]
+        except (ValueError, IndexError):
+            return None
+
+    return None
+
+
+def greenhouse_api_url_from_token(board_token):
+    return (
+        f"{GREENHOUSE_API_ROOT}/"
+        f"{board_token}/jobs"
+    )
+
+
+def greenhouse_api_url(employer):
+    board_token = greenhouse_board_token(employer)
+
+    if not board_token:
+        return None
+
+    return greenhouse_api_url_from_token(board_token)
+
+
+def strip_html_text(value):
+    if not value:
+        return None
+
+    text = re.sub(
+        r"(?is)<(script|style).*?>.*?</\1>",
+        " ",
+        str(value),
+    )
+    text = re.sub(r"(?s)<[^>]+>", " ", text)
+    text = (
+        text.replace("&nbsp;", " ")
+        .replace("&amp;", "&")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("&#39;", "'")
+        .replace("&quot;", '"')
+    )
+    text = re.sub(r"\s+", " ", text).strip()
+
+    return text or None
+
+
+def greenhouse_location_strings(job):
+    values = []
+
+    location = job.get("location")
+    if isinstance(location, dict):
+        name = location.get("name")
+        if name:
+            values.append(str(name))
+
+    offices = job.get("offices") or []
+    for office in offices:
+        if not isinstance(office, dict):
+            continue
+
+        for key in ("name", "location"):
+            value = office.get(key)
+            if value:
+                values.append(str(value))
+
+    metadata = job.get("metadata") or []
+    for item in metadata:
+        if not isinstance(item, dict):
+            continue
+
+        name = str(
+            item.get("name") or ""
+        ).lower()
+
+        if not any(
+            marker in name
+            for marker in (
+                "location",
+                "country",
+                "state",
+                "region",
+                "remote",
+            )
+        ):
+            continue
+
+        value = item.get("value")
+
+        if isinstance(value, str):
+            values.append(value)
+        elif isinstance(value, list):
+            for entry in value:
+                if isinstance(entry, str):
+                    values.append(entry)
+                elif isinstance(entry, dict):
+                    for key in ("name", "value", "label"):
+                        nested = entry.get(key)
+                        if nested:
+                            values.append(str(nested))
+        elif isinstance(value, dict):
+            for key in ("name", "value", "label"):
+                nested = value.get(key)
+                if nested:
+                    values.append(str(nested))
+
+    return list(
+        dict.fromkeys(
+            value.strip()
+            for value in values
+            if value and value.strip()
+        )
+    )
+
+
+def greenhouse_location_is_us(text):
+    if not text:
+        return False
+
+    value = str(text).strip()
+    upper = value.upper()
+
+    if looks_explicitly_us_location(value):
+        return True
+
+    if upper in US_COUNTRY_NAMES:
+        return True
+
+    if re.search(
+        r"(?:^|[\s,(/-])"
+        r"(?:US|USA|U\.S\.|U\.S\.A\.)"
+        r"(?:$|[\s,)/-])",
+        upper,
+    ):
+        return True
+
+    return False
+
+
+def greenhouse_job_is_us(job):
+    location_values = greenhouse_location_strings(job)
+
+    us_locations = [
+        value
+        for value in location_values
+        if greenhouse_location_is_us(value)
+    ]
+
+    return bool(us_locations), us_locations
+
+
+def greenhouse_updated_date(updated_at):
+    if not updated_at:
+        return None
+
+    match = re.match(
+        r"^(\d{4}-\d{2}-\d{2})",
+        str(updated_at).strip(),
+    )
+
+    return match.group(1) if match else None
+
+
+def collect_greenhouse(employer, run_time):
+    board_token = greenhouse_board_token(employer)
+
+    if not board_token:
+        print(
+            "      ERROR: Greenhouse ats_identifier "
+            "must contain the public board token"
+        )
+        return []
+
+    api_url = greenhouse_api_url_from_token(board_token)
+
+    print(f"      Board token: {board_token}")
+    print(f"      API: {api_url}")
+
+    try:
+        response = requests.get(
+            api_url,
+            headers=HEADERS,
+            params={"content": "true"},
+            timeout=REQUEST_TIMEOUT_SECONDS,
+        )
+    except requests.RequestException as exc:
+        print(f"      Greenhouse request error: {exc}")
+        return []
+
+    print(f"      Greenhouse HTTP: {response.status_code}")
+
+    if response.status_code >= 400:
+        print("      API failed: " + response.text[:300])
+        return []
+
+    try:
+        data = response.json()
+    except ValueError:
+        print("      ERROR: Greenhouse response was not JSON")
+        return []
+
+    postings = data.get("jobs") or []
+
+    if not isinstance(postings, list):
+        print("      ERROR: Greenhouse JSON missing jobs list")
+        return []
+
+    collected = {}
+    skipped_non_us = 0
+
+    for posting in postings:
+        if not isinstance(posting, dict):
+            continue
+
+        title = (posting.get("title") or "").strip()
+
+        if not title:
+            continue
+
+        if not RELEVANT_TITLE_PATTERN.search(title):
+            continue
+
+        is_us, us_locations = greenhouse_job_is_us(posting)
+
+        if not is_us:
+            skipped_non_us += 1
+            continue
+
+        job_id = str(posting.get("id") or "").strip()
+        job_url = (posting.get("absolute_url") or "").strip()
+
+        if not job_id or not job_url:
+            continue
+
+        raw_location = posting.get("location") or {}
+        if isinstance(raw_location, dict):
+            raw_location = raw_location.get("name") or ""
+
+        location = (
+            us_locations[0]
+            if us_locations
+            else str(raw_location).strip()
+        )
+
+        updated_at = posting.get("updated_at")
+        description = strip_html_text(posting.get("content"))
+
+        departments = [
+            item.get("name")
+            for item in (posting.get("departments") or [])
+            if isinstance(item, dict) and item.get("name")
+        ]
+
+        offices = [
+            item.get("name")
+            for item in (posting.get("offices") or [])
+            if isinstance(item, dict) and item.get("name")
+        ]
+
+        job = {
+            "company": employer["company"],
+            "title": title,
+            "job_id": job_id,
+            "requisition_number": job_id,
+            "location": location or None,
+            "locations_summary": (
+                " | ".join(us_locations)
+                if us_locations
+                else location or None
+            ),
+            "country": "US",
+            "country_verified": True,
+            # Public Greenhouse exposes updated_at, not guaranteed original posted date.
+            "posted_date": greenhouse_updated_date(updated_at),
+            "posted_date_text": (
+                f"Greenhouse updated_at: {updated_at}"
+                if updated_at
+                else None
+            ),
+            "posting_end_date": None,
+            "job_type": None,
+            "job_schedule": None,
+            "job_function": (
+                " | ".join(departments)
+                if departments
+                else None
+            ),
+            "organization": (
+                " | ".join(offices)
+                if offices
+                else None
+            ),
+            "remote_type": (
+                "remote"
+                if any(
+                    "REMOTE" in value.upper()
+                    for value in us_locations
+                )
+                else None
+            ),
+            "can_apply": True,
+            "short_description": (
+                description[:2000]
+                if description
+                else None
+            ),
+            "url": job_url,
+            "ats_type": "greenhouse",
+            "source": "official_greenhouse_job_board_api",
+            "matched_keyword": "title_filter",
+            "greenhouse_updated_at": updated_at,
+        }
+
+        key = (
+            employer["company"].lower(),
+            job_id.lower(),
+        )
+        collected[key] = job
+
+    print(
+        f"      Unique Greenhouse US jobs: "
+        f"{len(collected)}"
+    )
+    print(
+        f"      Non-US title matches skipped: "
+        f"{skipped_non_us}"
+    )
+
+    return list(collected.values())
+
+
+# ============================================================
 # ADAPTER ROUTING
 # ============================================================
 
@@ -1074,6 +1496,12 @@ def collect_jobs(employer, run_time):
 
     if ats_type == "workday":
         return collect_workday(
+            employer,
+            run_time,
+        )
+
+    if ats_type == "greenhouse":
+        return collect_greenhouse(
             employer,
             run_time,
         )
@@ -1127,6 +1555,7 @@ def main():
             if employer["ats_type"] in {
                 "oracle_cx",
                 "workday",
+                "greenhouse",
             }:
                 print(
                     f"    Adapter: "
@@ -1177,6 +1606,7 @@ def main():
     supported_types = {
         "oracle_cx",
         "workday",
+        "greenhouse",
     }
 
     supported = sum(
