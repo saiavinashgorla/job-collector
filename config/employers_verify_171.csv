@@ -1,0 +1,937 @@
+company,careers_url,ats_type,ats_identifier,enabled,notes
+Walmart,https://careers.walmart.com/,unknown,,true,Existing tested employer
+Target,https://target.wd5.myworkdayjobs.com/targetcareers,workday,target|targetcareers,true,"Verified Workday portal; Target Technology is an alias/search target, not a duplicate collector portal."
+Oracle,https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch,oracle_cx,CX_45001,true,Already working in collector; canonical Oracle portal. OCI/Oracle Health aliases should not duplicate this portal.
+CVS Health,https://cvshealth.wd1.myworkdayjobs.com/en-US/CVS_Health_Careers,workday,cvshealth|CVS_Health_Careers,true,Already working in collector; canonical CVS Health portal. Aetna/CVS aliases should not duplicate this portal unless a separate board is verified.
+Humana,https://careers.humana.com/,unknown,,true,Existing tested employer
+Samsung,https://www.samsung.com/us/careers/,unknown,,true,Existing tested employer
+Macy's,https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001,oracle_cx,CX_1001,true,Already working in collector; canonical Macy's portal. Macy's Technology/Bloomingdale's aliases should be checked before enabling separately.
+JPMorgan Chase,https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/jobs,oracle_cx,CX_1001,true,Oracle Recruiting Cloud URL provided by user; enable for live verification.
+Capital One,https://capitalone.wd12.myworkdayjobs.com/Capital_One,workday,capitalone|Capital_One,true,Verified Workday experienced-hire portal.
+Charles Schwab,https://schwab.wd5.myworkdayjobs.com/External,workday,schwab|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Fidelity Investments,https://fmr.wd1.myworkdayjobs.com/FidelityCareers,workday,fmr|FidelityCareers,true,Verified Workday portal.
+Goldman Sachs,https://hdpc.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/LateralHiring,oracle_cx,LateralHiring,true,Oracle Recruiting Cloud experienced-hire site; enable for live verification.
+Citi,https://citi.wd5.myworkdayjobs.com/2,workday,citi|2,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Wells Fargo,https://wellsfargo.wd1.myworkdayjobs.com/WellsFargoJobs,workday,wellsfargo|WellsFargoJobs,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Bank of America,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (careers.bankofamerica.com). Left unknown."
+BNY,https://eofe.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/BNY-Careers/jobs,oracle_cx,BNY-Careers,true,Oracle Recruiting Cloud URL provided by user; replaces disabled Workday guess; enable for live verification.
+Comerica,https://comerica.wd1.myworkdayjobs.com/ComericaCareers,workday,comerica|ComericaCareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Jack Henry,https://jackhenry.wd5.myworkdayjobs.com/Careers,workday,jackhenry|Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Alkami Technology,,unknown,,true,Canonical employer universe; mapping pending
+Mr. Cooper,,unknown,,true,Canonical employer universe; mapping pending
+Toyota Motor North America,https://toyota.wd503.myworkdayjobs.com/TMNA,workday,toyota|TMNA,true,Toyota TMNA Workday portal; enable for live verification.
+Toyota Connected North America,,unknown,,false,"Alias of ""Toyota Motor North America"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Toyota Financial Services,,unknown,,false,"Alias of ""Toyota Motor North America"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+GM Financial,,unknown,,true,Canonical employer universe; mapping pending
+AT&T,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (att.jobs). Left unknown."
+American Airlines,https://americanairlines.wd1.myworkdayjobs.com/AA_Careers,workday,americanairlines|AA_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Southwest Airlines,,unknown,,true,Canonical employer universe; mapping pending
+Sabre,,unknown,,true,Canonical employer universe; mapping pending
+7-Eleven,,unknown,,true,Canonical employer universe; mapping pending
+McKesson,https://mckesson.wd3.myworkdayjobs.com/External_Careers,workday,mckesson|External_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Caterpillar,https://cat.wd5.myworkdayjobs.com/CaterpillarCareers,workday,cat|CaterpillarCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+ExxonMobil,,unknown,,true,Canonical employer universe; mapping pending
+Chevron,https://chevron.wd5.myworkdayjobs.com/jobs,workday,chevron|jobs,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Phillips 66,https://p66.wd5.myworkdayjobs.com/P66,workday,p66|P66,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+ConocoPhillips,https://conocophillips.wd5.myworkdayjobs.com/Careers,workday,conocophillips|Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Occidental Petroleum/Oxy,https://oxy.wd5.myworkdayjobs.com/External,workday,oxy|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Halliburton,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+SLB,,unknown,,true,Canonical employer universe; mapping pending
+Baker Hughes,https://bakerhughes.wd5.myworkdayjobs.com/BakerHughes,workday,bakerhughes|BakerHughes,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Dell Technologies,https://enterpriseplatform.dell.com/hcmUI/CandidateExperience/en/sites/careers,oracle_cx,careers,true,Oracle Candidate Experience URL provided by user; replaces prior Workday guess; enable for live verification.
+Oracle Cloud Infrastructure/OCI,https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch,oracle_cx,CX_45001,false,"Alias of ""Oracle"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Oracle Health,https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch,oracle_cx,CX_45001,false,"Alias of ""Oracle"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Walmart Global Tech,,unknown,,false,"Alias of ""Walmart"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Sam's Club,,unknown,,false,"Alias of ""Walmart"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Home Depot,,unknown,,true,Not Workday/Oracle CX: custom careers.homedepot.com. Left unknown.
+Lowe's,,unknown,,true,Not Workday/Oracle CX: custom talent.lowes.com (Phenom) - no Workday portal found 2026-10-05. Left unknown.
+H-E-B,,unknown,,true,Not Workday/Oracle CX: custom careers.heb.com. Left unknown.
+Academy Sports + Outdoors,https://academy.wd1.myworkdayjobs.com/External,workday,academy|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+USAA,https://usaa.wd1.myworkdayjobs.com/USAAJOBSWD,workday,usaa|USAAJOBSWD,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Visa,https://visa.wd5.myworkdayjobs.com/Visa,workday,visa|Visa,true,Verified experienced-hire Workday portal; do not use Visa_Early_Careers for this senior-job collector.
+Mastercard,https://mastercard.wd1.myworkdayjobs.com/CorporateCareers,workday,mastercard|CorporateCareers,true,Verified Workday corporate careers portal.
+Fiserv,https://fiserv.wd5.myworkdayjobs.com/EXT,workday,fiserv|EXT,true,Verified Workday portal (2026-10-05) via live job URLs. 392 jobs listed 2026-10-05.
+FIS,https://fis.wd5.myworkdayjobs.com/SearchJobs,workday,fis|SearchJobs,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Thomson Reuters,https://thomsonreuters.wd5.myworkdayjobs.com/External_Career_Site,workday,thomsonreuters|External_Career_Site,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+CBRE,https://cbre.wd1.myworkdayjobs.com/CBRE,workday,cbre|CBRE,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+JLL,https://jll.wd1.myworkdayjobs.com/jllcareers,workday,jll|jllcareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+RealPage,,unknown,,true,Canonical employer universe; mapping pending
+Tyler Technologies,,unknown,,true,Canonical employer universe; mapping pending
+Texas Instruments,,unknown,,true,Not Workday/Oracle CX: custom careers.ti.com. Left unknown.
+NXP,https://nxp.wd3.myworkdayjobs.com/careers,workday,nxp|careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Samsung Semiconductor,https://sec.wd3.myworkdayjobs.com/Samsung_Careers,workday,sec|Samsung_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Samsung Electronics America,https://sec.wd3.myworkdayjobs.com/Samsung_Careers,workday,sec|Samsung_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+HARMAN,https://harman.wd3.myworkdayjobs.com/HARMAN,workday,harman|HARMAN,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Applied Materials,https://amat.wd1.myworkdayjobs.com/External,workday,amat|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+AMD,https://amd.wd1.myworkdayjobs.com/External,workday,amd|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Nvidia,https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite,workday,nvidia|NVIDIAExternalCareerSite,true,Verified NVIDIA external Workday portal.
+Qualcomm,https://qualcomm.wd5.myworkdayjobs.com/External,workday,qualcomm|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Cisco,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (jobs.cisco.com). Left unknown."
+Palo Alto Networks,,unknown,,true,Not Workday/Oracle CX: SmartRecruiters. Left unknown.
+CrowdStrike,https://crowdstrike.wd5.myworkdayjobs.com/crowdstrikecareers,workday,crowdstrike|crowdstrikecareers,true,Verified Workday careers portal.
+Salesforce,https://salesforce.wd12.myworkdayjobs.com/External_Career_Site,workday,salesforce|External_Career_Site,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+ServiceNow,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SmartRecruiters. Left unknown."
+Workday,https://workday.wd5.myworkdayjobs.com/Workday,workday,workday|Workday,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+PayPal,https://paypal.wd1.myworkdayjobs.com/jobs,workday,paypal|jobs,true,"Verified Workday portal; Venmo roles may share PayPal hiring infrastructure, so avoid a duplicate collector row unless a separate portal is verified."
+Intuit,,unknown,,true,Not Workday/Oracle CX: custom jobs.intuit.com. Left unknown.
+Indeed,,unknown,,true,Canonical employer universe; mapping pending
+Expedia Group,https://expedia.wd5.myworkdayjobs.com/search,workday,expedia|search,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Uber,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+DoorDash,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+PepsiCo/Frito-Lay,,unknown,,false,"Alias of ""PepsiCo"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Kimberly-Clark,https://kimberlyclark.wd5.myworkdayjobs.com/K-C,workday,kimberlyclark|K-C,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Keurig Dr Pepper,,unknown,,true,Canonical employer universe; mapping pending
+GameStop,https://gamestop.wd5.myworkdayjobs.com/Careers,workday,gamestop|Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Yum Brands/Pizza Hut,,unknown,,false,"Alias of ""Yum Brands"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Match Group,,unknown,,true,Canonical employer universe; mapping pending
+Optum,,unknown,,false,"Alias of ""UnitedHealth Group"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+CVS Health/Aetna,https://cvshealth.wd1.myworkdayjobs.com/en-US/CVS_Health_Careers,workday,cvshealth|CVS_Health_Careers,false,"Alias of ""CVS Health"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Cigna/Evernorth,https://cigna.wd5.myworkdayjobs.com/cignacareers,workday,cigna|cignacareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. Canonical Cigna portal; Cigna and Evernorth rows are aliases."
+Blue Cross Blue Shield/HCSC,,unknown,,false,"Alias of ""HCSC"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Baylor Scott & White,,unknown,,true,Canonical employer universe; mapping pending
+Texas Health Resources,,unknown,,true,Canonical employer universe; mapping pending
+UT Southwestern,,unknown,,true,Canonical employer universe; mapping pending
+Copart,,unknown,,true,Canonical employer universe; mapping pending
+Globe Life,,unknown,,true,Canonical employer universe; mapping pending
+Realtor.com/Move,,unknown,,false,"Alias of ""News Corp"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Cox Automotive,,unknown,,false,"Alias of ""Cox Enterprises"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Target Technology,https://target.wd5.myworkdayjobs.com/targetcareers,workday,target|targetcareers,false,"Alias of ""Target"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Costco Wholesale,,unknown,,true,Not Workday/Oracle CX: custom. Left unknown.
+Kroger,,unknown,,true,Not Workday/Oracle CX: custom jobs.kroger.com - no Workday portal found 2026-10-05. Left unknown.
+Albertsons,,unknown,,true,Canonical employer universe; mapping pending
+Safeway,,unknown,,false,"Alias of ""Albertsons"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Walgreens,,unknown,,true,Not Workday/Oracle CX: custom jobs.walgreens.com. Left unknown.
+Walgreens Boots Alliance,,unknown,,false,"Alias of ""Walgreens"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Best Buy,https://bestbuy.wd1.myworkdayjobs.com/External,workday,bestbuy|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Macy's Technology,https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001,oracle_cx,CX_1001,false,"Alias of ""Macy's"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Bloomingdale's,https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001,oracle_cx,CX_1001,false,"Alias of ""Macy's"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Nordstrom,https://nordstrom.wd5.myworkdayjobs.com/nordstrom_careers,workday,nordstrom|nordstrom_careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Gap Inc,https://gapinc.wd1.myworkdayjobs.com/Gap_Inc,workday,gapinc|Gap_Inc,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Old Navy,,unknown,,false,"Alias of ""Gap Inc"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Banana Republic,,unknown,,false,"Alias of ""Gap Inc"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Wayfair,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Chewy,,unknown,,true,Canonical employer universe; mapping pending
+Amazon,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (amazon.jobs). Left unknown."
+Amazon Stores,,unknown,,false,"Alias of ""Amazon"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+eBay,https://ebay.wd5.myworkdayjobs.com/apply,workday,ebay|apply,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Etsy,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Instacart,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+IKEA,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SmartRecruiters. Left unknown."
+Nike,,unknown,,true,Not Workday/Oracle CX: custom jobs.nike.com. Left unknown.
+Adidas,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+Lululemon,https://lululemon.wd3.myworkdayjobs.com/lululemon,workday,lululemon|lululemon,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Under Armour,https://underarmour.wd1.myworkdayjobs.com/UA_External,workday,underarmour|UA_External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Levi Strauss,https://levi.wd5.myworkdayjobs.com/External,workday,levi|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+VF Corporation,https://vfc.wd5.myworkdayjobs.com/VF_Careers,workday,vfc|VF_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Ralph Lauren,https://ralphlauren.wd1.myworkdayjobs.com/RalphLaurenCareers,workday,ralphlauren|RalphLaurenCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Tapestry/Coach,https://tapestry.wd1.myworkdayjobs.com/Tapestry,workday,tapestry|Tapestry,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Capri Holdings/Michael Kors,,unknown,,true,Canonical employer universe; mapping pending
+Williams-Sonoma,https://wsgc.wd5.myworkdayjobs.com/WSI_External,workday,wsgc|WSI_External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Sephora,,unknown,,true,Canonical employer universe; mapping pending
+LVMH,,unknown,,true,Canonical employer universe; mapping pending
+Ulta Beauty,https://ulta.wd5.myworkdayjobs.com/UltaCareers,workday,ulta|UltaCareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Tractor Supply,,unknown,,true,Canonical employer universe; mapping pending
+AutoZone,,unknown,,true,Canonical employer universe; mapping pending
+Advance Auto Parts,,unknown,,true,Canonical employer universe; mapping pending
+O'Reilly Automotive,,unknown,,true,Canonical employer universe; mapping pending
+CarMax,,unknown,,true,Canonical employer universe; mapping pending
+Carvana,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Stitch Fix,,unknown,,true,Canonical employer universe; mapping pending
+Grainger,,unknown,,true,Canonical employer universe; mapping pending
+Fastenal,,unknown,,true,Canonical employer universe; mapping pending
+Ferguson,https://ferguson.wd1.myworkdayjobs.com/ferguson,workday,ferguson|ferguson,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+REI,https://rei.wd1.myworkdayjobs.com/REI_External,workday,rei|REI_External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Dick's Sporting Goods,,unknown,,true,Canonical employer universe; mapping pending
+Foot Locker,,unknown,,true,Canonical employer universe; mapping pending
+TJX Companies,,unknown,,true,Canonical employer universe; mapping pending
+TJ Maxx,,unknown,,false,"Alias of ""TJX Companies"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Marshalls,,unknown,,false,"Alias of ""TJX Companies"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Ross Stores,,unknown,,true,Canonical employer universe; mapping pending
+Burlington Stores,,unknown,,true,Canonical employer universe; mapping pending
+Kohl's,,unknown,,true,Canonical employer universe; mapping pending
+Dollar General,,unknown,,true,Canonical employer universe; mapping pending
+Dollar Tree,,unknown,,true,Canonical employer universe; mapping pending
+Publix,,unknown,,true,Not Workday/Oracle CX: custom. Left unknown.
+Meijer,,unknown,,true,Canonical employer universe; mapping pending
+Wegmans,,unknown,,true,Canonical employer universe; mapping pending
+BJ's Wholesale Club,,unknown,,true,Canonical employer universe; mapping pending
+Bass Pro Shops,,unknown,,true,Canonical employer universe; mapping pending
+Cabela's,,unknown,,false,"Alias of ""Bass Pro Shops"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Harbor Freight,,unknown,,true,Canonical employer universe; mapping pending
+Floor & Decor,,unknown,,true,Canonical employer universe; mapping pending
+Ace Hardware,,unknown,,true,Canonical employer universe; mapping pending
+Casey's General Stores,,unknown,,true,Canonical employer universe; mapping pending
+Murphy USA,,unknown,,true,Canonical employer universe; mapping pending
+Neiman Marcus,,unknown,,true,Canonical employer universe; mapping pending
+Saks Global,,unknown,,true,Canonical employer universe; mapping pending
+QVC/Qurate Retail,,unknown,,true,Canonical employer universe; mapping pending
+Staples,,unknown,,true,Canonical employer universe; mapping pending
+Office Depot/ODP,,unknown,,true,Canonical employer universe; mapping pending
+Genuine Parts Company/NAPA,,unknown,,true,Canonical employer universe; mapping pending
+JPMorgan Payments,,unknown,,false,"Alias of ""JPMorgan Chase"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Morgan Stanley,https://ms.wd5.myworkdayjobs.com/External,workday,ms|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+American Express,https://careers.americanexpress.com/en/sites/CX_1/jobs,oracle_cx,CX_1,true,Oracle Candidate Experience URL provided by user; enable for live verification.
+Discover,https://discover.wd5.myworkdayjobs.com/Discover,workday,discover|Discover,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Vanguard,https://vanguard.wd5.myworkdayjobs.com/vanguard_external,workday,vanguard|vanguard_external,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+BlackRock,https://blackrock.wd1.myworkdayjobs.com/BlackRock_Professional,workday,blackrock|BlackRock_Professional,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+State Street,https://statestreet.wd1.myworkdayjobs.com/Global,workday,statestreet|Global,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Northern Trust,https://ntrs.wd1.myworkdayjobs.com/careers,workday,ntrs|careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+U.S. Bank,https://usbank.wd1.myworkdayjobs.com/US_Bank_Careers,workday,usbank|US_Bank_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+PNC,https://pnc.wd5.myworkdayjobs.com/External,workday,pnc|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Truist,https://truist.wd1.myworkdayjobs.com/Careers,workday,truist|Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Regions Bank,https://regions.wd5.myworkdayjobs.com/Regions_Careers,workday,regions|Regions_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Citizens Financial,https://citizens.wd5.myworkdayjobs.com/External,workday,citizens|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Fifth Third Bank,https://fifththird.wd5.myworkdayjobs.com/53careers,workday,fifththird|53careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+M&T Bank,https://mtb.wd5.myworkdayjobs.com/MTB,workday,mtb|MTB,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Huntington Bank,https://huntington.wd5.myworkdayjobs.com/HNB_Careers,workday,huntington|HNB_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Ally Financial,https://ally.wd1.myworkdayjobs.com/Ally_Careers,workday,ally|Ally_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Synchrony,https://synchrony.wd5.myworkdayjobs.com/careers,workday,synchrony|careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+SoFi,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Robinhood,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+TIAA,https://tiaa.wd5.myworkdayjobs.com/External,workday,tiaa|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Corebridge Financial,,unknown,,true,Canonical employer universe; mapping pending
+LPL Financial,https://lplfinancial.wd1.myworkdayjobs.com/LPL,workday,lplfinancial|LPL,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Edward Jones,https://edwardjones.wd1.myworkdayjobs.com/External,workday,edwardjones|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Raymond James,https://raymondjames.wd1.myworkdayjobs.com/RJF,workday,raymondjames|RJF,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Franklin Templeton,https://franklintempleton.wd5.myworkdayjobs.com/Franklin_Templeton,workday,franklintempleton|Franklin_Templeton,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+T. Rowe Price,https://troweprice.wd5.myworkdayjobs.com/TRowePrice,workday,troweprice|TRowePrice,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Invesco,https://invesco.wd1.myworkdayjobs.com/IVZ,workday,invesco|IVZ,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Principal Financial,https://principal.wd5.myworkdayjobs.com/PFG,workday,principal|PFG,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Blackstone,https://blackstone.wd1.myworkdayjobs.com/Blackstone_Careers,workday,blackstone|Blackstone_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+KKR,https://kkr.wd1.myworkdayjobs.com/KKR_Careers,workday,kkr|KKR_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Apollo Global Management,,unknown,,true,Canonical employer universe; mapping pending
+Carlyle,https://carlyle.wd1.myworkdayjobs.com/External,workday,carlyle|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Ares Management,,unknown,,true,Canonical employer universe; mapping pending
+Jane Street,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom. Left unknown."
+Citadel,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom. Left unknown."
+Citadel Securities,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom. Left unknown."
+Two Sigma,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Point72,,unknown,,true,Canonical employer universe; mapping pending
+Millennium Management,,unknown,,true,Canonical employer universe; mapping pending
+Interactive Brokers,https://ibkr.wd5.myworkdayjobs.com/External,workday,ibkr|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Cboe Global Markets,https://cboe.wd1.myworkdayjobs.com/External,workday,cboe|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+CME Group,https://cmegroup.wd1.myworkdayjobs.com/CME_Careers,workday,cmegroup|CME_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Intercontinental Exchange/ICE,https://ice.wd5.myworkdayjobs.com/ice_careers,workday,ice|ice_careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Nasdaq,https://nasdaq.wd1.myworkdayjobs.com/Global_External_Site,workday,nasdaq|Global_External_Site,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Tradeweb,,unknown,,true,Canonical employer universe; mapping pending
+Moody's,https://moodys.wd1.myworkdayjobs.com/External,workday,moodys|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+S&P Global,https://spgi.wd5.myworkdayjobs.com/SPGI,workday,spgi|SPGI,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Morningstar,https://morningstar.wd5.myworkdayjobs.com/Americas,workday,morningstar|Americas,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Bloomberg,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom. Left unknown."
+FactSet,https://factset.wd1.myworkdayjobs.com/FactSetCareers,workday,factset|FactSetCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+MSCI,https://msci.wd1.myworkdayjobs.com/MSCI_Careers,workday,msci|MSCI_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Navy Federal Credit Union,,unknown,,true,Canonical employer universe; mapping pending
+Federal Home Loan Banks,,unknown,,true,Canonical employer universe; mapping pending
+Stripe,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Block,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SmartRecruiters. Left unknown."
+Square,,unknown,,false,"Alias of ""Block"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Venmo,https://paypal.wd1.myworkdayjobs.com/jobs,workday,paypal|jobs,false,"Alias of ""PayPal"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Adyen,,unknown,,true,Canonical employer universe; mapping pending
+Plaid,,unknown,,true,Canonical employer universe; mapping pending
+Marqeta,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Affirm,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Klarna,,unknown,,true,Canonical employer universe; mapping pending
+Coinbase,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Chime,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Brex,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Ramp,,unknown,,true,Not Workday/Oracle CX: Ashby. Left unknown.
+Toast,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+BILL/Bill.com,,unknown,,true,Canonical employer universe; mapping pending
+Credit Karma,,unknown,,true,Canonical employer universe; mapping pending
+LendingClub,,unknown,,true,Canonical employer universe; mapping pending
+Upstart,,unknown,,true,Canonical employer universe; mapping pending
+NerdWallet,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Remitly,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Wise,,unknown,,true,Canonical employer universe; mapping pending
+Western Union,https://westernunion.wd5.myworkdayjobs.com/External,workday,westernunion|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+MoneyGram,,unknown,,true,Canonical employer universe; mapping pending
+Global Payments,https://tsys.wd1.myworkdayjobs.com/TSYS,workday,tsys|TSYS,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. Tenant is legacy TSYS; seen live in search 2026-10-05."
+Worldpay,,unknown,,true,Canonical employer universe; mapping pending
+Bread Financial,,unknown,,true,Canonical employer universe; mapping pending
+Green Dot,,unknown,,true,Canonical employer universe; mapping pending
+NCR Atleos,,unknown,,true,Canonical employer universe; mapping pending
+NCR Voyix,,unknown,,true,Canonical employer universe; mapping pending
+Flywire,,unknown,,true,Canonical employer universe; mapping pending
+Shift4 Payments,,unknown,,true,Canonical employer universe; mapping pending
+Paymentus,,unknown,,true,Canonical employer universe; mapping pending
+AvidXchange,,unknown,,true,Canonical employer universe; mapping pending
+Corpay,,unknown,,true,Canonical employer universe; mapping pending
+WEX,,unknown,,true,Canonical employer universe; mapping pending
+Enova International,,unknown,,true,Canonical employer universe; mapping pending
+Rocket Companies,,unknown,,true,Not Workday/Oracle CX: custom myrocketcareer.com. Left unknown.
+Rocket Mortgage,,unknown,,false,"Alias of ""Rocket Companies"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+PennyMac,,unknown,,true,Canonical employer universe; mapping pending
+Broadridge,https://broadridge.wd5.myworkdayjobs.com/Careers,workday,broadridge|Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+UnitedHealth Group,,unknown,,true,Not Workday/Oracle CX: custom careers.unitedhealthgroup.com. Left unknown.
+Aetna,https://cvshealth.wd1.myworkdayjobs.com/en-US/CVS_Health_Careers,workday,cvshealth|CVS_Health_Careers,false,"Alias of ""CVS Health"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Cigna,https://cigna.wd5.myworkdayjobs.com/cignacareers,workday,cigna|cignacareers,false,"Alias of ""Cigna/Evernorth"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Evernorth,https://cigna.wd5.myworkdayjobs.com/cignacareers,workday,cigna|cignacareers,false,"Alias of ""Cigna/Evernorth"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Elevance Health/Anthem,https://elevancehealth.wd1.myworkdayjobs.com/ANT,workday,elevancehealth|ANT,true,"Verified Workday portal (2026-10-05) via live job URLs. Site slug still ""ANT"" (Anthem). Carelon row is an alias."
+Centene,https://centene.wd5.myworkdayjobs.com/Centene,workday,centene|Centene,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Molina Healthcare,https://molina.wd1.myworkdayjobs.com/Molina,workday,molina|Molina,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+HCSC,,unknown,,true,Canonical employer universe; mapping pending
+Blue Cross Blue Shield organizations,,unknown,,false,"Alias of ""HCSC""; mapping follows that row. Disabled to avoid duplicate collection."
+Kaiser Permanente,,unknown,,true,Not Workday/Oracle CX: custom jobs.kp.org. Left unknown.
+MetLife,https://metlife.wd5.myworkdayjobs.com/MetLife,workday,metlife|MetLife,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Prudential Financial,https://pru.wd5.myworkdayjobs.com/Careers,workday,pru|Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+New York Life,https://nyl.wd1.myworkdayjobs.com/External,workday,nyl|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Northwestern Mutual,https://northwesternmutual.wd5.myworkdayjobs.com/CORPORATE-CAREERS,workday,northwesternmutual|CORPORATE-CAREERS,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+MassMutual,https://massmutual.wd1.myworkdayjobs.com/MassMutual_Careers,workday,massmutual|MassMutual_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Lincoln Financial,https://lfg.wd5.myworkdayjobs.com/LFG,workday,lfg|LFG,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Guardian Life,https://guardianlife.wd5.myworkdayjobs.com/External,workday,guardianlife|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+AIG,https://aig.wd1.myworkdayjobs.com/AIG,workday,aig|AIG,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Chubb,,unknown,,true,Not Workday/Oracle CX: no Workday portal found 2026-10-05 (chubbfiresecurity.wd3 is the unrelated Chubb Fire & Security/APi Group); careers.chubb.com runs its own ATS. Left unknown.
+Travelers,https://travelers.wd5.myworkdayjobs.com/External,workday,travelers|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Liberty Mutual,https://libertymutual.wd5.myworkdayjobs.com/External,workday,libertymutual|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Progressive,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom. Left unknown."
+Allstate,https://allstate.wd5.myworkdayjobs.com/allstate_careers,workday,allstate|allstate_careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+State Farm,,unknown,,true,Not Workday/Oracle CX: custom jobs.statefarm.com. Left unknown.
+Nationwide,https://nationwide.wd1.myworkdayjobs.com/Nationwide_Careers,workday,nationwide|Nationwide_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Farmers Insurance,https://farmers.wd5.myworkdayjobs.com/External,workday,farmers|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+GEICO,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom. Left unknown."
+Zurich North America,https://zurichna.wd1.myworkdayjobs.com/External,workday,zurichna|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Munich Re,,unknown,,true,Canonical employer universe; mapping pending
+Swiss Re,,unknown,,true,Canonical employer universe; mapping pending
+Berkshire Hathaway insurance companies,,unknown,,true,Canonical employer universe; mapping pending
+CNA,https://cna.wd1.myworkdayjobs.com/CNA_Careers,workday,cna|CNA_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. Seen live in search 2026-10-05."
+The Hartford,https://thehartford.wd5.myworkdayjobs.com/Careers_External,workday,thehartford|Careers_External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Unum,https://unum.wd1.myworkdayjobs.com/External,workday,unum|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Assurant,https://assurant.wd1.myworkdayjobs.com/Assurant_Careers,workday,assurant|Assurant_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Markel,https://markel.wd1.myworkdayjobs.com/Markel_Careers,workday,markel|Markel_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Marsh McLennan,https://mmc.wd1.myworkdayjobs.com/MMC,workday,mmc|MMC,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. Canonical MMC portal; Mercer and Guy Carpenter rows are aliases."
+Mercer,https://mmc.wd1.myworkdayjobs.com/MMC,workday,mmc|MMC,false,"Alias of ""Marsh McLennan"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Guy Carpenter,https://mmc.wd1.myworkdayjobs.com/MMC,workday,mmc|MMC,false,"Alias of ""Marsh McLennan"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Aon,https://aon.wd1.myworkdayjobs.com/EXTERNAL,workday,aon|EXTERNAL,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Gallagher,https://ajg.wd1.myworkdayjobs.com/ajg,workday,ajg|ajg,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Lemonade,,unknown,,true,Canonical employer universe; mapping pending
+Aflac,https://aflac.wd1.myworkdayjobs.com/External,workday,aflac|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+American Family Insurance,https://amfam.wd1.myworkdayjobs.com/External,workday,amfam|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Erie Insurance,https://erieinsurance.wd1.myworkdayjobs.com/External,workday,erieinsurance|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Auto-Owners Insurance,,unknown,,true,Canonical employer universe; mapping pending
+Blue Shield of California,,unknown,,true,Canonical employer universe; mapping pending
+Highmark Health,https://highmark.wd5.myworkdayjobs.com/External,workday,highmark|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+CareSource,,unknown,,true,Canonical employer universe; mapping pending
+Oscar Health,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+GuideWell/Florida Blue,,unknown,,true,Canonical employer universe; mapping pending
+Blue Cross Blue Shield of Michigan,,unknown,,true,Canonical employer universe; mapping pending
+Optum Rx,,unknown,,false,"Alias of ""UnitedHealth Group"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+CVS Digital/Technology,https://cvshealth.wd1.myworkdayjobs.com/en-US/CVS_Health_Careers,workday,cvshealth|CVS_Health_Careers,false,"Alias of ""CVS Health"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Cencora,,unknown,,true,Canonical employer universe; mapping pending
+Cardinal Health,https://cardinalhealth.wd1.myworkdayjobs.com/EXT,workday,cardinalhealth|EXT,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Epic Systems,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom. Left unknown."
+Oracle Health/Cerner,https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch,oracle_cx,CX_45001,false,"Alias of ""Oracle"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+IQVIA,https://iqvia.wd1.myworkdayjobs.com/IQVIA,workday,iqvia|IQVIA,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Veeva Systems,,unknown,,true,Not Workday/Oracle CX: Lever. Left unknown.
+athenahealth,https://athenahealth.wd1.myworkdayjobs.com/External,workday,athenahealth|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Teladoc Health,,unknown,,true,Canonical employer universe; mapping pending
+HCA Healthcare,,unknown,,true,Not Workday/Oracle CX: custom careers.hcahealthcare.com. Left unknown.
+Mayo Clinic,,unknown,,true,Not Workday/Oracle CX: custom jobs.mayoclinic.org - no Workday portal found 2026-10-05. Left unknown.
+Cleveland Clinic,https://clevelandclinic.wd1.myworkdayjobs.com/External,workday,clevelandclinic|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Mass General Brigham,https://partners.wd1.myworkdayjobs.com/MGB,workday,partners|MGB,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Johns Hopkins Medicine,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+NYU Langone,,unknown,,true,Canonical employer universe; mapping pending
+Mount Sinai,,unknown,,true,Canonical employer universe; mapping pending
+Northwell Health,,unknown,,true,Canonical employer universe; mapping pending
+Memorial Sloan Kettering,https://mskcc.wd1.myworkdayjobs.com/MSKCC,workday,mskcc|MSKCC,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+MD Anderson,https://mdanderson.wd1.myworkdayjobs.com/External,workday,mdanderson|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Providence,https://providence.wd5.myworkdayjobs.com/External,workday,providence|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+CommonSpirit Health,,unknown,,true,Canonical employer universe; mapping pending
+Ascension,,unknown,,true,Canonical employer universe; mapping pending
+Intermountain Health,https://imh.wd5.myworkdayjobs.com/External,workday,imh|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Sutter Health,,unknown,,true,Canonical employer universe; mapping pending
+Stanford Health Care,https://stanfordhealthcare.wd1.myworkdayjobs.com/External,workday,stanfordhealthcare|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Cedars-Sinai,https://cedarssinai.wd5.myworkdayjobs.com/External,workday,cedarssinai|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+UPMC,,unknown,,true,Not Workday/Oracle CX: custom careers.upmc.com. Left unknown.
+Humana Technology,https://humana.wd5.myworkdayjobs.com/Humana_External_Career_Site,workday,humana|Humana_External_Career_Site,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. Humana corporate portal."
+Optum Technology,,unknown,,false,"Alias of ""UnitedHealth Group"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+HealthEquity,,unknown,,true,Canonical employer universe; mapping pending
+Zelis,,unknown,,true,Canonical employer universe; mapping pending
+Cotiviti,,unknown,,true,Canonical employer universe; mapping pending
+Waystar,,unknown,,true,Canonical employer universe; mapping pending
+R1 RCM,,unknown,,true,Canonical employer universe; mapping pending
+Prime Therapeutics,,unknown,,true,Canonical employer universe; mapping pending
+Carelon,https://elevancehealth.wd1.myworkdayjobs.com/ANT,workday,elevancehealth|ANT,false,"Alias of ""Elevance Health/Anthem""; mapping follows that row. Disabled to avoid duplicate collection."
+Cambia Health Solutions,,unknown,,true,Canonical employer universe; mapping pending
+Medtronic,https://medtronic.wd1.myworkdayjobs.com/MedtronicCareers,workday,medtronic|MedtronicCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Abbott,https://abbott.wd5.myworkdayjobs.com/abbottcareers,workday,abbott|abbottcareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Boston Scientific,https://bostonscientific.wd1.myworkdayjobs.com/Careers,workday,bostonscientific|Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Stryker,https://stryker.wd1.myworkdayjobs.com/StrykerCareers,workday,stryker|StrykerCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+GE HealthCare,https://gehc.wd5.myworkdayjobs.com/GEHC_ExternalSite,workday,gehc|GEHC_ExternalSite,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Siemens Healthineers,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+Philips,https://philips.wd3.myworkdayjobs.com/jobs-and-careers,workday,philips|jobs-and-careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Baxter,https://baxter.wd1.myworkdayjobs.com/Baxter,workday,baxter|Baxter,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Becton Dickinson/BD,https://bdx.wd1.myworkdayjobs.com/EXTERNAL_CAREER_SITE_USA,workday,bdx|EXTERNAL_CAREER_SITE_USA,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Intuitive Surgical,,unknown,,true,Canonical employer universe; mapping pending
+Edwards Lifesciences,https://edwards.wd5.myworkdayjobs.com/EdwardsCareers,workday,edwards|EdwardsCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Dexcom,https://dexcom.wd1.myworkdayjobs.com/Dexcom,workday,dexcom|Dexcom,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+ResMed,,unknown,,true,Canonical employer universe; mapping pending
+Zimmer Biomet,https://zimmerbiomet.wd5.myworkdayjobs.com/ZimmerBiomet,workday,zimmerbiomet|ZimmerBiomet,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Alcon,https://alcon.wd5.myworkdayjobs.com/careers_alcon,workday,alcon|careers_alcon,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Illumina,https://illumina.wd1.myworkdayjobs.com/illumina-careers,workday,illumina|illumina-careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Agilent Technologies,,unknown,,true,Canonical employer universe; mapping pending
+Danaher,https://danaher.wd1.myworkdayjobs.com/DanaherCareers,workday,danaher|DanaherCareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Thermo Fisher Scientific,https://thermofisher.wd5.myworkdayjobs.com/ThermoFisherCareers,workday,thermofisher|ThermoFisherCareers,true,Verified Workday portal (2026-10-05) via live job URLs. jobs.thermofisher.com is a Phenom front end.
+Bio-Rad,,unknown,,true,Canonical employer universe; mapping pending
+Hologic,https://hologic.wd1.myworkdayjobs.com/Hologic,workday,hologic|Hologic,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Align Technology,,unknown,,true,Canonical employer universe; mapping pending
+Insulet,,unknown,,true,Canonical employer universe; mapping pending
+Exact Sciences,https://exactsciences.wd1.myworkdayjobs.com/Exact_Sciences,workday,exactsciences|Exact_Sciences,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Guardant Health,,unknown,,true,Canonical employer universe; mapping pending
+Johnson & Johnson,https://jj.wd5.myworkdayjobs.com/JJ,workday,jj|JJ,true,Verified Workday portal (2026-10-05) via live job URLs. careers.jnj.com is the front end.
+Pfizer,https://pfizer.wd1.myworkdayjobs.com/PfizerCareers,workday,pfizer|PfizerCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Merck,https://msd.wd5.myworkdayjobs.com/SearchJobs,workday,msd|SearchJobs,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+AbbVie,https://abbvie.wd5.myworkdayjobs.com/External,workday,abbvie|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Eli Lilly,https://lilly.wd5.myworkdayjobs.com/LLY,workday,lilly|LLY,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Amgen,https://amgen.wd1.myworkdayjobs.com/Careers,workday,amgen|Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Gilead Sciences,https://gilead.wd1.myworkdayjobs.com/gileadcareers,workday,gilead|gileadcareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Bristol Myers Squibb,https://bristolmyerssquibb.wd5.myworkdayjobs.com/BMS,workday,bristolmyerssquibb|BMS,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Moderna,https://modernatx.wd1.myworkdayjobs.com/M_tx,workday,modernatx|M_tx,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Regeneron,https://regeneron.wd1.myworkdayjobs.com/Regeneron,workday,regeneron|Regeneron,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Biogen,https://biogen.wd1.myworkdayjobs.com/External,workday,biogen|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Vertex Pharmaceuticals,https://vrtx.wd501.myworkdayjobs.com/vertex_careers,workday,vrtx|vertex_careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+AstraZeneca,https://astrazeneca.wd3.myworkdayjobs.com/Careers,workday,astrazeneca|Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Novartis,https://novartis.wd3.myworkdayjobs.com/Novartis_Careers,workday,novartis|Novartis_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Roche,https://roche.wd3.myworkdayjobs.com/roche-ext,workday,roche|roche-ext,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Genentech,https://gene.wd5.myworkdayjobs.com/gene,workday,gene|gene,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Sanofi,https://sanofi.wd3.myworkdayjobs.com/SanofiCareers,workday,sanofi|SanofiCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Takeda,https://takeda.wd3.myworkdayjobs.com/External,workday,takeda|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Bayer,,unknown,,true,Canonical employer universe; mapping pending
+Boehringer Ingelheim,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Novo Nordisk,https://novonordisk.wd3.myworkdayjobs.com/nnjobs,workday,novonordisk|nnjobs,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+GSK,https://gsk.wd5.myworkdayjobs.com/GSKCareers,workday,gsk|GSKCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+CSL Behring,https://csl.wd1.myworkdayjobs.com/CSL_External,workday,csl|CSL_External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+BioNTech,,unknown,,true,Canonical employer universe; mapping pending
+Sarepta Therapeutics,,unknown,,true,Canonical employer universe; mapping pending
+Alnylam,https://alnylam.wd1.myworkdayjobs.com/Alnylam,workday,alnylam|Alnylam,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Labcorp,https://labcorp.wd1.myworkdayjobs.com/External,workday,labcorp|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Quest Diagnostics,https://questdiagnostics.wd1.myworkdayjobs.com/External,workday,questdiagnostics|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Charles River Laboratories,,unknown,,true,Canonical employer universe; mapping pending
+Catalent,,unknown,,true,Canonical employer universe; mapping pending
+Microsoft,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (careers.microsoft.com). Left unknown."
+Google,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (careers.google.com). Left unknown."
+Alphabet,,unknown,,false,"Alias of ""Google"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+AWS,,unknown,,false,"Alias of ""Amazon"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Apple,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (jobs.apple.com). Left unknown."
+Meta,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (metacareers.com). Left unknown."
+OCI,https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch,oracle_cx,CX_45001,false,"Alias of ""Oracle"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Adobe,https://adobe.wd5.myworkdayjobs.com/external_experienced,workday,adobe|external_experienced,true,Verified experienced-hire Workday portal.
+IBM,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (ibm.com/careers). Left unknown."
+Red Hat,https://redhat.wd5.myworkdayjobs.com/Jobs,workday,redhat|Jobs,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+HPE,https://hpe.wd5.myworkdayjobs.com/Jobsathpe,workday,hpe|Jobsathpe,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+HP Inc,https://hp.wd5.myworkdayjobs.com/ExternalCareerSite,workday,hp|ExternalCareerSite,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Broadcom,https://broadcom.wd1.myworkdayjobs.com/External_Career,workday,broadcom|External_Career,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. Includes VMware roles post-acquisition."
+VMware/Broadcom,https://broadcom.wd1.myworkdayjobs.com/External_Career,workday,broadcom|External_Career,false,"Alias of ""Broadcom"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+SAP,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+Atlassian,,unknown,,true,Not Workday/Oracle CX: Lever. Left unknown.
+Snowflake,https://snowflake.wd5.myworkdayjobs.com/Snowflake_Careers,workday,snowflake|Snowflake_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Databricks,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+MongoDB,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Confluent,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Elastic,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Splunk/Cisco,,unknown,,false,"Alias of ""Cisco"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Cloudflare,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Okta,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Zscaler,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SmartRecruiters. Left unknown."
+Fortinet,https://fortinet.wd1.myworkdayjobs.com/fortinetcareers,workday,fortinet|fortinetcareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Nutanix,https://nutanix.wd1.myworkdayjobs.com/Nutanix_Careers,workday,nutanix|Nutanix_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+HashiCorp/IBM,,unknown,,false,"Alias of ""IBM"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+GitHub/Microsoft,,unknown,,false,"Alias of ""Microsoft"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+GitLab,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Twilio,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Zoom,https://zoom.wd5.myworkdayjobs.com/Zoom,workday,zoom|Zoom,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+DocuSign,,unknown,,true,Canonical employer universe; mapping pending
+Dropbox,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Box,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+HubSpot,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Shopify,,unknown,,true,Not Workday/Oracle CX: custom. Left unknown.
+Squarespace,,unknown,,true,Canonical employer universe; mapping pending
+Wix,,unknown,,true,Canonical employer universe; mapping pending
+Akamai,https://akamai.wd1.myworkdayjobs.com/External,workday,akamai|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Fastly,,unknown,,true,Canonical employer universe; mapping pending
+DigitalOcean,,unknown,,true,Canonical employer universe; mapping pending
+NetApp,https://netapp.wd1.myworkdayjobs.com/NetApp,workday,netapp|NetApp,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Pure Storage,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Rubrik,,unknown,,true,Canonical employer universe; mapping pending
+Cohesity,,unknown,,true,Canonical employer universe; mapping pending
+Cloudera,,unknown,,true,Canonical employer universe; mapping pending
+Teradata,,unknown,,true,Canonical employer universe; mapping pending
+Informatica,,unknown,,true,Canonical employer universe; mapping pending
+Alteryx,,unknown,,true,Canonical employer universe; mapping pending
+UiPath,,unknown,,true,Canonical employer universe; mapping pending
+Automation Anywhere,,unknown,,true,Canonical employer universe; mapping pending
+Pegasystems,,unknown,,true,Canonical employer universe; mapping pending
+Appian,,unknown,,true,Canonical employer universe; mapping pending
+Palantir,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Lever. Left unknown."
+Datadog,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+New Relic,,unknown,,true,Canonical employer universe; mapping pending
+Dynatrace,,unknown,,true,Canonical employer universe; mapping pending
+PagerDuty,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Smartsheet,,unknown,,true,Canonical employer universe; mapping pending
+Asana,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Monday.com,,unknown,,true,Canonical employer universe; mapping pending
+Figma,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Notion,,unknown,,true,Canonical employer universe; mapping pending
+Airtable,,unknown,,true,Canonical employer universe; mapping pending
+Canva,,unknown,,true,Canonical employer universe; mapping pending
+Postman,,unknown,,true,Canonical employer universe; mapping pending
+Docker,,unknown,,true,Canonical employer universe; mapping pending
+Redis,,unknown,,true,Canonical employer universe; mapping pending
+Grafana Labs,,unknown,,true,Canonical employer universe; mapping pending
+Sentry,,unknown,,true,Canonical employer universe; mapping pending
+Temporal,,unknown,,true,Canonical employer universe; mapping pending
+Cockroach Labs,,unknown,,true,Canonical employer universe; mapping pending
+Neo4j,,unknown,,true,Canonical employer universe; mapping pending
+JFrog,,unknown,,true,Canonical employer universe; mapping pending
+Harness,,unknown,,true,Canonical employer universe; mapping pending
+CircleCI,,unknown,,true,Canonical employer universe; mapping pending
+Sonar,,unknown,,true,Canonical employer universe; mapping pending
+Kong,,unknown,,true,Canonical employer universe; mapping pending
+dbt Labs,,unknown,,true,Canonical employer universe; mapping pending
+Lucid Software,,unknown,,true,Canonical employer universe; mapping pending
+Miro,,unknown,,true,Canonical employer universe; mapping pending
+Vercel,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Netlify,,unknown,,true,Canonical employer universe; mapping pending
+LaunchDarkly,,unknown,,true,Canonical employer universe; mapping pending
+Pulumi,,unknown,,true,Canonical employer universe; mapping pending
+Sumo Logic,,unknown,,true,Canonical employer universe; mapping pending
+Dataiku,,unknown,,true,Canonical employer universe; mapping pending
+DataRobot,,unknown,,true,Canonical employer universe; mapping pending
+Starburst,,unknown,,true,Canonical employer universe; mapping pending
+SingleStore,,unknown,,true,Canonical employer universe; mapping pending
+Yugabyte,,unknown,,true,Canonical employer universe; mapping pending
+Timescale,,unknown,,true,Canonical employer universe; mapping pending
+Pinecone,,unknown,,true,Canonical employer universe; mapping pending
+HashiCorp,,unknown,,false,"Alias of ""IBM"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+GitHub,,unknown,,false,"Alias of ""Microsoft"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+OpenAI,,unknown,,true,Not Workday/Oracle CX: Ashby. Left unknown.
+Anthropic,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Scale AI,,unknown,,true,Canonical employer universe; mapping pending
+CoreWeave,,unknown,,true,Canonical employer universe; mapping pending
+Hugging Face,,unknown,,true,Canonical employer universe; mapping pending
+Cerebras,,unknown,,true,Canonical employer universe; mapping pending
+Groq,,unknown,,true,Canonical employer universe; mapping pending
+xAI,,unknown,,true,Canonical employer universe; mapping pending
+Perplexity,,unknown,,true,Canonical employer universe; mapping pending
+Together AI,,unknown,,true,Canonical employer universe; mapping pending
+Lambda,,unknown,,true,Canonical employer universe; mapping pending
+Runway,,unknown,,true,Canonical employer universe; mapping pending
+Intel,https://intel.wd1.myworkdayjobs.com/External,workday,intel|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Micron Technology,https://micron.wd1.myworkdayjobs.com/External,workday,micron|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Lam Research,https://lamresearch.wd1.myworkdayjobs.com/LamCareers,workday,lamresearch|LamCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+KLA,https://kla.wd1.myworkdayjobs.com/Search,workday,kla|Search,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+ASML,,unknown,,true,Canonical employer universe; mapping pending
+Marvell Technology,https://marvell.wd1.myworkdayjobs.com/MarvellCareers,workday,marvell|MarvellCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Synopsys,https://synopsys.wd1.myworkdayjobs.com/careers,workday,synopsys|careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Cadence Design Systems,https://cadence.wd1.myworkdayjobs.com/External_Careers,workday,cadence|External_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Arm,,unknown,,true,Canonical employer universe; mapping pending
+NXP Semiconductors,https://nxp.wd3.myworkdayjobs.com/careers,workday,nxp|careers,false,"Alias of ""NXP"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Infineon,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Analog Devices,https://analogdevices.wd1.myworkdayjobs.com/External,workday,analogdevices|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+GlobalFoundries,https://globalfoundries.wd1.myworkdayjobs.com/External,workday,globalfoundries|External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Western Digital,,unknown,,true,Canonical employer universe; mapping pending
+Seagate,,unknown,,true,Not Workday/Oracle CX: custom seagatecareers.com. Left unknown.
+SanDisk,,unknown,,true,Canonical employer universe; mapping pending
+Dell,https://dell.wd1.myworkdayjobs.com/External,workday,dell|External,false,"Alias of ""Dell Technologies"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+HP,https://hp.wd5.myworkdayjobs.com/ExternalCareerSite,workday,hp|ExternalCareerSite,false,"Alias of ""HP Inc"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Juniper Networks,,unknown,,true,Canonical employer universe; mapping pending
+Arista Networks,,unknown,,true,Canonical employer universe; mapping pending
+Supermicro,,unknown,,true,Canonical employer universe; mapping pending
+Keysight Technologies,https://keysight.wd1.myworkdayjobs.com/Keysight_Careers,workday,keysight|Keysight_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Zebra Technologies,https://zebra.wd5.myworkdayjobs.com/ZebraCareers,workday,zebra|ZebraCareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Lenovo,,unknown,,true,Canonical employer universe; mapping pending
+Logitech,https://logitech.wd5.myworkdayjobs.com/Logitech,workday,logitech|Logitech,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Garmin,,unknown,,true,Canonical employer universe; mapping pending
+Motorola Solutions,https://motorolasolutions.wd5.myworkdayjobs.com/Careers,workday,motorolasolutions|Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Autodesk,https://autodesk.wd1.myworkdayjobs.com/Ext,workday,autodesk|Ext,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+PTC,,unknown,,true,Canonical employer universe; mapping pending
+Dassault Systèmes,,unknown,,true,Canonical employer universe; mapping pending
+Siemens Digital Industries Software,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Trimble,https://trimble.wd1.myworkdayjobs.com/TrimbleCareers,workday,trimble|TrimbleCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Bentley Systems,,unknown,,true,Canonical employer universe; mapping pending
+Epicor,,unknown,,true,Canonical employer universe; mapping pending
+Infor,,unknown,,true,Canonical employer universe; mapping pending
+Guidewire,,unknown,,true,Canonical employer universe; mapping pending
+Duck Creek Technologies,,unknown,,true,Canonical employer universe; mapping pending
+Manhattan Associates,,unknown,,true,Canonical employer universe; mapping pending
+Blue Yonder,,unknown,,true,Canonical employer universe; mapping pending
+Coupa,,unknown,,true,Canonical employer universe; mapping pending
+SAP Ariba,,unknown,,false,"Alias of ""SAP""; mapping follows that row. Disabled to avoid duplicate collection."
+Workiva,,unknown,,true,Canonical employer universe; mapping pending
+Avalara,,unknown,,true,Canonical employer universe; mapping pending
+ADP,,unknown,,true,Not Workday/Oracle CX: custom jobs.adp.com. Left unknown.
+UKG,,unknown,,true,Canonical employer universe; mapping pending
+Paycom,,unknown,,true,Not Workday/Oracle CX: custom. Left unknown.
+Paylocity,,unknown,,true,Canonical employer universe; mapping pending
+Dayforce,,unknown,,true,Canonical employer universe; mapping pending
+Rippling,,unknown,,true,Canonical employer universe; mapping pending
+Gusto,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+BambooHR,,unknown,,true,Canonical employer universe; mapping pending
+Workhuman,,unknown,,true,Canonical employer universe; mapping pending
+Greenhouse,,unknown,,true,Not Workday/Oracle CX: Greenhouse (own product). Left unknown.
+iCIMS,,unknown,,true,Not Workday/Oracle CX: iCIMS (own product). Left unknown.
+Workrise,,unknown,,true,Canonical employer universe; mapping pending
+Justworks,,unknown,,true,Canonical employer universe; mapping pending
+Deel,,unknown,,true,Canonical employer universe; mapping pending
+Samsara,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+ServiceTitan,,unknown,,true,Canonical employer universe; mapping pending
+Motive,,unknown,,true,Canonical employer universe; mapping pending
+project44,,unknown,,true,Canonical employer universe; mapping pending
+FourKites,,unknown,,true,Canonical employer universe; mapping pending
+Descartes Systems,,unknown,,true,Canonical employer universe; mapping pending
+Olo,,unknown,,true,Canonical employer universe; mapping pending
+Procore,,unknown,,true,Canonical employer universe; mapping pending
+AppFolio,,unknown,,true,Canonical employer universe; mapping pending
+Yardi Systems,,unknown,,true,Not Workday/Oracle CX: custom. Left unknown.
+MRI Software,,unknown,,true,Canonical employer universe; mapping pending
+Entrata,,unknown,,true,Canonical employer universe; mapping pending
+ServiceChannel,,unknown,,true,Canonical employer universe; mapping pending
+VTS,,unknown,,true,Canonical employer universe; mapping pending
+Verkada,,unknown,,true,Canonical employer universe; mapping pending
+Highspot,,unknown,,true,Canonical employer universe; mapping pending
+Outreach,,unknown,,true,Canonical employer universe; mapping pending
+Gong,,unknown,,true,Canonical employer universe; mapping pending
+CyberArk,,unknown,,true,Canonical employer universe; mapping pending
+Rapid7,,unknown,,true,Canonical employer universe; mapping pending
+Tenable,,unknown,,true,Canonical employer universe; mapping pending
+Proofpoint,,unknown,,true,Canonical employer universe; mapping pending
+Netskope,,unknown,,true,Canonical employer universe; mapping pending
+SentinelOne,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Snyk,,unknown,,true,Canonical employer universe; mapping pending
+Wiz,,unknown,,true,Canonical employer universe; mapping pending
+Check Point Software,,unknown,,true,Not Workday/Oracle CX: custom. Left unknown.
+Cisco Security,,unknown,,false,"Alias of ""Cisco"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Microsoft Security,,unknown,,false,"Alias of ""Microsoft"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Google/Mandiant,,unknown,,false,"Alias of ""Google"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Splunk,,unknown,,false,"Alias of ""Cisco"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Airbnb,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Booking Holdings,https://booking.wd3.myworkdayjobs.com/External,workday,booking|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Booking.com,,unknown,,false,"Alias of ""Booking Holdings"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Priceline,,unknown,,false,"Alias of ""Booking Holdings"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Kayak,,unknown,,false,"Alias of ""Booking Holdings"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Tripadvisor,,unknown,,true,Canonical employer universe; mapping pending
+Lyft,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+United Airlines,https://united.wd1.myworkdayjobs.com/United_External_Careers,workday,united|United_External_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Delta Air Lines,,unknown,,true,Not Workday/Oracle CX: custom delta.com/careers (Avature) - no Workday portal found 2026-10-05. Left unknown.
+Alaska Airlines,,unknown,,true,Canonical employer universe; mapping pending
+JetBlue,,unknown,,true,Canonical employer universe; mapping pending
+Marriott International,,unknown,,true,Not Workday/Oracle CX: custom careers.marriott.com (P1-… req IDs); only Marriott Vacations Worldwide (separate company) is on Workday - verified 2026-10-05. Left unknown.
+Hilton,,unknown,,true,"Not Workday/Oracle CX: Oracle Taleo (jobs.hilton.com, HOT… req IDs) - no Workday portal found 2026-10-05. Left unknown."
+Hyatt,https://hyatt.wd5.myworkdayjobs.com/careers,workday,hyatt|careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+IHG,,unknown,,true,Canonical employer universe; mapping pending
+Wyndham,,unknown,,true,Canonical employer universe; mapping pending
+Choice Hotels,,unknown,,true,Canonical employer universe; mapping pending
+Amadeus,,unknown,,true,Canonical employer universe; mapping pending
+Travelport,,unknown,,true,Canonical employer universe; mapping pending
+Hertz,https://hertz.wd5.myworkdayjobs.com/External,workday,hertz|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Enterprise Mobility,,unknown,,true,Not Workday/Oracle CX: custom careers.enterprise.com. Left unknown.
+Avis Budget Group,https://avisbudget.wd1.myworkdayjobs.com/External,workday,avisbudget|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Vacasa,,unknown,,true,Canonical employer universe; mapping pending
+Sonder,,unknown,,true,Canonical employer universe; mapping pending
+General Motors,https://generalmotors.wd5.myworkdayjobs.com/Careers_GM,workday,generalmotors|Careers_GM,true,Verified GM Workday portal; GM Financial is a separate employer and should not be mapped here without separate verification.
+Ford,https://efds.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1,oracle_cx,CX_1,true,"Verified Oracle Recruiting Cloud portal (2026-10-05): 847 open jobs, 689 US. Host is em5 region. Ford Credit row is an alias."
+Ford Credit,https://efds.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1,oracle_cx,CX_1,false,"Alias of ""Ford""; mapping follows that row. Disabled to avoid duplicate collection."
+Stellantis,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+Tesla,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (tesla.com/careers). Left unknown."
+Rivian,,unknown,,true,Canonical employer universe; mapping pending
+Lucid Motors,,unknown,,true,Canonical employer universe; mapping pending
+Honda,https://honda.wd5.myworkdayjobs.com/External,workday,honda|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Nissan,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+Hyundai,,unknown,,true,Canonical employer universe; mapping pending
+Kia,,unknown,,true,Canonical employer universe; mapping pending
+Mercedes-Benz USA,,unknown,,true,Canonical employer universe; mapping pending
+Mercedes-Benz Financial,,unknown,,false,"Alias of ""Mercedes-Benz USA"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+BMW,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+Volkswagen,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+Audi,,unknown,,false,"Alias of ""Volkswagen"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Volvo Cars,,unknown,,true,Canonical employer universe; mapping pending
+Porsche,,unknown,,true,Canonical employer universe; mapping pending
+Bosch,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+Continental,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Aptiv,https://aptiv.wd5.myworkdayjobs.com/Aptiv,workday,aptiv|Aptiv,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Magna,,unknown,,true,Canonical employer universe; mapping pending
+ZF,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Denso,,unknown,,true,Canonical employer universe; mapping pending
+Valeo,,unknown,,true,Canonical employer universe; mapping pending
+Lear,https://lear.wd1.myworkdayjobs.com/External,workday,lear|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+BorgWarner,https://borgwarner.wd1.myworkdayjobs.com/External,workday,borgwarner|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+PACCAR,https://paccar.wd1.myworkdayjobs.com/External,workday,paccar|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Cummins,https://cummins.wd1.myworkdayjobs.com/CumminsCareers,workday,cummins|CumminsCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+John Deere,https://deere.wd5.myworkdayjobs.com/Deere,workday,deere|Deere,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+CNH Industrial,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Harley-Davidson,https://harleydavidson.wd5.myworkdayjobs.com/External,workday,harleydavidson|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Aurora Innovation,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Waymo,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Cruise,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Zoox,,unknown,,true,Canonical employer universe; mapping pending
+Cox Enterprises,,unknown,,true,Canonical employer universe; mapping pending
+Dealertrack,,unknown,,false,"Alias of ""Cox Enterprises"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+CDK Global,,unknown,,true,Canonical employer universe; mapping pending
+CarGurus,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Cars.com,,unknown,,true,Canonical employer universe; mapping pending
+AutoNation,,unknown,,true,Canonical employer universe; mapping pending
+Lithia/Driveway,,unknown,,true,Canonical employer universe; mapping pending
+TrueCar,,unknown,,true,Canonical employer universe; mapping pending
+Reynolds and Reynolds,,unknown,,true,Canonical employer universe; mapping pending
+Edmunds,,unknown,,true,Canonical employer universe; mapping pending
+Verizon,,unknown,,true,Not Workday/Oracle CX: custom mycareer.verizon.com. Left unknown.
+T-Mobile,,unknown,,true,Not Workday/Oracle CX: custom careers.t-mobile.com. Left unknown.
+Comcast,https://comcast.wd5.myworkdayjobs.com/Comcast_Careers,workday,comcast|Comcast_Careers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. Comcast Cable row is an alias."
+Comcast Cable,https://comcast.wd5.myworkdayjobs.com/Comcast_Careers,workday,comcast|Comcast_Careers,false,"Alias of ""Comcast"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Charter Communications/Spectrum,https://charter.wd1.myworkdayjobs.com/External,workday,charter|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Cox Communications,,unknown,,false,"Alias of ""Cox Enterprises"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Lumen Technologies,https://lumen.wd5.myworkdayjobs.com/External,workday,lumen|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Dish/EchoStar,,unknown,,true,Canonical employer universe; mapping pending
+Nokia,https://nokia.wd3.myworkdayjobs.com/External,workday,nokia|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Ericsson,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Ciena,,unknown,,true,Canonical employer universe; mapping pending
+CommScope,,unknown,,true,Canonical employer universe; mapping pending
+Samsung Networks,,unknown,,true,Canonical employer universe; mapping pending
+Crown Castle,,unknown,,true,Canonical employer universe; mapping pending
+American Tower,,unknown,,true,Canonical employer universe; mapping pending
+Netflix,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (jobs.netflix.com). Left unknown."
+Disney,,unknown,,true,Not Workday/Oracle CX: custom jobs.disneycareers.com. Left unknown.
+Hulu,,unknown,,false,"Alias of ""Disney"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+ESPN,,unknown,,false,"Alias of ""Disney"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+NBCUniversal,,unknown,,true,Canonical employer universe; mapping pending
+Warner Bros. Discovery,https://warnerbros.wd5.myworkdayjobs.com/global,workday,warnerbros|global,true,Verified Workday portal (2026-10-05) via live job URLs. WBD announced a split into Warner Bros. and Discovery Global for mid-2026; recheck tenant after separation. HBO row is an alias.
+HBO,https://warnerbros.wd5.myworkdayjobs.com/global,workday,warnerbros|global,false,"Alias of ""Warner Bros. Discovery""; mapping follows that row. Disabled to avoid duplicate collection."
+Paramount,https://paramount.wd5.myworkdayjobs.com/External,workday,paramount|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+CBS,,unknown,,false,"Alias of ""Paramount"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Fox,https://fox.wd1.myworkdayjobs.com/External,workday,fox|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Roku,,unknown,,true,Canonical employer universe; mapping pending
+Spotify,,unknown,,true,Not Workday/Oracle CX: custom lifeatspotify.com. Left unknown.
+SiriusXM,https://siriusxm.wd1.myworkdayjobs.com/External,workday,siriusxm|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Pandora,,unknown,,false,"Alias of ""SiriusXM"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+YouTube/Google,,unknown,,false,"Alias of ""Google"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Twitch/Amazon,,unknown,,false,"Alias of ""Amazon"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Audible/Amazon,,unknown,,false,"Alias of ""Amazon"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Sony,https://sonyglobal.wd1.myworkdayjobs.com/SonyGlobalCareers,workday,sonyglobal|SonyGlobalCareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Sony Interactive Entertainment,https://sonyinteractive.wd1.myworkdayjobs.com/SIEGlobal,workday,sonyinteractive|SIEGlobal,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. PlayStation row is an alias."
+PlayStation,https://sonyinteractive.wd1.myworkdayjobs.com/SIEGlobal,workday,sonyinteractive|SIEGlobal,false,"Alias of ""Sony Interactive Entertainment"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Electronic Arts,https://ea.wd1.myworkdayjobs.com/EA_Careers,workday,ea|EA_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Activision Blizzard/Microsoft,,unknown,,false,"Alias of ""Microsoft"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Xbox/Microsoft,,unknown,,false,"Alias of ""Microsoft"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Take-Two Interactive,,unknown,,true,Canonical employer universe; mapping pending
+Roblox,,unknown,,true,Canonical employer universe; mapping pending
+Epic Games,,unknown,,true,Canonical employer universe; mapping pending
+Unity,,unknown,,true,Canonical employer universe; mapping pending
+The New York Times,,unknown,,true,Canonical employer universe; mapping pending
+Discord,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Hearst,,unknown,,true,Canonical employer universe; mapping pending
+Dow Jones,https://dowjones.wd1.myworkdayjobs.com/Dow_Jones_Career,workday,dowjones|Dow_Jones_Career,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+News Corp,,unknown,,true,Canonical employer universe; mapping pending
+iHeartMedia,,unknown,,true,Canonical employer universe; mapping pending
+Cox Media,,unknown,,false,"Alias of ""Cox Enterprises"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Fanatics,,unknown,,true,Canonical employer universe; mapping pending
+Live Nation Entertainment,https://livenation.wd1.myworkdayjobs.com/LNExternalSite,workday,livenation|LNExternalSite,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. Ticketmaster row is an alias."
+Ticketmaster,https://livenation.wd1.myworkdayjobs.com/LNExternalSite,workday,livenation|LNExternalSite,false,"Alias of ""Live Nation Entertainment"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+SeatGeek,,unknown,,true,Canonical employer universe; mapping pending
+StubHub,,unknown,,true,Canonical employer universe; mapping pending
+Vivid Seats,,unknown,,true,Canonical employer universe; mapping pending
+Eventbrite,,unknown,,true,Canonical employer universe; mapping pending
+DraftKings,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+FanDuel,,unknown,,true,Not Workday/Oracle CX: Greenhouse. Left unknown.
+Pinterest,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Reddit,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Snap,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+Nextdoor,,unknown,,true,Canonical employer universe; mapping pending
+Yelp,,unknown,,true,Canonical employer universe; mapping pending
+LinkedIn/Microsoft,,unknown,,false,"Alias of ""Microsoft"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Glassdoor,,unknown,,true,Canonical employer universe; mapping pending
+Zillow,https://zillow.wd5.myworkdayjobs.com/Zillow_Group_External,workday,zillow|Zillow_Group_External,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Redfin,,unknown,,true,Canonical employer universe; mapping pending
+Bumble,,unknown,,true,Canonical employer universe; mapping pending
+Thumbtack,,unknown,,true,Canonical employer universe; mapping pending
+Angi,,unknown,,true,Canonical employer universe; mapping pending
+Rover,,unknown,,true,Canonical employer universe; mapping pending
+Taskrabbit,,unknown,,true,Canonical employer universe; mapping pending
+Care.com,,unknown,,true,Canonical employer universe; mapping pending
+Strava,,unknown,,true,Canonical employer universe; mapping pending
+Duolingo,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): Greenhouse. Left unknown."
+PepsiCo,,unknown,,true,Not Workday/Oracle CX: custom pepsicojobs.com - no corporate Workday portal found 2026-10-05 (only franchise bottler Pepsi Bottling Ventures is on Workday). Left unknown.
+Frito-Lay,,unknown,,false,"Alias of ""PepsiCo"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Coca-Cola,https://coke.wd1.myworkdayjobs.com/coca-cola-careers,workday,coke|coca-cola-careers,true,Verified Workday portal (2026-10-05) via live job URLs. Separate coca_cola_college site exists (empty); do not collect.
+Procter & Gamble,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (pgcareers.com). Left unknown."
+Unilever,,unknown,,true,Canonical employer universe; mapping pending
+Nestlé USA,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Mars,,unknown,,true,Canonical employer universe; mapping pending
+Mondelez International,https://mondelezinternational.wd1.myworkdayjobs.com/External,workday,mondelezinternational|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Kraft Heinz,https://kraftheinz.wd1.myworkdayjobs.com/External,workday,kraftheinz|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+General Mills,https://generalmills.wd1.myworkdayjobs.com/External,workday,generalmills|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Kellanova,https://kellanova.wd1.myworkdayjobs.com/External,workday,kellanova|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Conagra Brands,https://conagra.wd1.myworkdayjobs.com/External,workday,conagra|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Tyson Foods,https://tyson.wd1.myworkdayjobs.com/External,workday,tyson|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Cargill,,unknown,,true,Canonical employer universe; mapping pending
+ADM,,unknown,,true,Canonical employer universe; mapping pending
+Campbell Soup,https://campbellsoup.wd5.myworkdayjobs.com/ExternalCareers_GlobalSite,workday,campbellsoup|ExternalCareers_GlobalSite,true,Verified Workday portal (2026-10-05) via live job URLs. 
+Hershey,https://hershey.wd5.myworkdayjobs.com/Hershey,workday,hershey|Hershey,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Starbucks,,unknown,,true,Not Workday/Oracle CX: Eightfold (careers.starbucks.com) - no Workday portal found 2026-10-05. Left unknown.
+McDonald's,https://mcdonalds.wd5.myworkdayjobs.com/External,workday,mcdonalds|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Yum Brands,https://yum.wd1.myworkdayjobs.com/External,workday,yum|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Pizza Hut,,unknown,,false,"Alias of ""Yum Brands"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Taco Bell,,unknown,,false,"Alias of ""Yum Brands"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+KFC,,unknown,,false,"Alias of ""Yum Brands"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Chipotle,,unknown,,true,Canonical employer universe; mapping pending
+Restaurant Brands International,,unknown,,true,Canonical employer universe; mapping pending
+Burger King,,unknown,,false,"Alias of ""Restaurant Brands International"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Popeyes,,unknown,,false,"Alias of ""Restaurant Brands International"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Domino's,https://dominos.wd1.myworkdayjobs.com/External,workday,dominos|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Darden Restaurants,https://darden.wd5.myworkdayjobs.com/External,workday,darden|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Sysco,https://sysco.wd1.myworkdayjobs.com/Sysco,workday,sysco|Sysco,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+US Foods,,unknown,,true,Canonical employer universe; mapping pending
+J.M. Smucker,https://smucker.wd1.myworkdayjobs.com/External,workday,smucker|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Colgate-Palmolive,https://colgate.wd1.myworkdayjobs.com/External,workday,colgate|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Clorox,https://clorox.wd1.myworkdayjobs.com/Clorox,workday,clorox|Clorox,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Church & Dwight,,unknown,,true,Canonical employer universe; mapping pending
+Reckitt,,unknown,,true,Canonical employer universe; mapping pending
+Inspire Brands,,unknown,,true,Canonical employer universe; mapping pending
+Dunkin',,unknown,,false,"Alias of ""Inspire Brands"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Buffalo Wild Wings,,unknown,,false,"Alias of ""Inspire Brands"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Sonic,,unknown,,false,"Alias of ""Inspire Brands"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Arby's,,unknown,,false,"Alias of ""Inspire Brands"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Chick-fil-A,,unknown,,true,Canonical employer universe; mapping pending
+Panera Bread,,unknown,,true,Canonical employer universe; mapping pending
+Wendy's,,unknown,,true,Canonical employer universe; mapping pending
+Papa Johns,,unknown,,true,Canonical employer universe; mapping pending
+Dine Brands,,unknown,,true,Canonical employer universe; mapping pending
+Bloomin' Brands,,unknown,,true,Canonical employer universe; mapping pending
+Shake Shack,,unknown,,true,Canonical employer universe; mapping pending
+Sweetgreen,,unknown,,true,Canonical employer universe; mapping pending
+Dutch Bros,,unknown,,true,Canonical employer universe; mapping pending
+FedEx,,unknown,,true,Not Workday/Oracle CX: fedex.wd1.myworkdayjobs.com tenant exists but the US external site slug was not confirmed (FXO_External returned 0 jobs; FXE-Canada_External_Career_Site is Canada-only); careers.fedex.com is a Phenom front end. Recheck with the correct site slug.. Left unknown.
+UPS,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (jobs-ups.com). Left unknown."
+DHL,,unknown,,true,Canonical employer universe; mapping pending
+Maersk,,unknown,,true,Canonical employer universe; mapping pending
+XPO,https://xpo.wd5.myworkdayjobs.com/External,workday,xpo|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+C.H. Robinson,https://chrobinson.wd1.myworkdayjobs.com/External,workday,chrobinson|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+J.B. Hunt,https://jbhunt.wd1.myworkdayjobs.com/External,workday,jbhunt|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Ryder,https://ryder.wd1.myworkdayjobs.com/External,workday,ryder|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Penske,,unknown,,true,Canonical employer universe; mapping pending
+Flexport,,unknown,,true,Canonical employer universe; mapping pending
+GXO Logistics,https://gxo.wd5.myworkdayjobs.com/External,workday,gxo|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Lineage Logistics,,unknown,,true,Canonical employer universe; mapping pending
+Expeditors,,unknown,,true,Canonical employer universe; mapping pending
+Schneider National,,unknown,,true,Canonical employer universe; mapping pending
+Union Pacific,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): custom (up.jobs). Left unknown."
+BNSF/Berkshire Hathaway,,unknown,,true,Canonical employer universe; mapping pending
+CSX,https://csx.wd1.myworkdayjobs.com/External,workday,csx|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Norfolk Southern,https://nscorp.wd1.myworkdayjobs.com/External,workday,nscorp|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Canadian Pacific Kansas City,,unknown,,true,Canonical employer universe; mapping pending
+Amazon Logistics,,unknown,,false,"Alias of ""Amazon"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Walmart Supply Chain,,unknown,,false,"Alias of ""Walmart"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Target Supply Chain Technology,https://target.wd5.myworkdayjobs.com/targetcareers,workday,target|targetcareers,false,"Alias of ""Target"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+ArcBest,,unknown,,true,Canonical employer universe; mapping pending
+Old Dominion Freight Line,,unknown,,true,Canonical employer universe; mapping pending
+Saia,,unknown,,true,Canonical employer universe; mapping pending
+Knight-Swift Transportation,,unknown,,true,Canonical employer universe; mapping pending
+Hub Group,,unknown,,true,Canonical employer universe; mapping pending
+Echo Global Logistics,,unknown,,true,Canonical employer universe; mapping pending
+Americold,,unknown,,true,Canonical employer universe; mapping pending
+Uber Freight,,unknown,,false,"Alias of ""Uber""; mapping follows that row. Disabled to avoid duplicate collection."
+ShipBob,,unknown,,true,Canonical employer universe; mapping pending
+Flexe,,unknown,,true,Canonical employer universe; mapping pending
+Stord,,unknown,,true,Canonical employer universe; mapping pending
+Shell USA,https://shell.wd3.myworkdayjobs.com/ShellCareers,workday,shell|ShellCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+BP,https://bp.wd3.myworkdayjobs.com/bpCareers,workday,bp|bpCareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Marathon Petroleum,,unknown,,true,Canonical employer universe; mapping pending
+Valero,,unknown,,true,Canonical employer universe; mapping pending
+Occidental/Oxy,,unknown,,false,"Alias of ""Occidental Petroleum/Oxy"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Devon Energy,,unknown,,true,Canonical employer universe; mapping pending
+EOG Resources,,unknown,,true,Canonical employer universe; mapping pending
+Hess/Chevron,https://chevron.wd5.myworkdayjobs.com/jobs,workday,chevron|jobs,false,"Alias of ""Chevron"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Kinder Morgan,,unknown,,true,Canonical employer universe; mapping pending
+Williams Companies,,unknown,,true,Canonical employer universe; mapping pending
+Enterprise Products,,unknown,,true,Canonical employer universe; mapping pending
+Energy Transfer,,unknown,,true,Canonical employer universe; mapping pending
+NextEra Energy,,unknown,,true,Not Workday/Oracle CX: no Workday portal found 2026-10-05; careers.nexteraenergy.com runs its own ATS. Left unknown.
+Duke Energy,https://dukeenergy.wd1.myworkdayjobs.com/Search,workday,dukeenergy|Search,true,Verified Workday portal (2026-10-05) via live job URLs. Covers Piedmont Natural Gas too.
+Southern Company,https://southernco.wd1.myworkdayjobs.com/External,workday,southernco|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Dominion Energy,https://dominionenergy.wd1.myworkdayjobs.com/careers,workday,dominionenergy|careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Exelon,https://exelon.wd1.myworkdayjobs.com/exelonjobs,workday,exelon|exelonjobs,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Entergy,https://entergy.wd5.myworkdayjobs.com/External,workday,entergy|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+American Electric Power,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+PG&E,,unknown,,true,Canonical employer universe; mapping pending
+Sempra,,unknown,,true,Canonical employer universe; mapping pending
+Xcel Energy,https://xcelenergy.wd1.myworkdayjobs.com/External,workday,xcelenergy|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Vistra,,unknown,,true,Canonical employer universe; mapping pending
+Constellation Energy,https://constellation.wd1.myworkdayjobs.com/careers,workday,constellation|careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+National Grid,,unknown,,true,Canonical employer universe; mapping pending
+GE Vernova,https://gevernova.wd5.myworkdayjobs.com/GE_Vernova_External,workday,gevernova|GE_Vernova_External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Siemens Energy,,unknown,,true,Not Workday/Oracle CX: SAP SuccessFactors. Left unknown.
+Schneider Electric,,unknown,,true,Canonical employer universe; mapping pending
+Honeywell,https://ibqbjb.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1,oracle_cx,CX_1,true,Verified Oracle Recruiting Cloud portal (2026-10-05) via live job URLs. careers.honeywell.com is a vanity domain. Honeywell Aerospace has a separate tenant (see its row).
+Siemens,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SAP SuccessFactors. Left unknown."
+ABB,,unknown,,true,Canonical employer universe; mapping pending
+Emerson,https://emerson.wd5.myworkdayjobs.com/Careers,workday,emerson|Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Rockwell Automation,https://rockwellautomation.wd1.myworkdayjobs.com/External_Rockwell_Automation,workday,rockwellautomation|External_Rockwell_Automation,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Eaton,https://eaton.wd1.myworkdayjobs.com/EatonCareers,workday,eaton|EatonCareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+3M,https://3m.wd1.myworkdayjobs.com/Search,workday,3m|Search,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+GE Aerospace,https://ge.wd5.myworkdayjobs.com/GE_ExternalSite,workday,ge|GE_ExternalSite,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+Johnson Controls,https://jci.wd5.myworkdayjobs.com/JCI,workday,jci|JCI,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Carrier,https://carrier.wd5.myworkdayjobs.com/jobs,workday,carrier|jobs,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Trane Technologies,https://tranetechnologies.wd5.myworkdayjobs.com/TraneTechnologies,workday,tranetechnologies|TraneTechnologies,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Deere & Company,,unknown,,false,"Alias of ""John Deere"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Parker Hannifin,https://parker.wd5.myworkdayjobs.com/External,workday,parker|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Illinois Tool Works,,unknown,,true,Canonical employer universe; mapping pending
+Stanley Black & Decker,https://sbdinc.wd1.myworkdayjobs.com/External,workday,sbdinc|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Whirlpool,https://whirlpool.wd5.myworkdayjobs.com/Whirlpool_Careers,workday,whirlpool|Whirlpool_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Corning,https://corning.wd1.myworkdayjobs.com/Corning,workday,corning|Corning,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Dow,https://dow.wd1.myworkdayjobs.com/ExternalCareers,workday,dow|ExternalCareers,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. "
+DuPont,https://dupont.wd1.myworkdayjobs.com/DuPont_Careers,workday,dupont|DuPont_Careers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+PPG,https://ppg.wd5.myworkdayjobs.com/PPG,workday,ppg|PPG,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Sherwin-Williams,https://sherwin.wd1.myworkdayjobs.com/External,workday,sherwin|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Linde,https://linde.wd3.myworkdayjobs.com/Linde,workday,linde|Linde,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Air Products,https://airproducts.wd5.myworkdayjobs.com/APcareers,workday,airproducts|APcareers,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Saint-Gobain,,unknown,,true,Canonical employer universe; mapping pending
+Owens Corning,https://owenscorning.wd5.myworkdayjobs.com/External,workday,owenscorning|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Goodyear,https://goodyear.wd5.myworkdayjobs.com/External,workday,goodyear|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Michelin North America,,unknown,,true,Canonical employer universe; mapping pending
+CoStar Group,https://costar.wd1.myworkdayjobs.com/CoStarCareers,workday,costar|CoStarCareers,false,"Alias of ""CoStar"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Apartments.com,https://costar.wd1.myworkdayjobs.com/CoStarCareers,workday,costar|CoStarCareers,false,"Alias of ""CoStar"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Cushman & Wakefield,https://cushwake.wd1.myworkdayjobs.com/External,workday,cushwake|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Prologis,https://prologis.wd1.myworkdayjobs.com/External,workday,prologis|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Opendoor,,unknown,,true,Canonical employer universe; mapping pending
+Compass,,unknown,,true,Canonical employer universe; mapping pending
+Blackstone Real Estate,https://blackstone.wd1.myworkdayjobs.com/Blackstone_Careers,workday,blackstone|Blackstone_Careers,false,"Alias of ""Blackstone"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Brookfield,https://brookfield.wd3.myworkdayjobs.com/External,workday,brookfield|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Invitation Homes,,unknown,,true,Canonical employer universe; mapping pending
+CoreLogic/Cotality,,unknown,,true,Canonical employer universe; mapping pending
+Roofstock,,unknown,,true,Canonical employer universe; mapping pending
+Rent,,unknown,,true,Canonical employer universe; mapping pending
+SmartRent,,unknown,,true,Canonical employer universe; mapping pending
+Anywhere Real Estate,,unknown,,true,Canonical employer universe; mapping pending
+Anywhere Technology,,unknown,,false,"Alias of ""Anywhere Real Estate"" (brand/division of same employer); mapping follows that row. Disabled to avoid duplicate collection."
+Better.com,,unknown,,true,Canonical employer universe; mapping pending
+RELX,https://relx.wd3.myworkdayjobs.com/relx,workday,relx|relx,true,"Knowledge-based mapping, NOT live-verified; run verify_employers.py before trusting. LexisNexis and Elsevier rows are aliases."
+LexisNexis,https://relx.wd3.myworkdayjobs.com/relx,workday,relx|relx,false,"Alias of ""RELX"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Elsevier,https://relx.wd3.myworkdayjobs.com/relx,workday,relx|relx,false,"Alias of ""RELX"" portal (same ATS tenant/site). Disabled to avoid duplicate collection; use as search/title alias only."
+Gartner,https://gartner.wd5.myworkdayjobs.com/EXT,workday,gartner|EXT,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Nielsen,https://nielsen.wd1.myworkdayjobs.com/External,workday,nielsen|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Experian,,unknown,,true,"Not Workday/Oracle CX (knowledge-based, not live-verified): SmartRecruiters. Left unknown."
+Equifax,https://equifax.wd5.myworkdayjobs.com/External,workday,equifax|External,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+TransUnion,https://transunion.wd5.myworkdayjobs.com/TransUnion,workday,transunion|TransUnion,false,"LOW-CONFIDENCE guess (tenant/site from memory, may be wrong). Disabled until verify_employers.py passes it. "
+Dun & Bradstreet,https://dnb.wd1.myworkdayjobs.com/Careers,workday,dnb|Careers,true,"Verified Workday portal (2026-10-05). D&B went private (Clearlake, 2025); recheck portal if counts drop to zero."
+Verisk,https://fa-ewmy-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1,oracle_cx,CX_1,true,Verified Oracle Recruiting Cloud portal (2026-10-05). Host fa-ewmy-saasfaprod1.fa.ocs.oraclecloud.com; postings dated Oct 2026 confirm active. A legacy careers.smartrecruiters.com/Verisk board also exists; ignore it.
+CoStar,https://costar.wd1.myworkdayjobs.com/CoStarCareers,workday,costar|CoStarCareers,true,Verified Workday portal (2026-10-05). Separate costar_campus and CoStarCareersEurope sites exist on same tenant; do not collect them.
+Wolters Kluwer,https://wk.wd3.myworkdayjobs.com/External,workday,wk|External,true,Verified Workday portal (2026-10-05). 
+Pearson,https://hccz.fa.em3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2,oracle_cx,CX_2,true,Verified Oracle Recruiting Cloud portal (2026-10-05). Host hccz.fa.em3.oraclecloud.com (EMEA region host). pearson.jobs is a DirectEmployers front end. Third-party guides wrongly claim Workday; live job URLs confirm Oracle CX.
+Instructure,https://www.instructure.com/about/careers,unknown,,true,No Workday/Oracle CX portal found. instructure.com/about/careers lists openings natively (41 as of Oct 2026); ATS not verified.
+Coursera,https://careers.coursera.com/,unknown,,true,No Workday/Oracle CX portal found. ATS not verified in search.
+Chegg,https://osv-chegg.wd5.myworkdayjobs.com/Chegg,workday,osv-chegg|Chegg,true,"Verified Workday portal (2026-10-05). Tenant is OneSource Virtual-hosted (""osv-chegg"" prefix); CXS path is /wday/cxs/osv-chegg/Chegg/jobs. Smaller headcount post-2025 restructuring."
+PowerSchool,https://www.powerschool.com/company/careers/,unknown,,true,No Workday/Oracle CX portal found. ATS not verified in search.
+Anthology/Blackboard,https://www.blackboard.com/,unknown,,true,No Workday/Oracle CX portal found. Anthology emerged from Chapter 11 in Mar 2026 and rebranded as Blackboard; Enterprise Ops business sold to Ellucian. Company universe entry may need renaming; ATS not verified.
+Renaissance Learning,https://www.renaissance.com/careers/,unknown,,true,"Not Workday/Oracle CX. Greenhouse board slug ""renaissancelearning-nam"" (job-boards.greenhouse.io/renaissancelearning-nam)."
+Udemy,https://about.udemy.com/careers/,unknown,,true,No public Workday/Oracle CX job portal found (Udemy uses Workday HCM internally but careers site is not a myworkdayjobs portal). ATS not verified in search.
+Pluralsight,https://pluralsight.wd1.myworkdayjobs.com/Careers,workday,pluralsight|Careers,true,Verified Workday portal (2026-10-05). 
+Guild,https://www.guild.com/careers,unknown,,true,No Workday/Oracle CX portal found. ATS not verified in search.
+Handshake,https://joinhandshake.com/careers/,unknown,,true,"No Workday/Oracle CX portal found. Own-hiring ATS not verified in search (Handshake integrates with Greenhouse as a vendor, which is not evidence of its own ATS)."
+Boeing,https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS,workday,boeing|EXTERNAL_CAREERS,true,Verified Workday portal (2026-10-05). jobs.boeing.com is the vanity front end.
+Collins Aerospace/RTX,https://globalhr.wd5.myworkdayjobs.com/REC_RTX_Ext_Gateway,workday,globalhr|REC_RTX_Ext_Gateway,false,Alias of RTX/Raytheon portal (same Workday tenant/site). Disabled to avoid duplicate collection; use as a search/title alias only.
+Honeywell Aerospace,https://icfcjb.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/Aerospace,oracle_cx,Aerospace,true,"Verified Oracle Recruiting Cloud portal (2026-10-05). Honeywell Aerospace Inc. has its own Oracle tenant (icfcjb) separate from Honeywell parent (ibqbjb, site CX_1). NOTE: site code is ""Aerospace"", not CX_NNN; confirm collector does not assume CX_ prefix. A second site ""CX"" also appears on this tenant."
+Gulfstream,https://careers.gulfstream.com/,unknown,,true,Not Workday/Oracle CX. careers.gulfstream.com runs on SAP SuccessFactors (not the General Dynamics tenant).
+Textron Aviation,https://careers.textron.com/,unknown,,true,"Not Workday/Oracle CX. Textron (incl. Textron Aviation) applies via Oracle Taleo (textron.taleo.net), which is not the Oracle CX API."
+SpaceX,https://www.spacex.com/careers/,unknown,,true,"Not Workday/Oracle CX. Greenhouse board slug ""spacex"" (job-boards.greenhouse.io/spacex); spacex.com/careers is a custom front end."
+Blue Origin,https://blueorigin.wd5.myworkdayjobs.com/BlueOrigin,workday,blueorigin|BlueOrigin,true,Verified Workday portal (2026-10-05). 
+Northrop Grumman,https://ngc.wd1.myworkdayjobs.com/Northrop_Grumman_External_Site,workday,ngc|Northrop_Grumman_External_Site,true,Verified Workday portal (2026-10-05). Separate Northrop_Grumman_Contingent_Worker_Site exists on same tenant; do not collect it.
+Lockheed Martin,https://www.lockheedmartinjobs.com/,unknown,,true,"Not Workday/Oracle CX. lockheedmartinjobs.com runs on Radancy/TalentBrew; a 2026 LM posting references an in-progress ATS replacement, so recheck later."
+RTX/Raytheon,https://globalhr.wd5.myworkdayjobs.com/REC_RTX_Ext_Gateway,workday,globalhr|REC_RTX_Ext_Gateway,true,"Verified Workday portal (2026-10-05). Single tenant serves Raytheon, Collins Aerospace and Pratt & Whitney; careers.rtx.com is a Phenom front end. Collins Aerospace/RTX is an alias of this portal, not a separate collector."
