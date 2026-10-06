@@ -1,0 +1,54 @@
+name: Discover All Employer ATS
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+          pip install requests
+
+      - name: Run discovery self-test
+        run: python src/discover_employers.py --self-test
+
+      - name: Confirm previous verification report exists
+        run: |
+          test -f output/employer_verification.json
+          echo "Found output/employer_verification.json"
+
+      - name: Discover ATS for all pending and failed employers
+        run: |
+          python src/discover_employers.py             config/employers.csv             --verification output/employer_verification.json             --include-failed             --probe-misses             --write output/employers_discovered.csv             --workers 6
+
+      - name: Verify all discovered Workday and Oracle mappings
+        run: |
+          python src/verify_employers.py             --input output/employers_discovered.csv             --output-dir output/discovery_verification             --scope candidates             --workers 6
+
+      - name: Upload discovery results
+        uses: actions/upload-artifact@v4
+        with:
+          name: employer-discovery-results
+          path: |
+            output/employers_discovered.csv
+            output/discovery_verification/employer_verification.json
+            output/discovery_verification/employer_verification.csv
+          retention-days: 7
