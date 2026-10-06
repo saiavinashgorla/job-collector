@@ -21,3 +21,11 @@ jobs:
 
       - name: Run discovery self-test
         run: python src/discover_employers.py --self-test
+
+      - name: Dry run discovery on 20 employers
+        run: |
+          python src/discover_employers.py \
+            config/employers.csv \
+            --verification output/employer_verification.json \
+            --include-failed \
+            --limit 20
