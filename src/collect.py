@@ -2,6 +2,7 @@ import csv
 import json
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -29,6 +30,13 @@ WORKDAY_PAGE_SIZE = 20
 WORKDAY_MAX_PAGES_PER_TERM = 10
 
 GREENHOUSE_API_ROOT = "https://boards-api.greenhouse.io/v1/boards"
+
+# Concurrency tuning. These values keep the collector fast without creating
+# an excessive burst of requests against any one ATS.
+EMPLOYER_WORKERS = 4
+WORKDAY_SEARCH_WORKERS = 4
+WORKDAY_DETAIL_WORKERS = 8
+ORACLE_SEARCH_WORKERS = 4
 
 REQUEST_TIMEOUT_SECONDS = 30
 DETAIL_RETRY_STATUSES = {429, 500, 502, 503, 504}
@@ -215,6 +223,57 @@ def build_oracle_job_url(employer, job_id):
     )
 
 
+def oracle_search_keyword(employer, keyword):
+    site_number = employer["ats_identifier"]
+    api_url = oracle_api_url(employer)
+
+    finder = (
+        "findReqs;"
+        f"siteNumber={site_number},"
+        f"keyword={keyword},"
+        "limit=50,"
+        "offset=0,"
+        "sortBy=POSTING_DATES_DESC"
+    )
+
+    params = {
+        "onlyData": "true",
+        "expand": "requisitionList",
+        "finder": finder,
+    }
+
+    try:
+        response = requests.get(
+            api_url,
+            headers=HEADERS,
+            params=params,
+            timeout=REQUEST_TIMEOUT_SECONDS,
+        )
+    except requests.RequestException as exc:
+        return keyword, [], f"request error: {exc}"
+
+    if response.status_code >= 400:
+        return (
+            keyword,
+            [],
+            f"HTTP {response.status_code}: "
+            f"{response.text[:180]}",
+        )
+
+    try:
+        data = response.json()
+    except ValueError:
+        return keyword, [], "response was not JSON"
+
+    requisitions = []
+
+    for parent in data.get("items", []):
+        for req in parent.get("requisitionList") or []:
+            requisitions.append(req)
+
+    return keyword, requisitions, None
+
+
 def collect_oracle_cx(employer):
     site_number = employer["ats_identifier"]
 
@@ -222,156 +281,115 @@ def collect_oracle_cx(employer):
         print("      ERROR: missing Oracle site number")
         return []
 
-    api_url = oracle_api_url(employer)
     collected = {}
 
-    for keyword in SEARCH_TERMS:
-        finder = (
-            "findReqs;"
-            f"siteNumber={site_number},"
-            f"keyword={keyword},"
-            "limit=50,"
-            "offset=0,"
-            "sortBy=POSTING_DATES_DESC"
+    with ThreadPoolExecutor(
+        max_workers=min(
+            ORACLE_SEARCH_WORKERS,
+            len(SEARCH_TERMS),
         )
-
-        params = {
-            "onlyData": "true",
-            "expand": "requisitionList",
-            "finder": finder,
-        }
-
-        print(f"      Oracle search: {keyword}")
-
-        try:
-            response = requests.get(
-                api_url,
-                headers=HEADERS,
-                params=params,
-                timeout=REQUEST_TIMEOUT_SECONDS,
+    ) as executor:
+        futures = [
+            executor.submit(
+                oracle_search_keyword,
+                employer,
+                keyword,
             )
+            for keyword in SEARCH_TERMS
+        ]
 
-            print(
-                f"        HTTP status: "
-                f"{response.status_code}"
-            )
+        for future in as_completed(futures):
+            keyword, requisitions, error = future.result()
 
-            if response.status_code >= 400:
+            if error:
                 print(
-                    "        API failed: "
-                    + response.text[:300]
+                    f"      Oracle '{keyword}' failed: {error}"
                 )
                 continue
 
-            try:
-                data = response.json()
-            except ValueError:
-                print(
-                    "        ERROR: response was not JSON"
+            for req in requisitions:
+                title = (
+                    req.get("Title") or ""
+                ).strip()
+
+                if not title:
+                    continue
+
+                if not RELEVANT_TITLE_PATTERN.search(title):
+                    continue
+
+                country = (
+                    req.get("PrimaryLocationCountry")
+                    or ""
+                ).strip()
+
+                if (
+                    country
+                    and country.upper()
+                    not in {"US", "USA"}
+                ):
+                    continue
+
+                job_id = str(
+                    req.get("Id")
+                    or req.get("RequisitionId")
+                    or ""
+                ).strip()
+
+                if not job_id:
+                    continue
+
+                job = {
+                    "company": employer["company"],
+                    "title": title,
+                    "job_id": job_id,
+                    "requisition_number": (
+                        req.get("RequisitionNumber")
+                    ),
+                    "location": req.get(
+                        "PrimaryLocation"
+                    ),
+                    "country": country or None,
+                    "posted_date": req.get(
+                        "PostedDate"
+                    ),
+                    "posted_date_text": None,
+                    "posting_end_date": req.get(
+                        "PostingEndDate"
+                    ),
+                    "job_type": req.get(
+                        "JobType"
+                    ),
+                    "job_schedule": req.get(
+                        "JobSchedule"
+                    ),
+                    "job_function": req.get(
+                        "JobFunction"
+                    ),
+                    "organization": req.get(
+                        "Organization"
+                    ),
+                    "short_description": req.get(
+                        "ShortDescriptionStr"
+                    ),
+                    "url": build_oracle_job_url(
+                        employer,
+                        job_id,
+                    ),
+                    "ats_type": "oracle_cx",
+                    "source": (
+                        "official_oracle_recruiting_api"
+                    ),
+                    "matched_keyword": keyword,
+                }
+
+                key = (
+                    employer["company"].lower(),
+                    job_id.lower(),
                 )
-                continue
 
-            parents = data.get("items", [])
-
-            for parent in parents:
-                requisitions = (
-                    parent.get("requisitionList")
-                    or []
-                )
-
-                for req in requisitions:
-                    title = (
-                        req.get("Title") or ""
-                    ).strip()
-
-                    if not title:
-                        continue
-
-                    if not RELEVANT_TITLE_PATTERN.search(
-                        title
-                    ):
-                        continue
-
-                    country = (
-                        req.get(
-                            "PrimaryLocationCountry"
-                        )
-                        or ""
-                    ).strip()
-
-                    if (
-                        country
-                        and country.upper()
-                        not in {"US", "USA"}
-                    ):
-                        continue
-
-                    job_id = str(
-                        req.get("Id")
-                        or req.get("RequisitionId")
-                        or ""
-                    ).strip()
-
-                    if not job_id:
-                        continue
-
-                    job = {
-                        "company": employer["company"],
-                        "title": title,
-                        "job_id": job_id,
-                        "requisition_number": (
-                            req.get(
-                                "RequisitionNumber"
-                            )
-                        ),
-                        "location": req.get(
-                            "PrimaryLocation"
-                        ),
-                        "country": country or None,
-                        "posted_date": req.get(
-                            "PostedDate"
-                        ),
-                        "posted_date_text": None,
-                        "posting_end_date": req.get(
-                            "PostingEndDate"
-                        ),
-                        "job_type": req.get(
-                            "JobType"
-                        ),
-                        "job_schedule": req.get(
-                            "JobSchedule"
-                        ),
-                        "job_function": req.get(
-                            "JobFunction"
-                        ),
-                        "organization": req.get(
-                            "Organization"
-                        ),
-                        "short_description": req.get(
-                            "ShortDescriptionStr"
-                        ),
-                        "url": build_oracle_job_url(
-                            employer,
-                            job_id,
-                        ),
-                        "ats_type": "oracle_cx",
-                        "source": (
-                            "official_oracle_recruiting_api"
-                        ),
-                        "matched_keyword": keyword,
-                    }
-
-                    key = (
-                        employer["company"].lower(),
-                        job_id.lower(),
-                    )
-
-                    collected[key] = job
-
-        except requests.RequestException as exc:
-            print(
-                f"        Oracle request error: {exc}"
-            )
+                # Keep the first copy. Keyword searches overlap heavily.
+                collected.setdefault(key, job)
 
     print(
         f"      Unique Oracle jobs: "
@@ -820,6 +838,240 @@ def workday_display_location(
     return posting.get("locationsText")
 
 
+def workday_search_keyword(
+    employer,
+    keyword,
+):
+    api_url = workday_api_url(employer)
+
+    workday_headers = dict(HEADERS)
+    workday_headers["Content-Type"] = (
+        "application/json"
+    )
+    workday_headers["Referer"] = (
+        employer["careers_url"]
+    )
+
+    postings_by_path = {}
+    offset = 0
+    expected_total = None
+    pages_fetched = 0
+    rows_seen = 0
+    error = None
+
+    for page_number in range(
+        1,
+        WORKDAY_MAX_PAGES_PER_TERM + 1,
+    ):
+        payload = {
+            "appliedFacets": {},
+            "limit": WORKDAY_PAGE_SIZE,
+            "offset": offset,
+            "searchText": keyword,
+        }
+
+        response = None
+
+        for attempt in range(1, 4):
+            try:
+                response = requests.post(
+                    api_url,
+                    headers=workday_headers,
+                    json=payload,
+                    timeout=REQUEST_TIMEOUT_SECONDS,
+                )
+            except requests.RequestException as exc:
+                if attempt == 3:
+                    error = f"request error: {exc}"
+                else:
+                    time.sleep(0.4 * attempt)
+                continue
+
+            if (
+                response.status_code
+                in DETAIL_RETRY_STATUSES
+                and attempt < 3
+            ):
+                time.sleep(0.4 * attempt)
+                continue
+
+            break
+
+        if response is None:
+            break
+
+        if response.status_code >= 400:
+            error = (
+                f"HTTP {response.status_code}: "
+                f"{response.text[:180]}"
+            )
+            break
+
+        try:
+            data = response.json()
+        except ValueError:
+            error = "response was not JSON"
+            break
+
+        postings = data.get("jobPostings") or []
+        pages_fetched += 1
+        rows_seen += len(postings)
+
+        if page_number == 1:
+            raw_total = data.get("total")
+            if isinstance(raw_total, int):
+                expected_total = raw_total
+
+        if not postings:
+            break
+
+        for posting in postings:
+            title = (
+                posting.get("title")
+                or ""
+            ).strip()
+
+            external_path = (
+                posting.get("externalPath")
+                or ""
+            ).strip()
+
+            if not title or not external_path:
+                continue
+
+            if not RELEVANT_TITLE_PATTERN.search(title):
+                continue
+
+            postings_by_path.setdefault(
+                external_path,
+                {
+                    "posting": posting,
+                    "matched_keyword": keyword,
+                },
+            )
+
+        offset += len(postings)
+
+        if (
+            expected_total is not None
+            and offset >= expected_total
+        ):
+            break
+
+        if len(postings) < WORKDAY_PAGE_SIZE:
+            break
+
+    return {
+        "keyword": keyword,
+        "postings": postings_by_path,
+        "pages_fetched": pages_fetched,
+        "rows_seen": rows_seen,
+        "expected_total": expected_total,
+        "error": error,
+    }
+
+
+def workday_build_job(
+    employer,
+    site,
+    run_time,
+    external_path,
+    posting_record,
+    job_info,
+):
+    if not job_info:
+        return None, "unverified"
+
+    can_apply = job_info.get("canApply")
+
+    if can_apply is False:
+        return None, "closed"
+
+    is_us, us_locations = (
+        workday_detail_is_us(job_info)
+    )
+
+    if not is_us:
+        return None, "non_us"
+
+    posting = posting_record["posting"]
+
+    job_id = str(
+        job_info.get("jobReqId")
+        or workday_job_id(external_path)
+        or ""
+    ).strip()
+
+    if not job_id:
+        return None, "missing_id"
+
+    posted_text = (
+        job_info.get("postedOn")
+        or posting.get("postedOn")
+    )
+
+    posted_date = (
+        job_info.get("startDate")
+        or normalize_workday_posted_date(
+            posted_text,
+            run_time,
+        )
+    )
+
+    job_url = (
+        job_info.get("externalUrl")
+        or workday_public_job_url(
+            employer,
+            site,
+            external_path,
+        )
+    )
+
+    location = workday_display_location(
+        job_info,
+        posting,
+        us_locations,
+    )
+
+    job = {
+        "company": employer["company"],
+        "title": (
+            job_info.get("title")
+            or posting.get("title")
+        ),
+        "job_id": job_id,
+        "requisition_number": job_id,
+        "location": location,
+        "locations_summary": posting.get(
+            "locationsText"
+        ),
+        "country": "US",
+        "country_verified": True,
+        "posted_date": posted_date,
+        "posted_date_text": posted_text,
+        "posting_end_date": None,
+        "job_type": job_info.get(
+            "timeType"
+        ),
+        "job_schedule": None,
+        "job_function": None,
+        "organization": None,
+        "remote_type": job_info.get(
+            "remoteType"
+        ),
+        "can_apply": can_apply,
+        "short_description": None,
+        "url": job_url,
+        "ats_type": "workday",
+        "source": "official_workday_api",
+        "matched_keyword": (
+            posting_record["matched_keyword"]
+        ),
+    }
+
+    return job, "kept"
+
+
 def collect_workday(employer, run_time):
     tenant, site = parse_workday_identifier(
         employer
@@ -832,265 +1084,148 @@ def collect_workday(employer, run_time):
         )
         return []
 
-    api_url = workday_api_url(employer)
+    print(
+        f"      Workday {tenant}|{site}"
+    )
 
-    print(f"      Tenant: {tenant}")
-    print(f"      Site: {site}")
-    print(f"      API: {api_url}")
+    # Phase 1: search all keywords first, in parallel. We intentionally DO NOT
+    # fetch job details during pagination. This prevents the same Workday job
+    # from being fetched repeatedly when it matches several keywords.
+    candidate_postings = {}
+    search_stats = []
 
-    collected = {}
+    with ThreadPoolExecutor(
+        max_workers=min(
+            WORKDAY_SEARCH_WORKERS,
+            len(SEARCH_TERMS),
+        )
+    ) as executor:
+        futures = [
+            executor.submit(
+                workday_search_keyword,
+                employer,
+                keyword,
+            )
+            for keyword in SEARCH_TERMS
+        ]
+
+        for future in as_completed(futures):
+            result = future.result()
+            search_stats.append(result)
+
+            if result["error"]:
+                print(
+                    f"      Workday '{result['keyword']}' "
+                    f"warning: {result['error']}"
+                )
+
+            for external_path, record in (
+                result["postings"].items()
+            ):
+                candidate_postings.setdefault(
+                    external_path,
+                    record,
+                )
+
+    pages_total = sum(
+        item["pages_fetched"]
+        for item in search_stats
+    )
+    rows_total = sum(
+        item["rows_seen"]
+        for item in search_stats
+    )
+
+    print(
+        f"      Search pages: {pages_total}; "
+        f"rows scanned: {rows_total}; "
+        f"unique title matches: "
+        f"{len(candidate_postings)}"
+    )
+
+    if not candidate_postings:
+        return []
+
+    # Phase 2: fetch each unique detail exactly once, concurrently.
     detail_cache = {}
 
+    with ThreadPoolExecutor(
+        max_workers=min(
+            WORKDAY_DETAIL_WORKERS,
+            len(candidate_postings),
+        )
+    ) as executor:
+        future_to_path = {
+            executor.submit(
+                fetch_workday_detail,
+                employer,
+                external_path,
+            ): external_path
+            for external_path in candidate_postings
+        }
+
+        for future in as_completed(
+            future_to_path
+        ):
+            external_path = future_to_path[
+                future
+            ]
+
+            try:
+                detail_cache[external_path] = (
+                    future.result()
+                )
+            except Exception as exc:
+                print(
+                    "      Workday detail worker error "
+                    f"for {external_path}: {exc}"
+                )
+                detail_cache[external_path] = None
+
+    collected = {}
     skipped_non_us = 0
     skipped_unverified = 0
+    skipped_closed = 0
 
-    workday_headers = dict(HEADERS)
-    workday_headers["Content-Type"] = (
-        "application/json"
-    )
-    workday_headers["Referer"] = (
-        employer["careers_url"]
-    )
-
-    for keyword in SEARCH_TERMS:
-        print(
-            f"      Workday search: {keyword}"
+    for external_path, posting_record in (
+        candidate_postings.items()
+    ):
+        job, disposition = workday_build_job(
+            employer,
+            site,
+            run_time,
+            external_path,
+            posting_record,
+            detail_cache.get(external_path),
         )
 
-        offset = 0
-        expected_total = None
+        if disposition == "non_us":
+            skipped_non_us += 1
+            continue
 
-        for page_number in range(
-            1,
-            WORKDAY_MAX_PAGES_PER_TERM + 1,
-        ):
-            payload = {
-                "appliedFacets": {},
-                "limit": WORKDAY_PAGE_SIZE,
-                "offset": offset,
-                "searchText": keyword,
-            }
+        if disposition == "unverified":
+            skipped_unverified += 1
+            continue
 
-            try:
-                response = requests.post(
-                    api_url,
-                    headers=workday_headers,
-                    json=payload,
-                    timeout=REQUEST_TIMEOUT_SECONDS,
-                )
+        if disposition == "closed":
+            skipped_closed += 1
+            continue
 
-            except requests.RequestException as exc:
-                print(
-                    f"        Request error: {exc}"
-                )
-                break
+        if not job:
+            continue
 
-            print(
-                f"        Page {page_number} "
-                f"HTTP {response.status_code}"
-            )
-
-            if response.status_code >= 400:
-                print(
-                    "        API failed: "
-                    + response.text[:300]
-                )
-                break
-
-            try:
-                data = response.json()
-            except ValueError:
-                print(
-                    "        ERROR: response was not JSON"
-                )
-                break
-
-            postings = (
-                data.get("jobPostings")
-                or []
-            )
-
-            if page_number == 1:
-                raw_total = data.get("total")
-                if isinstance(raw_total, int):
-                    expected_total = raw_total
-
-            print(
-                f"        Rows: {len(postings)} "
-                f"Total(first page): "
-                f"{expected_total}"
-            )
-
-            if not postings:
-                break
-
-            for posting in postings:
-                title = (
-                    posting.get("title")
-                    or ""
-                ).strip()
-
-                external_path = (
-                    posting.get(
-                        "externalPath"
-                    )
-                    or ""
-                ).strip()
-
-                if not title or not external_path:
-                    continue
-
-                if not RELEVANT_TITLE_PATTERN.search(
-                    title
-                ):
-                    continue
-
-                if external_path in detail_cache:
-                    job_info = detail_cache[
-                        external_path
-                    ]
-                else:
-                    job_info = fetch_workday_detail(
-                        employer,
-                        external_path,
-                    )
-                    detail_cache[
-                        external_path
-                    ] = job_info
-
-                if not job_info:
-                    skipped_unverified += 1
-                    continue
-
-                can_apply = job_info.get(
-                    "canApply"
-                )
-
-                if can_apply is False:
-                    continue
-
-                is_us, us_locations = (
-                    workday_detail_is_us(
-                        job_info
-                    )
-                )
-
-                if not is_us:
-                    skipped_non_us += 1
-                    continue
-
-                job_id = str(
-                    job_info.get("jobReqId")
-                    or workday_job_id(
-                        external_path
-                    )
-                    or ""
-                ).strip()
-
-                if not job_id:
-                    continue
-
-                posted_text = (
-                    job_info.get("postedOn")
-                    or posting.get("postedOn")
-                )
-
-                posted_date = (
-                    job_info.get("startDate")
-                    or normalize_workday_posted_date(
-                        posted_text,
-                        run_time,
-                    )
-                )
-
-                job_url = (
-                    job_info.get("externalUrl")
-                    or workday_public_job_url(
-                        employer,
-                        site,
-                        external_path,
-                    )
-                )
-
-                location = (
-                    workday_display_location(
-                        job_info,
-                        posting,
-                        us_locations,
-                    )
-                )
-
-                job = {
-                    "company": employer["company"],
-                    "title": (
-                        job_info.get("title")
-                        or title
-                    ),
-                    "job_id": job_id,
-                    "requisition_number": job_id,
-                    "location": location,
-                    "locations_summary": posting.get(
-                        "locationsText"
-                    ),
-                    "country": "US",
-                    "country_verified": True,
-                    "posted_date": posted_date,
-                    "posted_date_text": posted_text,
-                    "posting_end_date": None,
-                    "job_type": job_info.get(
-                        "timeType"
-                    ),
-                    "job_schedule": None,
-                    "job_function": None,
-                    "organization": None,
-                    "remote_type": job_info.get(
-                        "remoteType"
-                    ),
-                    "can_apply": can_apply,
-                    "short_description": None,
-                    "url": job_url,
-                    "ats_type": "workday",
-                    "source": (
-                        "official_workday_api"
-                    ),
-                    "matched_keyword": keyword,
-                }
-
-                key = (
-                    employer["company"].lower(),
-                    job_id.lower(),
-                )
-
-                collected[key] = job
-
-            offset += len(postings)
-
-            if (
-                expected_total is not None
-                and offset >= expected_total
-            ):
-                break
-
-            if len(postings) < WORKDAY_PAGE_SIZE:
-                break
-
-        else:
-            print(
-                "        WARNING: page safety cap "
-                f"reached for '{keyword}'"
-            )
+        key = (
+            employer["company"].lower(),
+            job["job_id"].lower(),
+        )
+        collected[key] = job
 
     print(
         f"      Unique Workday US jobs: "
-        f"{len(collected)}"
-    )
-    print(
-        f"      Non-US rows skipped: "
-        f"{skipped_non_us}"
-    )
-    print(
-        f"      Unverified detail rows skipped: "
-        f"{skipped_unverified}"
+        f"{len(collected)}; "
+        f"non-US skipped: {skipped_non_us}; "
+        f"unverified: {skipped_unverified}; "
+        f"closed: {skipped_closed}"
     )
 
     return list(collected.values())
@@ -1513,6 +1648,46 @@ def collect_jobs(employer, run_time):
 # MAIN
 # ============================================================
 
+def process_employer(
+    index,
+    employer,
+    run_time,
+):
+    started = time.monotonic()
+
+    result = check_employer(employer)
+
+    jobs = []
+    ats_type = employer["ats_type"]
+
+    if ats_type in {
+        "oracle_cx",
+        "workday",
+        "greenhouse",
+    }:
+        # The adapter API is authoritative for collection. Do not prevent an
+        # otherwise-valid ATS API from running just because the human-facing
+        # careers page is temporarily blocked or slow.
+        jobs = collect_jobs(
+            employer,
+            run_time,
+        )
+
+        if (
+            result["status"] != "reachable"
+            and jobs
+        ):
+            result["status"] = "api_reachable"
+
+    result["jobs_found"] = len(jobs)
+    result["duration_seconds"] = round(
+        time.monotonic() - started,
+        2,
+    )
+
+    return index, result, jobs
+
+
 def main():
     OUTPUT_DIR.mkdir(
         parents=True,
@@ -1524,78 +1699,116 @@ def main():
     run_time = datetime.now(
         timezone.utc
     )
+    started = time.monotonic()
 
-    coverage_results = []
+    coverage_by_index = {}
     all_jobs = {}
 
-    for index, employer in enumerate(
-        employers,
-        start=1,
-    ):
-        print()
-        print("=" * 60)
-        print(
-            f"[{index}/{len(employers)}] "
-            f"{employer['company']}"
+    print("=" * 60)
+    print("JOB COLLECTION STARTED")
+    print("=" * 60)
+    print(
+        f"Employers configured: {len(employers)}"
+    )
+    print(
+        f"Employer workers: {EMPLOYER_WORKERS}"
+    )
+    print(
+        "Workday search/detail workers per employer: "
+        f"{WORKDAY_SEARCH_WORKERS}/"
+        f"{WORKDAY_DETAIL_WORKERS}"
+    )
+
+    with ThreadPoolExecutor(
+        max_workers=min(
+            EMPLOYER_WORKERS,
+            max(1, len(employers)),
         )
-        print("=" * 60)
+    ) as executor:
+        future_to_employer = {
+            executor.submit(
+                process_employer,
+                index,
+                employer,
+                run_time,
+            ): employer
+            for index, employer in enumerate(
+                employers,
+                start=1,
+            )
+        }
 
-        result = check_employer(employer)
+        completed = 0
 
-        print(
-            f"    Site status: "
-            f"{result['status']} "
-            f"{result['http_status'] or ''}"
-        )
+        for future in as_completed(
+            future_to_employer
+        ):
+            employer = future_to_employer[
+                future
+            ]
+            completed += 1
 
-        jobs = []
-
-        if result["status"] == "reachable":
-
-            if employer["ats_type"] in {
-                "oracle_cx",
-                "workday",
-                "greenhouse",
-            }:
-                print(
-                    f"    Adapter: "
-                    f"{employer['ats_type']}"
+            try:
+                index, result, jobs = (
+                    future.result()
                 )
+            except Exception as exc:
+                index = employers.index(
+                    employer
+                ) + 1
+                result = {
+                    "company": employer["company"],
+                    "careers_url": employer[
+                        "careers_url"
+                    ],
+                    "ats_type": employer["ats_type"],
+                    "status": "collector_error",
+                    "http_status": None,
+                    "final_url": None,
+                    "error": str(exc),
+                    "jobs_found": 0,
+                    "duration_seconds": None,
+                }
+                jobs = []
 
-                jobs = collect_jobs(
-                    employer,
-                    run_time,
+            coverage_by_index[index] = result
+
+            for job in jobs:
+                key = (
+                    job["company"].lower(),
+                    (
+                        job.get("job_id")
+                        or job["url"]
+                    ).lower(),
                 )
+                all_jobs[key] = job
 
-            else:
-                print(
-                    f"    Adapter not built yet: "
-                    f"{employer['ats_type']}"
-                )
-
-        result["jobs_found"] = len(jobs)
-
-        for job in jobs:
-            key = (
-                job["company"].lower(),
-                (
-                    job.get("job_id")
-                    or job["url"]
-                ).lower(),
+            print(
+                f"[{completed}/{len(employers)}] "
+                f"{result['company']} | "
+                f"{result['ats_type']} | "
+                f"{result['status']} | "
+                f"jobs={len(jobs)} | "
+                f"{result.get('duration_seconds')}s"
             )
 
-            all_jobs[key] = job
-
-        coverage_results.append(result)
-
-        print(
-            f"    Jobs collected: {len(jobs)}"
+    coverage_results = [
+        coverage_by_index[index]
+        for index in sorted(
+            coverage_by_index
         )
+    ]
+
+    reachable_statuses = {
+        "reachable",
+        "api_reachable",
+    }
 
     reachable = sum(
         1
         for result in coverage_results
-        if result["status"] == "reachable"
+        if result["status"]
+        in reachable_statuses
     )
 
     failed = (
@@ -1627,10 +1840,16 @@ def main():
         reverse=True,
     )
 
+    elapsed_seconds = round(
+        time.monotonic() - started,
+        2,
+    )
+
     coverage = {
         "run_time_utc": (
             run_time.isoformat()
         ),
+        "duration_seconds": elapsed_seconds,
         "employers_total": len(employers),
         "reachable": reachable,
         "failed_or_unverified": failed,
@@ -1686,7 +1905,8 @@ def main():
         f"{len(employers)}"
     )
     print(
-        f"Reachable: {reachable}"
+        f"Reachable/API reachable: "
+        f"{reachable}"
     )
     print(
         f"Supported ATS employers: "
@@ -1695,6 +1915,10 @@ def main():
     print(
         f"Candidate jobs collected: "
         f"{len(jobs)}"
+    )
+    print(
+        f"Elapsed seconds: "
+        f"{elapsed_seconds}"
     )
 
 
