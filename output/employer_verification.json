@@ -1,0 +1,69 @@
+{
+  "summary": {
+    "run_time_utc": "2026-10-06T11:51:29.345990+00:00",
+    "input_file": "config/employers.csv",
+    "scope": "enabled",
+    "csv_rows_total": 936,
+    "rows_selected": 3,
+    "unique_endpoints_tested": 3,
+    "duplicate_endpoints_skipped": 0,
+    "correct_mappings": 3,
+    "pass_with_jobs": 3,
+    "pass_empty_but_valid": 0,
+    "failed_mappings": 0,
+    "blocked_or_rate_limited": 0,
+    "network_or_runtime_errors": 0,
+    "conclusive_tests": 3,
+    "counts_by_status": {
+      "PASS": 3
+    }
+  },
+  "results": [
+    {
+      "company": "CVS Health",
+      "ats_type": "workday",
+      "ats_identifier": "cvshealth|CVS_Health_Careers",
+      "careers_url": "https://cvshealth.wd1.myworkdayjobs.com/en-US/CVS_Health_Careers",
+      "enabled": true,
+      "notes": "Workday tenant and site mapped",
+      "status": "PASS",
+      "http_status": 200,
+      "jobs_available": 18654,
+      "sample_title": "District Support Pharmacist - Full-time",
+      "sample_location": null,
+      "api_url": "https://cvshealth.wd1.myworkdayjobs.com/wday/cxs/cvshealth/CVS_Health_Careers/jobs",
+      "reason": "Valid Workday CXS job inventory"
+    },
+    {
+      "company": "Macy's",
+      "ats_type": "oracle_cx",
+      "ats_identifier": "CX_1001",
+      "careers_url": "https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001",
+      "enabled": true,
+      "notes": "Oracle Fusion Recruiting; adapter working",
+      "status": "PASS",
+      "http_status": 200,
+      "jobs_available": 5,
+      "sample_title": "Senior Software Engineer - Contact Center",
+      "sample_location": "Johns Creek, GA, United States",
+      "api_url": "https://ebwh.fa.us2.oraclecloud.com/hcmRestApi/resources/latest/recruitingCEJobRequisitions",
+      "reason": "Valid Oracle Recruiting Cloud inventory"
+    },
+    {
+      "company": "Oracle",
+      "ats_type": "oracle_cx",
+      "ats_identifier": "CX_45001",
+      "careers_url": "https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch",
+      "enabled": true,
+      "notes": "Oracle Fusion Recruiting; adapter working",
+      "status": "PASS",
+      "http_status": 200,
+      "jobs_available": 5,
+      "sample_title": "Principal Quality Engineer",
+      "sample_location": "Santa Clara, CA, United States",
+      "api_url": "https://eeho.fa.us2.oraclecloud.com/hcmRestApi/resources/latest/recruitingCEJobRequisitions",
+      "reason": "Valid Oracle Recruiting Cloud inventory"
+    }
+  ],
+  "duplicate_endpoints": []
+}
