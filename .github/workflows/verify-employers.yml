@@ -9,7 +9,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Check out repository
@@ -23,8 +23,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Verify enabled Workday and Oracle mappings
-        run: python src/verify_employers.py --input config/employers.csv --output-dir output --scope enabled --workers 6
+      - name: Verify ALL mapped Workday and Oracle candidates
+        run: python src/verify_employers.py --input config/employers.csv --output-dir output --scope candidates --workers 6
 
       - name: Commit verification reports
         run: |
@@ -34,6 +34,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No verification output changes to commit"
           else
-            git commit -m "Verify employer ATS mappings"
+            git commit -m "Verify all employer ATS mappings"
             git push
           fi
