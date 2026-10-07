@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: "0 6,12,17 * * 1-5"
+    - cron: "30 5,9,13,17 * * 1-5"
       timezone: "America/Chicago"
 
 permissions:
@@ -13,7 +13,7 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
 
     steps:
       - name: Checkout repository
@@ -35,8 +35,13 @@ jobs:
           git config user.name "job-collector-bot"
           git config user.email "job-collector-bot@users.noreply.github.com"
 
-          git add output/
+          git add output/latest_candidates.json output/latest_coverage.json
 
-          git diff --cached --quiet || git commit -m "Update job collector output"
+          if git diff --cached --quiet; then
+            echo "No output changes to commit"
+            exit 0
+          fi
 
-          git push
+          git commit -m "Update job collector output"
+          git pull --rebase origin main
+          git push origin main
