@@ -129,7 +129,7 @@
 
   "pay_floor_base_usd": null,
 
-  "candidate_history_retention_days": 45,
+  "candidate_history_retention_days": 90,
   "late_discovery_hours": 48,
 
   "secondary_web_search_hours": 72
