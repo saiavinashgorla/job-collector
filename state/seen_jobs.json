@@ -1,7 +1,7 @@
 {
   "_meta": {
     "schema_version": 1,
-    "retention_days": 45,
+    "retention_days": 90,
     "updated_at_utc": null,
     "last_pruned_at_utc": null,
     "description": "History of jobs that passed title and location filtering."
