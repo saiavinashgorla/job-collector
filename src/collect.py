@@ -11,6 +11,7 @@ import requests
 
 
 EMPLOYERS_FILE = Path("config/employers.csv")
+PROFILE_FILE = Path("config/profile.md")
 OUTPUT_DIR = Path("output")
 STATE_FILE = Path("state/seen_jobs.json")
 DEFAULT_HISTORY_RETENTION_DAYS = 90
@@ -134,6 +135,213 @@ def load_employers():
     return employers
 
 
+def load_profile_config():
+    """
+    Load the machine-readable JSON block from config/profile.md.
+
+    The collector deliberately fails if this block is missing or invalid:
+    candidate filtering is part of the collector contract, not an optional
+    AI-side step.
+    """
+    try:
+        text = PROFILE_FILE.read_text(encoding="utf-8")
+    except OSError as exc:
+        raise RuntimeError(
+            f"Could not read {PROFILE_FILE}: {exc}"
+        ) from exc
+
+    match = re.search(
+        r"##\s+Machine Config\s*.*?"
+        r"```json\s*(\{.*?\})\s*```",
+        text,
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    if not match:
+        raise RuntimeError(
+            "config/profile.md is missing the Machine Config JSON block"
+        )
+
+    try:
+        config = json.loads(match.group(1))
+    except ValueError as exc:
+        raise RuntimeError(
+            f"Invalid Machine Config JSON in {PROFILE_FILE}: {exc}"
+        ) from exc
+
+    if not isinstance(config, dict):
+        raise RuntimeError(
+            "Machine Config in config/profile.md must be a JSON object"
+        )
+
+    required_lists = (
+        "target_titles",
+        "strong_title_terms",
+        "software_title_terms",
+        "seniority_terms",
+        "excluded_title_terms",
+        "preferred_location_terms",
+    )
+
+    for key in required_lists:
+        value = config.get(key)
+        if not isinstance(value, list) or not value:
+            raise RuntimeError(
+                f"Machine Config field {key!r} must be a non-empty list"
+            )
+
+    return config
+
+
+def normalized_filter_text(value):
+    return re.sub(
+        r"\s+",
+        " ",
+        str(value or "").strip().lower(),
+    )
+
+
+def contains_profile_term(text, term):
+    text = normalized_filter_text(text)
+    term = normalized_filter_text(term)
+
+    if not text or not term:
+        return False
+
+    escaped = re.escape(term).replace(r"\ ", r"\s+")
+
+    return bool(
+        re.search(
+            rf"(?<![a-z0-9]){escaped}(?![a-z0-9])",
+            text,
+            re.IGNORECASE,
+        )
+    )
+
+
+def contains_any_profile_term(text, terms):
+    return any(
+        contains_profile_term(text, term)
+        for term in (terms or [])
+        if term
+    )
+
+
+def profile_location_text(job):
+    values = [
+        job.get("location"),
+        job.get("locations_summary"),
+        job.get("remote_type"),
+        job.get("job_schedule"),
+    ]
+
+    return " | ".join(
+        str(value).strip()
+        for value in values
+        if value and str(value).strip()
+    )
+
+
+def evaluate_profile_candidate(job, profile_config):
+    """
+    Deterministic first-pass filter.
+
+    The collector already validates that jobs are US-based. This stage removes
+    obvious profile mismatches before latest_candidates.json is handed to the
+    AI. It intentionally uses structured/title-level signals only; the AI still
+    opens the real posting for sponsorship and detailed technical evaluation.
+    """
+    title = str(job.get("title") or "").strip()
+
+    if not title:
+        return False, "missing_title"
+
+    if contains_any_profile_term(
+        title,
+        profile_config.get("excluded_title_terms"),
+    ):
+        return False, "excluded_title"
+
+    strong_title = contains_any_profile_term(
+        title,
+        profile_config.get("strong_title_terms"),
+    )
+    software_title = contains_any_profile_term(
+        title,
+        profile_config.get("software_title_terms"),
+    )
+    target_title = contains_any_profile_term(
+        title,
+        profile_config.get("target_titles"),
+    )
+    senior_title = contains_any_profile_term(
+        title,
+        profile_config.get("seniority_terms"),
+    )
+
+    if not (
+        strong_title
+        or software_title
+        or target_title
+    ):
+        return False, "not_target_software_title"
+
+    # Seniority is required for generic software/application/platform titles.
+    # A non-senior title is kept only when it is both an explicit configured
+    # target and contains a strong backend signal such as Java/JVM/backend.
+    if not senior_title and not (
+        target_title and strong_title
+    ):
+        return False, "wrong_seniority"
+
+    location_text = profile_location_text(job)
+    preferred_location = contains_any_profile_term(
+        location_text,
+        profile_config.get("preferred_location_terms"),
+    )
+
+    if preferred_location:
+        return True, "preferred_location"
+
+    if (
+        profile_config.get(
+            "allow_other_us_locations_for_strong_match",
+            False,
+        )
+        and strong_title
+    ):
+        return True, "exceptional_other_us_strong_match"
+
+    return False, "location_not_preferred_for_generic_role"
+
+
+def filter_jobs_for_profile(jobs, profile_config):
+    filtered = []
+    accepted_by = {}
+    rejected_by = {}
+
+    for job in jobs:
+        keep, reason = evaluate_profile_candidate(
+            job,
+            profile_config,
+        )
+
+        bucket = accepted_by if keep else rejected_by
+        bucket[reason] = bucket.get(reason, 0) + 1
+
+        if keep:
+            filtered.append(job)
+
+    return filtered, {
+        "filter_source": str(PROFILE_FILE),
+        "raw_jobs_collected": len(jobs),
+        "filtered_candidates": len(filtered),
+        "rejected_total": len(jobs) - len(filtered),
+        "accepted_by": accepted_by,
+        "rejected_by": rejected_by,
+    }
+
+
 def load_seen_state():
     default_state = {
         "_meta": {
@@ -142,7 +350,7 @@ def load_seen_state():
             "updated_at_utc": None,
             "last_pruned_at_utc": None,
             "description": (
-                "History of jobs that passed title and location filtering."
+                "History of jobs that passed deterministic profile candidate filtering."
             ),
         },
         "jobs": {},
@@ -174,7 +382,7 @@ def load_seen_state():
     meta.setdefault("retention_days", DEFAULT_HISTORY_RETENTION_DAYS)
     meta.setdefault(
         "description",
-        "History of jobs that passed title and location filtering.",
+        "History of jobs that passed deterministic profile candidate filtering.",
     )
 
     return state
@@ -238,13 +446,51 @@ def parse_history_datetime(value):
         return None
 
 
-def update_seen_state(jobs, run_time):
+def update_seen_state(
+    jobs,
+    run_time,
+    profile_config=None,
+):
     state = load_seen_state()
     meta = state["_meta"]
     history = state["jobs"]
 
-    retention_days = DEFAULT_HISTORY_RETENTION_DAYS
+    profile_config = profile_config or {}
+
+    retention_days = int(
+        profile_config.get(
+            "candidate_history_retention_days",
+            DEFAULT_HISTORY_RETENTION_DAYS,
+        )
+    )
+    late_discovery_hours = int(
+        profile_config.get(
+            "late_discovery_hours",
+            LATE_DISCOVERY_HOURS,
+        )
+    )
+
     meta["retention_days"] = retention_days
+    meta["filter_source"] = str(PROFILE_FILE)
+
+    # One-time migration from the earlier broad state file: retain historical
+    # jobs that still satisfy the deterministic profile filter, while removing
+    # entries that never belonged in the filtered candidate history.
+    profile_pruned = 0
+    if profile_config:
+        for key in list(history):
+            entry = history.get(key)
+            if not isinstance(entry, dict):
+                continue
+
+            keep, _ = evaluate_profile_candidate(
+                entry,
+                profile_config,
+            )
+
+            if not keep:
+                del history[key]
+                profile_pruned += 1
 
     run_iso = run_time.isoformat()
     currently_seen = set()
@@ -275,7 +521,7 @@ def update_seen_state(jobs, run_time):
                 age_hours = (
                     run_time - posted_dt
                 ).total_seconds() / 3600
-                if age_hours > LATE_DISCOVERY_HOURS:
+                if age_hours > late_discovery_hours:
                     discovery_status = "late_discovery"
                     new_count -= 1
                     late_count += 1
@@ -341,8 +587,10 @@ def update_seen_state(jobs, run_time):
         "late_discovery": late_count,
         "seen_before": seen_before_count,
         "purged": purged,
+        "profile_pruned": profile_pruned,
         "tracked_total": len(history),
         "retention_days": retention_days,
+        "late_discovery_hours": late_discovery_hours,
     }
 
 
@@ -1910,6 +2158,7 @@ def main():
     )
 
     employers = load_employers()
+    profile_config = load_profile_config()
 
     run_time = datetime.now(
         timezone.utc
@@ -2044,11 +2293,17 @@ def main():
         in supported_types
     )
 
-    jobs = list(all_jobs.values())
+    raw_jobs = list(all_jobs.values())
+
+    jobs, candidate_filter = filter_jobs_for_profile(
+        raw_jobs,
+        profile_config,
+    )
 
     history_summary = update_seen_state(
         jobs,
         run_time,
+        profile_config=profile_config,
     )
 
     jobs.sort(
@@ -2076,7 +2331,9 @@ def main():
         "employers_with_supported_adapter": (
             supported
         ),
+        "raw_jobs_collected": len(raw_jobs),
         "candidate_jobs_collected": len(jobs),
+        "candidate_filter": candidate_filter,
         "history": history_summary,
         "employers": coverage_results,
     }
@@ -2134,8 +2391,17 @@ def main():
         f"{supported}"
     )
     print(
-        f"Candidate jobs collected: "
+        f"Raw US software-ish jobs collected: "
+        f"{len(raw_jobs)}"
+    )
+    print(
+        f"Filtered candidate jobs: "
         f"{len(jobs)}"
+    )
+    print(
+        "Candidate filter rejected: "
+        f"{candidate_filter['rejected_total']} | "
+        f"reasons={candidate_filter['rejected_by']}"
     )
     print(
         "History: "
@@ -2143,6 +2409,7 @@ def main():
         f"late={history_summary['late_discovery']}, "
         f"seen_before={history_summary['seen_before']}, "
         f"purged={history_summary['purged']}, "
+        f"profile_pruned={history_summary['profile_pruned']}, "
         f"tracked={history_summary['tracked_total']}, "
         f"retention_days={history_summary['retention_days']}"
     )
