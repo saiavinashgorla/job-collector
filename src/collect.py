@@ -2139,12 +2139,12 @@ def main():
     )
     print(
         "History: "
-        f"new={history_summary[\'new\']}, "
-        f"late={history_summary[\'late_discovery\']}, "
-        f"seen_before={history_summary[\'seen_before\']}, "
-        f"purged={history_summary[\'purged\']}, "
-        f"tracked={history_summary[\'tracked_total\']}, "
-        f"retention_days={history_summary[\'retention_days\']}"
+        f"new={history_summary['new']}, "
+        f"late={history_summary['late_discovery']}, "
+        f"seen_before={history_summary['seen_before']}, "
+        f"purged={history_summary['purged']}, "
+        f"tracked={history_summary['tracked_total']}, "
+        f"retention_days={history_summary['retention_days']}"
     )
     print(
         f"Elapsed seconds: "
