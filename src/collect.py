@@ -12,6 +12,9 @@ import requests
 
 EMPLOYERS_FILE = Path("config/employers.csv")
 OUTPUT_DIR = Path("output")
+STATE_FILE = Path("state/seen_jobs.json")
+DEFAULT_HISTORY_RETENTION_DAYS = 90
+LATE_DISCOVERY_HOURS = 48
 
 SEARCH_TERMS = [
     "java",
@@ -129,6 +132,218 @@ def load_employers():
             )
 
     return employers
+
+
+def load_seen_state():
+    default_state = {
+        "_meta": {
+            "schema_version": 1,
+            "retention_days": DEFAULT_HISTORY_RETENTION_DAYS,
+            "updated_at_utc": None,
+            "last_pruned_at_utc": None,
+            "description": (
+                "History of jobs that passed title and location filtering."
+            ),
+        },
+        "jobs": {},
+    }
+
+    if not STATE_FILE.exists():
+        return default_state
+
+    try:
+        with STATE_FILE.open("r", encoding="utf-8") as file:
+            state = json.load(file)
+    except (OSError, ValueError):
+        return default_state
+
+    if not isinstance(state, dict):
+        return default_state
+
+    meta = state.get("_meta")
+    if not isinstance(meta, dict):
+        meta = {}
+        state["_meta"] = meta
+
+    jobs = state.get("jobs")
+    if not isinstance(jobs, dict):
+        jobs = {}
+        state["jobs"] = jobs
+
+    meta.setdefault("schema_version", 1)
+    meta.setdefault("retention_days", DEFAULT_HISTORY_RETENTION_DAYS)
+    meta.setdefault(
+        "description",
+        "History of jobs that passed title and location filtering.",
+    )
+
+    return state
+
+
+def history_company_slug(company):
+    value = re.sub(
+        r"[^a-z0-9]+",
+        "-",
+        (company or "").strip().lower(),
+    ).strip("-")
+    return value or "unknown-company"
+
+
+def history_key(job):
+    company = history_company_slug(job.get("company"))
+    identifier = str(
+        job.get("job_id")
+        or job.get("requisition_number")
+        or job.get("url")
+        or ""
+    ).strip()
+
+    return f"{company}:{identifier}"
+
+
+def trusted_posted_at(job):
+    # Greenhouse public board updated_at is not guaranteed to be the
+    # original posting date, so do not use it for late-discovery logic.
+    if job.get("ats_type") == "greenhouse":
+        return None
+
+    value = job.get("posted_date")
+    return str(value).strip() if value else None
+
+
+def parse_history_datetime(value):
+    if not value:
+        return None
+
+    text = str(value).strip()
+
+    try:
+        if text.endswith("Z"):
+            return datetime.fromisoformat(
+                text[:-1] + "+00:00"
+            )
+        parsed = datetime.fromisoformat(text)
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+    except ValueError:
+        pass
+
+    try:
+        return datetime.strptime(
+            text[:10],
+            "%Y-%m-%d",
+        ).replace(tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
+def update_seen_state(jobs, run_time):
+    state = load_seen_state()
+    meta = state["_meta"]
+    history = state["jobs"]
+
+    retention_days = DEFAULT_HISTORY_RETENTION_DAYS
+    meta["retention_days"] = retention_days
+
+    run_iso = run_time.isoformat()
+    currently_seen = set()
+    new_count = 0
+    late_count = 0
+    seen_before_count = 0
+
+    for job in jobs:
+        key = history_key(job)
+        currently_seen.add(key)
+        existing = history.get(key)
+
+        posted_at = trusted_posted_at(job)
+
+        if isinstance(existing, dict):
+            first_seen = existing.get("first_seen") or run_iso
+            if not posted_at:
+                posted_at = existing.get("posted_at")
+            discovery_status = "seen_before"
+            seen_before_count += 1
+        else:
+            first_seen = run_iso
+            discovery_status = "new"
+            new_count += 1
+
+            posted_dt = parse_history_datetime(posted_at)
+            if posted_dt is not None:
+                age_hours = (
+                    run_time - posted_dt
+                ).total_seconds() / 3600
+                if age_hours > LATE_DISCOVERY_HOURS:
+                    discovery_status = "late_discovery"
+                    new_count -= 1
+                    late_count += 1
+
+        entry = {
+            "company": job.get("company"),
+            "job_id": job.get("job_id"),
+            "title": job.get("title"),
+            "location": job.get("location"),
+            "first_seen": first_seen,
+            "last_seen": run_iso,
+            "posted_at": posted_at,
+        }
+
+        history[key] = entry
+
+        job["history_key"] = key
+        job["first_seen"] = first_seen
+        job["last_seen"] = run_iso
+        job["discovery_status"] = discovery_status
+
+    cutoff = run_time - timedelta(days=retention_days)
+    purged = 0
+
+    for key in list(history):
+        if key in currently_seen:
+            continue
+
+        entry = history.get(key)
+        if not isinstance(entry, dict):
+            del history[key]
+            purged += 1
+            continue
+
+        last_seen_dt = parse_history_datetime(entry.get("last_seen"))
+        if last_seen_dt is None or last_seen_dt < cutoff:
+            del history[key]
+            purged += 1
+
+    meta["updated_at_utc"] = run_iso
+    meta["last_pruned_at_utc"] = run_iso
+
+    STATE_FILE.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    with STATE_FILE.open(
+        "w",
+        encoding="utf-8",
+    ) as file:
+        json.dump(
+            state,
+            file,
+            indent=2,
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        file.write("\n")
+
+    return {
+        "new": new_count,
+        "late_discovery": late_count,
+        "seen_before": seen_before_count,
+        "purged": purged,
+        "tracked_total": len(history),
+        "retention_days": retention_days,
+    }
 
 
 def check_employer(employer):
@@ -1831,6 +2046,11 @@ def main():
 
     jobs = list(all_jobs.values())
 
+    history_summary = update_seen_state(
+        jobs,
+        run_time,
+    )
+
     jobs.sort(
         key=lambda item: (
             item.get("posted_date") or "",
@@ -1857,6 +2077,7 @@ def main():
             supported
         ),
         "candidate_jobs_collected": len(jobs),
+        "history": history_summary,
         "employers": coverage_results,
     }
 
@@ -1915,6 +2136,15 @@ def main():
     print(
         f"Candidate jobs collected: "
         f"{len(jobs)}"
+    )
+    print(
+        "History: "
+        f"new={history_summary[\'new\']}, "
+        f"late={history_summary[\'late_discovery\']}, "
+        f"seen_before={history_summary[\'seen_before\']}, "
+        f"purged={history_summary[\'purged\']}, "
+        f"tracked={history_summary[\'tracked_total\']}, "
+        f"retention_days={history_summary[\'retention_days\']}"
     )
     print(
         f"Elapsed seconds: "
