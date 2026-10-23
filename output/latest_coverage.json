@@ -1,35 +1,35 @@
 {
-  "run_time_utc": "2026-10-23T10:37:08.428044+00:00",
-  "duration_seconds": 863.79,
+  "run_time_utc": "2026-10-23T14:44:49.198106+00:00",
+  "duration_seconds": 931.91,
   "employers_total": 259,
-  "reachable": 254,
-  "failed_or_unverified": 5,
+  "reachable": 256,
+  "failed_or_unverified": 3,
   "employers_with_supported_adapter": 259,
-  "raw_jobs_collected": 10725,
-  "candidate_jobs_collected": 618,
+  "raw_jobs_collected": 10872,
+  "candidate_jobs_collected": 635,
   "candidate_filter": {
     "filter_source": "config/profile.md",
-    "raw_jobs_collected": 10725,
-    "filtered_candidates": 618,
-    "rejected_total": 10107,
+    "raw_jobs_collected": 10872,
+    "filtered_candidates": 635,
+    "rejected_total": 10237,
     "accepted_by": {
-      "exceptional_other_us_strong_match": 156,
-      "preferred_location": 462
+      "exceptional_other_us_strong_match": 163,
+      "preferred_location": 472
     },
     "rejected_by": {
-      "location_not_preferred_for_generic_role": 1592,
-      "not_target_software_title": 6362,
-      "wrong_seniority": 967,
-      "excluded_title": 1186
+      "location_not_preferred_for_generic_role": 1611,
+      "not_target_software_title": 6451,
+      "excluded_title": 1197,
+      "wrong_seniority": 978
     }
   },
   "history": {
-    "new": 18,
-    "late_discovery": 28,
-    "seen_before": 572,
+    "new": 21,
+    "late_discovery": 29,
+    "seen_before": 585,
     "purged": 0,
-    "profile_pruned": 39,
-    "tracked_total": 940,
+    "profile_pruned": 42,
+    "tracked_total": 948,
     "retention_days": 90,
     "late_discovery_hours": 48
   },
@@ -43,7 +43,7 @@
       "final_url": "https://target.wd5.myworkdayjobs.com/targetcareers",
       "error": null,
       "jobs_found": 66,
-      "duration_seconds": 22.67
+      "duration_seconds": 33.22
     },
     {
       "company": "Oracle",
@@ -54,7 +54,7 @@
       "final_url": "https://eeho.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/jobsearch",
       "error": null,
       "jobs_found": 106,
-      "duration_seconds": 3.76
+      "duration_seconds": 3.65
     },
     {
       "company": "CVS Health",
@@ -64,8 +64,8 @@
       "http_status": 200,
       "final_url": "https://cvshealth.wd1.myworkdayjobs.com/en-US/CVS_Health_Careers",
       "error": null,
-      "jobs_found": 91,
-      "duration_seconds": 20.39
+      "jobs_found": 93,
+      "duration_seconds": 13.9
     },
     {
       "company": "Samsung",
@@ -76,7 +76,7 @@
       "final_url": "https://sec.wd3.myworkdayjobs.com/Samsung_Careers",
       "error": null,
       "jobs_found": 99,
-      "duration_seconds": 19.7
+      "duration_seconds": 20.18
     },
     {
       "company": "Macy's",
@@ -87,7 +87,7 @@
       "final_url": "https://ebwh.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001",
       "error": null,
       "jobs_found": 7,
-      "duration_seconds": 2.38
+      "duration_seconds": 2.26
     },
     {
       "company": "JPMorgan Chase",
@@ -97,8 +97,8 @@
       "http_status": 200,
       "final_url": "https://jpmc.fa.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001/jobs",
       "error": null,
-      "jobs_found": 66,
-      "duration_seconds": 2.81
+      "jobs_found": 63,
+      "duration_seconds": 2.58
     },
     {
       "company": "Capital One",
@@ -108,8 +108,8 @@
       "http_status": 200,
       "final_url": "https://capitalone.wd12.myworkdayjobs.com/Capital_One",
       "error": null,
-      "jobs_found": 260,
-      "duration_seconds": 21.74
+      "jobs_found": 259,
+      "duration_seconds": 27.58
     },
     {
       "company": "Fidelity Investments",
@@ -120,7 +120,7 @@
       "final_url": "https://fmr.wd1.myworkdayjobs.com/FidelityCareers",
       "error": null,
       "jobs_found": 85,
-      "duration_seconds": 19.14
+      "duration_seconds": 18.4
     },
     {
       "company": "Goldman Sachs",
@@ -131,7 +131,7 @@
       "final_url": "https://hdpc.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/LateralHiring",
       "error": null,
       "jobs_found": 26,
-      "duration_seconds": 4.8
+      "duration_seconds": 2.81
     },
     {
       "company": "Citi",
@@ -141,8 +141,8 @@
       "http_status": 200,
       "final_url": "https://citi.wd5.myworkdayjobs.com/2",
       "error": null,
-      "jobs_found": 91,
-      "duration_seconds": 94.85
+      "jobs_found": 100,
+      "duration_seconds": 99.87
     },
     {
       "company": "Bank of America",
@@ -153,7 +153,7 @@
       "final_url": "https://ghr.wd1.myworkdayjobs.com/lateral-us",
       "error": null,
       "jobs_found": 84,
-      "duration_seconds": 10.34
+      "duration_seconds": 10.94
     },
     {
       "company": "BNY",
@@ -163,8 +163,8 @@
       "http_status": 200,
       "final_url": "https://eofe.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/BNY-Careers/jobs",
       "error": null,
-      "jobs_found": 64,
-      "duration_seconds": 3.1
+      "jobs_found": 66,
+      "duration_seconds": 2.76
     },
     {
       "company": "Alkami Technology",
@@ -186,7 +186,7 @@
       "final_url": "https://toyota.wd503.myworkdayjobs.com/TMNA",
       "error": null,
       "jobs_found": 38,
-      "duration_seconds": 12.06
+      "duration_seconds": 17.33
     },
     {
       "company": "Sabre",
@@ -197,7 +197,7 @@
       "final_url": "https://sabre.wd1.myworkdayjobs.com/SabreJobs",
       "error": null,
       "jobs_found": 3,
-      "duration_seconds": 7.15
+      "duration_seconds": 8.26
     },
     {
       "company": "McKesson",
@@ -208,7 +208,7 @@
       "final_url": "https://mckesson.wd3.myworkdayjobs.com/External_Careers",
       "error": null,
       "jobs_found": 49,
-      "duration_seconds": 24.14
+      "duration_seconds": 24.04
     },
     {
       "company": "Caterpillar",
@@ -219,7 +219,7 @@
       "final_url": "https://cat.wd5.myworkdayjobs.com/CaterpillarCareers",
       "error": null,
       "jobs_found": 63,
-      "duration_seconds": 45.05
+      "duration_seconds": 45.82
     },
     {
       "company": "Chevron",
@@ -230,7 +230,7 @@
       "final_url": "https://chevron.wd5.myworkdayjobs.com/jobs",
       "error": null,
       "jobs_found": 2,
-      "duration_seconds": 4.46
+      "duration_seconds": 5.1
     },
     {
       "company": "ConocoPhillips",
@@ -241,7 +241,7 @@
       "final_url": "https://conocophillips.wd1.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 1,
-      "duration_seconds": 2.34
+      "duration_seconds": 2.23
     },
     {
       "company": "Baker Hughes",
@@ -252,7 +252,7 @@
       "final_url": "https://bakerhughes.wd5.myworkdayjobs.com/BakerHughes",
       "error": null,
       "jobs_found": 15,
-      "duration_seconds": 27.19
+      "duration_seconds": 36.07
     },
     {
       "company": "Dell Technologies",
@@ -262,8 +262,8 @@
       "http_status": 200,
       "final_url": "https://enterpriseplatform.dell.com/hcmUI/CandidateExperience/en/sites/careers",
       "error": null,
-      "jobs_found": 49,
-      "duration_seconds": 3.2
+      "jobs_found": 47,
+      "duration_seconds": 2.98
     },
     {
       "company": "USAA",
@@ -273,8 +273,8 @@
       "http_status": 200,
       "final_url": "https://usaa.wd1.myworkdayjobs.com/USAAJOBSWD",
       "error": null,
-      "jobs_found": 26,
-      "duration_seconds": 4.03
+      "jobs_found": 27,
+      "duration_seconds": 4.31
     },
     {
       "company": "Visa",
@@ -284,8 +284,8 @@
       "http_status": 429,
       "final_url": "https://visa.wd5.myworkdayjobs.com/Visa",
       "error": null,
-      "jobs_found": 17,
-      "duration_seconds": 28.15
+      "jobs_found": 32,
+      "duration_seconds": 28.47
     },
     {
       "company": "Mastercard",
@@ -295,8 +295,8 @@
       "http_status": 200,
       "final_url": "https://mastercard.wd1.myworkdayjobs.com/CorporateCareers",
       "error": null,
-      "jobs_found": 99,
-      "duration_seconds": 42.7
+      "jobs_found": 101,
+      "duration_seconds": 41.97
     },
     {
       "company": "Fiserv",
@@ -306,8 +306,8 @@
       "http_status": 200,
       "final_url": "https://fiserv.wd5.myworkdayjobs.com/EXT",
       "error": null,
-      "jobs_found": 15,
-      "duration_seconds": 22.71
+      "jobs_found": 38,
+      "duration_seconds": 21.99
     },
     {
       "company": "FIS",
@@ -317,8 +317,8 @@
       "http_status": 429,
       "final_url": "https://fis.wd5.myworkdayjobs.com/SearchJobs",
       "error": null,
-      "jobs_found": 6,
-      "duration_seconds": 13.72
+      "jobs_found": 20,
+      "duration_seconds": 26.0
     },
     {
       "company": "Thomson Reuters",
@@ -328,8 +328,8 @@
       "http_status": 429,
       "final_url": "https://thomsonreuters.wd5.myworkdayjobs.com/External_Career_Site",
       "error": null,
-      "jobs_found": 72,
-      "duration_seconds": 25.58
+      "jobs_found": 54,
+      "duration_seconds": 23.66
     },
     {
       "company": "JLL",
@@ -339,8 +339,8 @@
       "http_status": 200,
       "final_url": "https://jll.wd1.myworkdayjobs.com/jllcareers",
       "error": null,
-      "jobs_found": 44,
-      "duration_seconds": 25.2
+      "jobs_found": 46,
+      "duration_seconds": 24.02
     },
     {
       "company": "NXP",
@@ -350,8 +350,8 @@
       "http_status": 200,
       "final_url": "https://nxp.wd3.myworkdayjobs.com/careers",
       "error": null,
-      "jobs_found": 31,
-      "duration_seconds": 33.41
+      "jobs_found": 30,
+      "duration_seconds": 35.46
     },
     {
       "company": "HARMAN",
@@ -361,8 +361,8 @@
       "http_status": 200,
       "final_url": "https://harman.wd3.myworkdayjobs.com/HARMAN",
       "error": null,
-      "jobs_found": 12,
-      "duration_seconds": 33.41
+      "jobs_found": 11,
+      "duration_seconds": 31.51
     },
     {
       "company": "Applied Materials",
@@ -372,8 +372,8 @@
       "http_status": 200,
       "final_url": "https://amat.wd1.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 92,
-      "duration_seconds": 43.91
+      "jobs_found": 101,
+      "duration_seconds": 35.4
     },
     {
       "company": "Nvidia",
@@ -383,8 +383,8 @@
       "http_status": 200,
       "final_url": "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite",
       "error": null,
-      "jobs_found": 300,
-      "duration_seconds": 121.41
+      "jobs_found": 298,
+      "duration_seconds": 125.21
     },
     {
       "company": "CrowdStrike",
@@ -394,8 +394,8 @@
       "http_status": 200,
       "final_url": "https://crowdstrike.wd5.myworkdayjobs.com/crowdstrikecareers",
       "error": null,
-      "jobs_found": 75,
-      "duration_seconds": 31.19
+      "jobs_found": 69,
+      "duration_seconds": 33.29
     },
     {
       "company": "Salesforce",
@@ -405,8 +405,8 @@
       "http_status": 200,
       "final_url": "https://salesforce.wd12.myworkdayjobs.com/External_Career_Site",
       "error": null,
-      "jobs_found": 121,
-      "duration_seconds": 28.1
+      "jobs_found": 120,
+      "duration_seconds": 30.02
     },
     {
       "company": "Workday",
@@ -416,8 +416,8 @@
       "http_status": 200,
       "final_url": "https://workday.wd5.myworkdayjobs.com/Workday",
       "error": null,
-      "jobs_found": 37,
-      "duration_seconds": 27.89
+      "jobs_found": 64,
+      "duration_seconds": 49.18
     },
     {
       "company": "PayPal",
@@ -428,7 +428,7 @@
       "final_url": "https://paypal.wd1.myworkdayjobs.com/jobs",
       "error": null,
       "jobs_found": 50,
-      "duration_seconds": 14.27
+      "duration_seconds": 15.75
     },
     {
       "company": "Uber",
@@ -439,7 +439,7 @@
       "final_url": "https://iaziqy.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/UberCareers",
       "error": null,
       "jobs_found": 75,
-      "duration_seconds": 2.64
+      "duration_seconds": 2.86
     },
     {
       "company": "Cigna/Evernorth",
@@ -449,8 +449,8 @@
       "http_status": 200,
       "final_url": "https://cigna.wd5.myworkdayjobs.com/cignacareers",
       "error": null,
-      "jobs_found": 22,
-      "duration_seconds": 19.09
+      "jobs_found": 23,
+      "duration_seconds": 20.58
     },
     {
       "company": "Albertsons",
@@ -461,7 +461,7 @@
       "final_url": "https://eofd.fa.us6.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1001",
       "error": null,
       "jobs_found": 1,
-      "duration_seconds": 2.22
+      "duration_seconds": 2.12
     },
     {
       "company": "Nordstrom",
@@ -472,18 +472,18 @@
       "final_url": "https://nordstrom.wd501.myworkdayjobs.com/nordstrom_careers",
       "error": null,
       "jobs_found": 13,
-      "duration_seconds": 8.32
+      "duration_seconds": 8.91
     },
     {
       "company": "eBay",
       "careers_url": "https://ebay.wd5.myworkdayjobs.com/apply",
       "ats_type": "workday",
-      "status": "reachable",
-      "http_status": 200,
+      "status": "api_reachable",
+      "http_status": 429,
       "final_url": "https://ebay.wd5.myworkdayjobs.com/apply",
       "error": null,
-      "jobs_found": 13,
-      "duration_seconds": 28.01
+      "jobs_found": 16,
+      "duration_seconds": 28.32
     },
     {
       "company": "Instacart",
@@ -493,8 +493,8 @@
       "http_status": 200,
       "final_url": "https://boards-api.greenhouse.io/v1/boards/instacart/jobs",
       "error": null,
-      "jobs_found": 23,
-      "duration_seconds": 0.42
+      "jobs_found": 22,
+      "duration_seconds": 0.46
     },
     {
       "company": "Tapestry/Coach",
@@ -505,7 +505,7 @@
       "final_url": "https://tapestry.wd108.myworkdayjobs.com/Tapestry_Careers",
       "error": null,
       "jobs_found": 4,
-      "duration_seconds": 5.18
+      "duration_seconds": 5.53
     },
     {
       "company": "CarMax",
@@ -516,7 +516,7 @@
       "final_url": "https://carmax.wd1.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 7,
-      "duration_seconds": 2.59
+      "duration_seconds": 2.64
     },
     {
       "company": "Carvana",
@@ -527,7 +527,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/carvana/jobs",
       "error": null,
       "jobs_found": 8,
-      "duration_seconds": 1.06
+      "duration_seconds": 0.86
     },
     {
       "company": "Ferguson",
@@ -538,7 +538,7 @@
       "final_url": "https://ferguson.wd1.myworkdayjobs.com/Ferguson_Experienced",
       "error": null,
       "jobs_found": 4,
-      "duration_seconds": 4.27
+      "duration_seconds": 4.47
     },
     {
       "company": "Dick's Sporting Goods",
@@ -549,7 +549,7 @@
       "final_url": "https://dickssportinggoods.wd1.myworkdayjobs.com/DSG",
       "error": null,
       "jobs_found": 4,
-      "duration_seconds": 12.19
+      "duration_seconds": 16.53
     },
     {
       "company": "Kohl's",
@@ -560,7 +560,7 @@
       "final_url": "https://kohls.wd504.myworkdayjobs.com/kohlscareers",
       "error": null,
       "jobs_found": 6,
-      "duration_seconds": 3.17
+      "duration_seconds": 3.42
     },
     {
       "company": "Dollar General",
@@ -571,7 +571,7 @@
       "final_url": "https://ibxwjb.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
       "jobs_found": 40,
-      "duration_seconds": 2.44
+      "duration_seconds": 2.66
     },
     {
       "company": "Wegmans",
@@ -582,7 +582,7 @@
       "final_url": "https://wegmans.wd1.myworkdayjobs.com/Wegmans",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 2.47
+      "duration_seconds": 3.55
     },
     {
       "company": "BJ's Wholesale Club",
@@ -593,7 +593,7 @@
       "final_url": "https://bjswholesaleclub.wd1.myworkdayjobs.com/BJsCareers",
       "error": null,
       "jobs_found": 3,
-      "duration_seconds": 2.71
+      "duration_seconds": 3.28
     },
     {
       "company": "QVC/Qurate Retail",
@@ -604,7 +604,7 @@
       "final_url": "https://qvc.wd5.myworkdayjobs.com/QRG",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 3.1
+      "duration_seconds": 4.43
     },
     {
       "company": "Staples",
@@ -615,29 +615,29 @@
       "final_url": "https://fa-exhh-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/StaplesInc",
       "error": null,
       "jobs_found": 8,
-      "duration_seconds": 2.26
+      "duration_seconds": 1.71
     },
     {
       "company": "Morgan Stanley",
       "careers_url": "https://ms.wd5.myworkdayjobs.com/External",
       "ats_type": "workday",
-      "status": "reachable",
-      "http_status": 200,
+      "status": "api_reachable",
+      "http_status": 429,
       "final_url": "https://ms.wd5.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 30,
-      "duration_seconds": 30.09
+      "jobs_found": 34,
+      "duration_seconds": 30.54
     },
     {
       "company": "Vanguard",
       "careers_url": "https://vanguard.wd5.myworkdayjobs.com/vanguard_external",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://vanguard.wd5.myworkdayjobs.com/vanguard_external",
       "error": null,
-      "jobs_found": 29,
-      "duration_seconds": 24.46
+      "jobs_found": 35,
+      "duration_seconds": 25.72
     },
     {
       "company": "BlackRock",
@@ -648,7 +648,7 @@
       "final_url": "https://blackrock.wd1.myworkdayjobs.com/BlackRock_Professional",
       "error": null,
       "jobs_found": 31,
-      "duration_seconds": 8.77
+      "duration_seconds": 9.72
     },
     {
       "company": "State Street",
@@ -658,8 +658,8 @@
       "http_status": 200,
       "final_url": "https://statestreet.wd1.myworkdayjobs.com/Global",
       "error": null,
-      "jobs_found": 97,
-      "duration_seconds": 40.29
+      "jobs_found": 93,
+      "duration_seconds": 43.12
     },
     {
       "company": "Northern Trust",
@@ -669,8 +669,8 @@
       "http_status": 200,
       "final_url": "https://ntrs.wd1.myworkdayjobs.com/northerntrust",
       "error": null,
-      "jobs_found": 34,
-      "duration_seconds": 13.42
+      "jobs_found": 37,
+      "duration_seconds": 14.07
     },
     {
       "company": "U.S. Bank",
@@ -680,8 +680,8 @@
       "http_status": 200,
       "final_url": "https://usbank.wd1.myworkdayjobs.com/US_Bank_Careers",
       "error": null,
-      "jobs_found": 32,
-      "duration_seconds": 20.92
+      "jobs_found": 30,
+      "duration_seconds": 22.06
     },
     {
       "company": "PNC",
@@ -692,18 +692,18 @@
       "final_url": "https://pnc.wd5.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 27,
-      "duration_seconds": 9.5
+      "duration_seconds": 10.09
     },
     {
       "company": "Truist",
       "careers_url": "https://truist.wd1.myworkdayjobs.com/Careers",
       "ats_type": "workday",
-      "status": "http_error",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://truist.wd1.myworkdayjobs.com/Careers",
       "error": null,
-      "jobs_found": 0,
-      "duration_seconds": 3.32
+      "jobs_found": 34,
+      "duration_seconds": 20.56
     },
     {
       "company": "Regions Bank",
@@ -714,7 +714,7 @@
       "final_url": "https://regions.wd5.myworkdayjobs.com/Regions_Careers",
       "error": null,
       "jobs_found": 15,
-      "duration_seconds": 5.15
+      "duration_seconds": 5.06
     },
     {
       "company": "Fifth Third Bank",
@@ -725,7 +725,7 @@
       "final_url": "https://fifththird.wd5.myworkdayjobs.com/53careers",
       "error": null,
       "jobs_found": 9,
-      "duration_seconds": 8.75
+      "duration_seconds": 10.61
     },
     {
       "company": "M&T Bank",
@@ -736,7 +736,7 @@
       "final_url": "https://mtb.wd5.myworkdayjobs.com/MTB",
       "error": null,
       "jobs_found": 66,
-      "duration_seconds": 11.94
+      "duration_seconds": 12.36
     },
     {
       "company": "Ally Financial",
@@ -747,7 +747,7 @@
       "final_url": "https://ally.wd1.myworkdayjobs.com/Ally",
       "error": null,
       "jobs_found": 14,
-      "duration_seconds": 7.31
+      "duration_seconds": 7.29
     },
     {
       "company": "SoFi",
@@ -757,8 +757,8 @@
       "http_status": 200,
       "final_url": "https://boards-api.greenhouse.io/v1/boards/sofi/jobs",
       "error": null,
-      "jobs_found": 4,
-      "duration_seconds": 0.44
+      "jobs_found": 8,
+      "duration_seconds": 0.45
     },
     {
       "company": "Robinhood",
@@ -769,7 +769,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/robinhood/jobs",
       "error": null,
       "jobs_found": 51,
-      "duration_seconds": 0.39
+      "duration_seconds": 0.51
     },
     {
       "company": "T. Rowe Price",
@@ -779,8 +779,8 @@
       "http_status": 200,
       "final_url": "https://troweprice.wd5.myworkdayjobs.com/TRowePrice",
       "error": null,
-      "jobs_found": 30,
-      "duration_seconds": 9.83
+      "jobs_found": 33,
+      "duration_seconds": 7.77
     },
     {
       "company": "Invesco",
@@ -790,41 +790,41 @@
       "http_status": 429,
       "final_url": "https://invesco.wd1.myworkdayjobs.com/IVZ",
       "error": null,
-      "jobs_found": 16,
-      "duration_seconds": 14.28
+      "jobs_found": 20,
+      "duration_seconds": 11.46
     },
     {
       "company": "Blackstone",
       "careers_url": "https://blackstone.wd1.myworkdayjobs.com/Blackstone_Careers",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://blackstone.wd1.myworkdayjobs.com/Blackstone_Careers",
       "error": null,
-      "jobs_found": 9,
-      "duration_seconds": 6.66
+      "jobs_found": 11,
+      "duration_seconds": 7.48
     },
     {
       "company": "Apollo Global Management",
       "careers_url": "https://athene.wd5.myworkdayjobs.com/Apollo_Careers",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://athene.wd5.myworkdayjobs.com/Apollo_Careers",
       "error": null,
       "jobs_found": 3,
-      "duration_seconds": 5.22
+      "duration_seconds": 3.92
     },
     {
       "company": "CME Group",
       "careers_url": "https://cmegroup.wd1.myworkdayjobs.com/CME_Careers",
       "ats_type": "workday",
-      "status": "reachable",
-      "http_status": 200,
+      "status": "api_reachable",
+      "http_status": 429,
       "final_url": "https://cmegroup.wd1.myworkdayjobs.com/CME_Careers",
       "error": null,
-      "jobs_found": 6,
-      "duration_seconds": 8.17
+      "jobs_found": 5,
+      "duration_seconds": 6.15
     },
     {
       "company": "Nasdaq",
@@ -834,8 +834,8 @@
       "http_status": 429,
       "final_url": "https://nasdaq.wd1.myworkdayjobs.com/Global_External_Site",
       "error": null,
-      "jobs_found": 12,
-      "duration_seconds": 21.1
+      "jobs_found": 15,
+      "duration_seconds": 21.19
     },
     {
       "company": "Morningstar",
@@ -846,7 +846,7 @@
       "final_url": "https://morningstar.wd5.myworkdayjobs.com/Americas",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 2.65
+      "duration_seconds": 2.91
     },
     {
       "company": "Stripe",
@@ -857,7 +857,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/stripe/jobs",
       "error": null,
       "jobs_found": 87,
-      "duration_seconds": 0.8
+      "duration_seconds": 0.66
     },
     {
       "company": "Affirm",
@@ -868,7 +868,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/affirm/jobs",
       "error": null,
       "jobs_found": 89,
-      "duration_seconds": 0.41
+      "duration_seconds": 0.53
     },
     {
       "company": "Coinbase",
@@ -879,7 +879,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/coinbase/jobs",
       "error": null,
       "jobs_found": 78,
-      "duration_seconds": 0.45
+      "duration_seconds": 0.46
     },
     {
       "company": "Chime",
@@ -890,7 +890,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/chime/jobs",
       "error": null,
       "jobs_found": 28,
-      "duration_seconds": 0.4
+      "duration_seconds": 0.41
     },
     {
       "company": "Brex",
@@ -901,7 +901,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/brex/jobs",
       "error": null,
       "jobs_found": 45,
-      "duration_seconds": 0.51
+      "duration_seconds": 0.37
     },
     {
       "company": "Toast",
@@ -912,7 +912,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/toast/jobs",
       "error": null,
       "jobs_found": 22,
-      "duration_seconds": 0.51
+      "duration_seconds": 0.44
     },
     {
       "company": "LendingClub",
@@ -923,29 +923,29 @@
       "final_url": "https://lendingclub.wd1.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 4,
-      "duration_seconds": 4.62
+      "duration_seconds": 6.01
     },
     {
       "company": "Global Payments",
       "careers_url": "https://tsys.wd1.myworkdayjobs.com/TSYS",
       "ats_type": "workday",
-      "status": "reachable",
-      "http_status": 200,
+      "status": "api_reachable",
+      "http_status": 429,
       "final_url": "https://tsys.wd1.myworkdayjobs.com/TSYS",
       "error": null,
-      "jobs_found": 14,
-      "duration_seconds": 17.56
+      "jobs_found": 13,
+      "duration_seconds": 22.27
     },
     {
       "company": "Green Dot",
       "careers_url": "https://greendotcorp.wd1.myworkdayjobs.com/gdc",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://greendotcorp.wd1.myworkdayjobs.com/gdc",
       "error": null,
-      "jobs_found": 12,
-      "duration_seconds": 7.67
+      "jobs_found": 18,
+      "duration_seconds": 8.8
     },
     {
       "company": "Corpay",
@@ -956,7 +956,7 @@
       "final_url": "https://corpay.wd103.myworkdayjobs.com/Ext_001",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 4.49
+      "duration_seconds": 4.46
     },
     {
       "company": "Broadridge",
@@ -967,18 +967,18 @@
       "final_url": "https://broadridge.wd5.myworkdayjobs.com/Careers",
       "error": null,
       "jobs_found": 23,
-      "duration_seconds": 9.81
+      "duration_seconds": 9.57
     },
     {
       "company": "Elevance Health/Anthem",
       "careers_url": "https://elevancehealth.wd1.myworkdayjobs.com/ANT",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://elevancehealth.wd1.myworkdayjobs.com/ANT",
       "error": null,
-      "jobs_found": 13,
-      "duration_seconds": 7.65
+      "jobs_found": 14,
+      "duration_seconds": 8.37
     },
     {
       "company": "Centene",
@@ -988,8 +988,8 @@
       "http_status": 200,
       "final_url": "https://centene.wd5.myworkdayjobs.com/centene_external",
       "error": null,
-      "jobs_found": 4,
-      "duration_seconds": 2.8
+      "jobs_found": 3,
+      "duration_seconds": 3.1
     },
     {
       "company": "Molina Healthcare",
@@ -1000,18 +1000,18 @@
       "final_url": "https://hckd.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
       "jobs_found": 4,
-      "duration_seconds": 1.85
+      "duration_seconds": 1.83
     },
     {
       "company": "HCSC",
       "careers_url": "https://hcsc.wd1.myworkdayjobs.com/HCSC_External",
       "ats_type": "workday",
-      "status": "reachable",
-      "http_status": 200,
+      "status": "api_reachable",
+      "http_status": 429,
       "final_url": "https://hcsc.wd1.myworkdayjobs.com/HCSC_External",
       "error": null,
       "jobs_found": 7,
-      "duration_seconds": 2.14
+      "duration_seconds": 4.26
     },
     {
       "company": "Prudential Financial",
@@ -1022,7 +1022,7 @@
       "final_url": "https://pru.wd5.myworkdayjobs.com/Careers",
       "error": null,
       "jobs_found": 9,
-      "duration_seconds": 5.33
+      "duration_seconds": 6.17
     },
     {
       "company": "Northwestern Mutual",
@@ -1033,7 +1033,7 @@
       "final_url": "https://northwesternmutual.wd5.myworkdayjobs.com/CORPORATE-CAREERS",
       "error": null,
       "jobs_found": 11,
-      "duration_seconds": 4.27
+      "duration_seconds": 3.16
     },
     {
       "company": "Guardian Life",
@@ -1044,7 +1044,7 @@
       "final_url": "https://guardianlife.wd5.myworkdayjobs.com/Guardian-Life-Careers",
       "error": null,
       "jobs_found": 14,
-      "duration_seconds": 4.39
+      "duration_seconds": 5.16
     },
     {
       "company": "AIG",
@@ -1055,7 +1055,7 @@
       "final_url": "https://aig.wd1.myworkdayjobs.com/AIG",
       "error": null,
       "jobs_found": 11,
-      "duration_seconds": 5.71
+      "duration_seconds": 4.21
     },
     {
       "company": "Travelers",
@@ -1065,8 +1065,8 @@
       "http_status": 200,
       "final_url": "https://travelers.wd5.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 35,
-      "duration_seconds": 11.62
+      "jobs_found": 38,
+      "duration_seconds": 10.46
     },
     {
       "company": "Allstate",
@@ -1076,8 +1076,8 @@
       "http_status": 200,
       "final_url": "https://allstate.wd5.myworkdayjobs.com/allstate_careers",
       "error": null,
-      "jobs_found": 40,
-      "duration_seconds": 13.16
+      "jobs_found": 42,
+      "duration_seconds": 13.8
     },
     {
       "company": "Nationwide",
@@ -1088,7 +1088,7 @@
       "final_url": "https://nationwide.wd1.myworkdayjobs.com/Nationwide_Career",
       "error": null,
       "jobs_found": 9,
-      "duration_seconds": 3.23
+      "duration_seconds": 3.55
     },
     {
       "company": "CNA",
@@ -1099,7 +1099,7 @@
       "final_url": "https://cna.wd1.myworkdayjobs.com/CNA_Careers",
       "error": null,
       "jobs_found": 8,
-      "duration_seconds": 2.89
+      "duration_seconds": 2.85
     },
     {
       "company": "The Hartford",
@@ -1109,8 +1109,8 @@
       "http_status": 200,
       "final_url": "https://thehartford.wd5.myworkdayjobs.com/Careers_External",
       "error": null,
-      "jobs_found": 22,
-      "duration_seconds": 17.72
+      "jobs_found": 23,
+      "duration_seconds": 16.07
     },
     {
       "company": "Unum",
@@ -1121,7 +1121,7 @@
       "final_url": "https://unum.wd1.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 3,
-      "duration_seconds": 2.69
+      "duration_seconds": 2.74
     },
     {
       "company": "Assurant",
@@ -1132,18 +1132,18 @@
       "final_url": "https://assurant.wd1.myworkdayjobs.com/Assurant_Careers",
       "error": null,
       "jobs_found": 1,
-      "duration_seconds": 1.69
+      "duration_seconds": 1.82
     },
     {
       "company": "Markel",
       "careers_url": "https://markelcorp.wd5.myworkdayjobs.com/GlobalCareers",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://markelcorp.wd5.myworkdayjobs.com/GlobalCareers",
       "error": null,
       "jobs_found": 1,
-      "duration_seconds": 5.71
+      "duration_seconds": 4.53
     },
     {
       "company": "Marsh McLennan",
@@ -1153,8 +1153,8 @@
       "http_status": 200,
       "final_url": "https://mmc.wd1.myworkdayjobs.com/MMC",
       "error": null,
-      "jobs_found": 7,
-      "duration_seconds": 18.02
+      "jobs_found": 9,
+      "duration_seconds": 19.35
     },
     {
       "company": "Oscar Health",
@@ -1165,7 +1165,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/oscar/jobs",
       "error": null,
       "jobs_found": 18,
-      "duration_seconds": 0.43
+      "duration_seconds": 0.53
     },
     {
       "company": "GuideWell/Florida Blue",
@@ -1176,7 +1176,7 @@
       "final_url": "https://fa-etum-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
       "jobs_found": 2,
-      "duration_seconds": 2.25
+      "duration_seconds": 1.97
     },
     {
       "company": "Cardinal Health",
@@ -1186,8 +1186,8 @@
       "http_status": 200,
       "final_url": "https://cardinalhealth.wd1.myworkdayjobs.com/EXT",
       "error": null,
-      "jobs_found": 20,
-      "duration_seconds": 16.59
+      "jobs_found": 19,
+      "duration_seconds": 18.02
     },
     {
       "company": "IQVIA",
@@ -1197,8 +1197,8 @@
       "http_status": 200,
       "final_url": "https://iqvia.wd1.myworkdayjobs.com/IQVIA",
       "error": null,
-      "jobs_found": 16,
-      "duration_seconds": 22.13
+      "jobs_found": 14,
+      "duration_seconds": 23.98
     },
     {
       "company": "athenahealth",
@@ -1208,8 +1208,8 @@
       "http_status": 200,
       "final_url": "https://athenahealth.wd1.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 8,
-      "duration_seconds": 6.53
+      "jobs_found": 7,
+      "duration_seconds": 8.46
     },
     {
       "company": "Teladoc Health",
@@ -1220,7 +1220,7 @@
       "final_url": "https://teladoc.wd503.myworkdayjobs.com/teladochealth_is_hiring",
       "error": null,
       "jobs_found": 1,
-      "duration_seconds": 2.24
+      "duration_seconds": 2.08
     },
     {
       "company": "Northwell Health",
@@ -1231,7 +1231,7 @@
       "final_url": "https://eppr.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 1.71
+      "duration_seconds": 1.62
     },
     {
       "company": "Humana Technology",
@@ -1241,19 +1241,19 @@
       "http_status": 200,
       "final_url": "https://humana.wd5.myworkdayjobs.com/Humana_External_Career_Site",
       "error": null,
-      "jobs_found": 42,
-      "duration_seconds": 9.74
+      "jobs_found": 41,
+      "duration_seconds": 10.72
     },
     {
       "company": "Prime Therapeutics",
       "careers_url": "https://primetherapeutics.wd1.myworkdayjobs.com/PrimeTherapeuticsCareers",
       "ats_type": "workday",
-      "status": "api_reachable",
+      "status": "http_error",
       "http_status": 429,
       "final_url": "https://primetherapeutics.wd1.myworkdayjobs.com/PrimeTherapeuticsCareers",
       "error": null,
-      "jobs_found": 1,
-      "duration_seconds": 3.87
+      "jobs_found": 0,
+      "duration_seconds": 3.67
     },
     {
       "company": "Medtronic",
@@ -1263,8 +1263,8 @@
       "http_status": 429,
       "final_url": "https://medtronic.wd1.myworkdayjobs.com/MedtronicCareers",
       "error": null,
-      "jobs_found": 38,
-      "duration_seconds": 36.52
+      "jobs_found": 15,
+      "duration_seconds": 20.72
     },
     {
       "company": "Abbott",
@@ -1275,7 +1275,7 @@
       "final_url": "https://abbott.wd5.myworkdayjobs.com/abbottcareers",
       "error": null,
       "jobs_found": 136,
-      "duration_seconds": 46.26
+      "duration_seconds": 43.11
     },
     {
       "company": "Stryker",
@@ -1285,8 +1285,8 @@
       "http_status": 200,
       "final_url": "https://stryker.wd1.myworkdayjobs.com/StrykerCareers",
       "error": null,
-      "jobs_found": 44,
-      "duration_seconds": 28.52
+      "jobs_found": 49,
+      "duration_seconds": 27.54
     },
     {
       "company": "GE HealthCare",
@@ -1296,8 +1296,8 @@
       "http_status": 200,
       "final_url": "https://gehc.wd5.myworkdayjobs.com/GEHC_ExternalSite",
       "error": null,
-      "jobs_found": 33,
-      "duration_seconds": 22.42
+      "jobs_found": 31,
+      "duration_seconds": 19.05
     },
     {
       "company": "Philips",
@@ -1308,7 +1308,7 @@
       "final_url": "https://philips.wd3.myworkdayjobs.com/jobs-and-careers",
       "error": null,
       "jobs_found": 24,
-      "duration_seconds": 22.61
+      "duration_seconds": 22.68
     },
     {
       "company": "Baxter",
@@ -1318,8 +1318,8 @@
       "http_status": 200,
       "final_url": "https://baxter.wd1.myworkdayjobs.com/Baxter",
       "error": null,
-      "jobs_found": 19,
-      "duration_seconds": 8.62
+      "jobs_found": 22,
+      "duration_seconds": 15.09
     },
     {
       "company": "Becton Dickinson/BD",
@@ -1329,8 +1329,8 @@
       "http_status": 200,
       "final_url": "https://bdx.wd1.myworkdayjobs.com/EXTERNAL_CAREER_SITE_USA",
       "error": null,
-      "jobs_found": 87,
-      "duration_seconds": 19.74
+      "jobs_found": 84,
+      "duration_seconds": 35.14
     },
     {
       "company": "Edwards Lifesciences",
@@ -1341,7 +1341,7 @@
       "final_url": "https://edwards.wd5.myworkdayjobs.com/EdwardsCareers",
       "error": null,
       "jobs_found": 16,
-      "duration_seconds": 9.96
+      "duration_seconds": 10.4
     },
     {
       "company": "Dexcom",
@@ -1351,8 +1351,8 @@
       "http_status": 200,
       "final_url": "https://dexcom.wd1.myworkdayjobs.com/Dexcom",
       "error": null,
-      "jobs_found": 27,
-      "duration_seconds": 15.68
+      "jobs_found": 24,
+      "duration_seconds": 16.74
     },
     {
       "company": "ResMed",
@@ -1363,51 +1363,51 @@
       "final_url": "https://resmed.wd3.myworkdayjobs.com/Resmed_External_Careers",
       "error": null,
       "jobs_found": 17,
-      "duration_seconds": 9.88
+      "duration_seconds": 9.58
     },
     {
       "company": "Alcon",
       "careers_url": "https://alcon.wd5.myworkdayjobs.com/careers_alcon",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://alcon.wd5.myworkdayjobs.com/careers_alcon",
       "error": null,
-      "jobs_found": 13,
-      "duration_seconds": 5.82
+      "jobs_found": 14,
+      "duration_seconds": 8.37
     },
     {
       "company": "Illumina",
       "careers_url": "https://illumina.wd1.myworkdayjobs.com/illumina-careers",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://illumina.wd1.myworkdayjobs.com/illumina-careers",
       "error": null,
       "jobs_found": 15,
-      "duration_seconds": 12.5
+      "duration_seconds": 14.36
     },
     {
       "company": "Thermo Fisher Scientific",
       "careers_url": "https://thermofisher.wd5.myworkdayjobs.com/ThermoFisherCareers",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://thermofisher.wd5.myworkdayjobs.com/ThermoFisherCareers",
       "error": null,
-      "jobs_found": 36,
-      "duration_seconds": 37.82
+      "jobs_found": 39,
+      "duration_seconds": 40.38
     },
     {
       "company": "Exact Sciences",
       "careers_url": "https://exactsciences.wd1.myworkdayjobs.com/Exact_Sciences",
       "ats_type": "workday",
-      "status": "http_error",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://exactsciences.wd1.myworkdayjobs.com/Exact_Sciences",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 2.3
+      "duration_seconds": 1.36
     },
     {
       "company": "Johnson & Johnson",
@@ -1417,8 +1417,8 @@
       "http_status": 200,
       "final_url": "https://jj.wd5.myworkdayjobs.com/JJ",
       "error": null,
-      "jobs_found": 42,
-      "duration_seconds": 26.22
+      "jobs_found": 40,
+      "duration_seconds": 24.56
     },
     {
       "company": "Pfizer",
@@ -1429,7 +1429,7 @@
       "final_url": "https://pfizer.wd1.myworkdayjobs.com/PfizerCareers",
       "error": null,
       "jobs_found": 9,
-      "duration_seconds": 7.48
+      "duration_seconds": 8.13
     },
     {
       "company": "Merck",
@@ -1439,8 +1439,8 @@
       "http_status": 429,
       "final_url": "https://msd.wd5.myworkdayjobs.com/SearchJobs",
       "error": null,
-      "jobs_found": 4,
-      "duration_seconds": 16.79
+      "jobs_found": 5,
+      "duration_seconds": 16.29
     },
     {
       "company": "Amgen",
@@ -1450,8 +1450,8 @@
       "http_status": 200,
       "final_url": "https://amgen.wd1.myworkdayjobs.com/Careers",
       "error": null,
-      "jobs_found": 44,
-      "duration_seconds": 39.49
+      "jobs_found": 50,
+      "duration_seconds": 40.81
     },
     {
       "company": "Gilead Sciences",
@@ -1462,7 +1462,7 @@
       "final_url": "https://gilead.wd1.myworkdayjobs.com/gileadcareers",
       "error": null,
       "jobs_found": 7,
-      "duration_seconds": 5.25
+      "duration_seconds": 7.89
     },
     {
       "company": "Bristol Myers Squibb",
@@ -1472,8 +1472,8 @@
       "http_status": 429,
       "final_url": "https://bristolmyerssquibb.wd5.myworkdayjobs.com/BMS",
       "error": null,
-      "jobs_found": 13,
-      "duration_seconds": 9.99
+      "jobs_found": 15,
+      "duration_seconds": 18.25
     },
     {
       "company": "Moderna",
@@ -1483,8 +1483,8 @@
       "http_status": 200,
       "final_url": "https://modernatx.wd1.myworkdayjobs.com/M_tx",
       "error": null,
-      "jobs_found": 26,
-      "duration_seconds": 16.18
+      "jobs_found": 29,
+      "duration_seconds": 14.69
     },
     {
       "company": "Biogen",
@@ -1495,7 +1495,7 @@
       "final_url": "https://biibhr.wd3.myworkdayjobs.com/external",
       "error": null,
       "jobs_found": 5,
-      "duration_seconds": 5.47
+      "duration_seconds": 5.73
     },
     {
       "company": "Vertex Pharmaceuticals",
@@ -1506,7 +1506,7 @@
       "final_url": "https://vrtx.wd501.myworkdayjobs.com/vertex_careers",
       "error": null,
       "jobs_found": 8,
-      "duration_seconds": 14.18
+      "duration_seconds": 3.34
     },
     {
       "company": "AstraZeneca",
@@ -1517,7 +1517,7 @@
       "final_url": "https://astrazeneca.wd3.myworkdayjobs.com/Careers",
       "error": null,
       "jobs_found": 12,
-      "duration_seconds": 23.67
+      "duration_seconds": 12.71
     },
     {
       "company": "Novartis",
@@ -1539,7 +1539,7 @@
       "final_url": "https://roche.wd3.myworkdayjobs.com/roche-ext",
       "error": null,
       "jobs_found": 6,
-      "duration_seconds": 22.48
+      "duration_seconds": 18.65
     },
     {
       "company": "Sanofi",
@@ -1549,8 +1549,8 @@
       "http_status": 200,
       "final_url": "https://sanofi.wd3.myworkdayjobs.com/SanofiCareers",
       "error": null,
-      "jobs_found": 8,
-      "duration_seconds": 16.54
+      "jobs_found": 9,
+      "duration_seconds": 16.67
     },
     {
       "company": "GSK",
@@ -1561,7 +1561,7 @@
       "final_url": "https://gsk.wd5.myworkdayjobs.com/GSKCareers",
       "error": null,
       "jobs_found": 6,
-      "duration_seconds": 13.91
+      "duration_seconds": 14.65
     },
     {
       "company": "CSL Behring",
@@ -1572,7 +1572,7 @@
       "final_url": "https://csl.wd1.myworkdayjobs.com/CSL_External",
       "error": null,
       "jobs_found": 2,
-      "duration_seconds": 5.63
+      "duration_seconds": 6.01
     },
     {
       "company": "Labcorp",
@@ -1582,8 +1582,8 @@
       "http_status": 200,
       "final_url": "https://labcorp.wd1.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 12,
-      "duration_seconds": 3.15
+      "jobs_found": 11,
+      "duration_seconds": 18.05
     },
     {
       "company": "Quest Diagnostics",
@@ -1594,7 +1594,7 @@
       "final_url": "https://hdox.fa.us6.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
       "jobs_found": 17,
-      "duration_seconds": 1.92
+      "duration_seconds": 3.08
     },
     {
       "company": "Adobe",
@@ -1604,8 +1604,8 @@
       "http_status": 200,
       "final_url": "https://adobe.wd5.myworkdayjobs.com/external_experienced",
       "error": null,
-      "jobs_found": 49,
-      "duration_seconds": 20.81
+      "jobs_found": 55,
+      "duration_seconds": 18.35
     },
     {
       "company": "Red Hat",
@@ -1616,7 +1616,7 @@
       "final_url": "https://redhat.wd5.myworkdayjobs.com/Jobs",
       "error": null,
       "jobs_found": 6,
-      "duration_seconds": 9.28
+      "duration_seconds": 10.86
     },
     {
       "company": "HPE",
@@ -1626,8 +1626,8 @@
       "http_status": 200,
       "final_url": "https://hpe.wd5.myworkdayjobs.com/Jobsathpe",
       "error": null,
-      "jobs_found": 123,
-      "duration_seconds": 73.13
+      "jobs_found": 165,
+      "duration_seconds": 91.85
     },
     {
       "company": "HP Inc",
@@ -1637,8 +1637,8 @@
       "http_status": 200,
       "final_url": "https://hp.wd5.myworkdayjobs.com/ExternalCareerSite",
       "error": null,
-      "jobs_found": 55,
-      "duration_seconds": 32.99
+      "jobs_found": 58,
+      "duration_seconds": 39.54
     },
     {
       "company": "Broadcom",
@@ -1649,7 +1649,7 @@
       "final_url": "https://broadcom.wd1.myworkdayjobs.com/External_Career",
       "error": null,
       "jobs_found": 86,
-      "duration_seconds": 10.44
+      "duration_seconds": 11.49
     },
     {
       "company": "Databricks",
@@ -1660,7 +1660,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/databricks/jobs",
       "error": null,
       "jobs_found": 208,
-      "duration_seconds": 0.9
+      "duration_seconds": 0.73
     },
     {
       "company": "MongoDB",
@@ -1671,7 +1671,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/mongodb/jobs",
       "error": null,
       "jobs_found": 34,
-      "duration_seconds": 0.82
+      "duration_seconds": 0.49
     },
     {
       "company": "Elastic",
@@ -1682,7 +1682,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/elastic/jobs",
       "error": null,
       "jobs_found": 65,
-      "duration_seconds": 0.6
+      "duration_seconds": 0.53
     },
     {
       "company": "Cloudflare",
@@ -1693,7 +1693,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/cloudflare/jobs",
       "error": null,
       "jobs_found": 120,
-      "duration_seconds": 0.74
+      "duration_seconds": 0.6
     },
     {
       "company": "Okta",
@@ -1704,7 +1704,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/okta/jobs",
       "error": null,
       "jobs_found": 43,
-      "duration_seconds": 0.72
+      "duration_seconds": 0.53
     },
     {
       "company": "Fortinet",
@@ -1715,7 +1715,7 @@
       "final_url": "https://edel.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2001",
       "error": null,
       "jobs_found": 49,
-      "duration_seconds": 3.07
+      "duration_seconds": 2.39
     },
     {
       "company": "GitLab",
@@ -1726,7 +1726,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/gitlab/jobs",
       "error": null,
       "jobs_found": 34,
-      "duration_seconds": 0.43
+      "duration_seconds": 0.54
     },
     {
       "company": "Twilio",
@@ -1737,18 +1737,18 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/twilio/jobs",
       "error": null,
       "jobs_found": 21,
-      "duration_seconds": 0.54
+      "duration_seconds": 0.34
     },
     {
       "company": "Zoom",
       "careers_url": "https://zoom.wd5.myworkdayjobs.com/Zoom",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://zoom.wd5.myworkdayjobs.com/Zoom",
       "error": null,
-      "jobs_found": 5,
-      "duration_seconds": 9.64
+      "jobs_found": 7,
+      "duration_seconds": 9.59
     },
     {
       "company": "Dropbox",
@@ -1759,7 +1759,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/dropbox/jobs",
       "error": null,
       "jobs_found": 2,
-      "duration_seconds": 0.3
+      "duration_seconds": 0.28
     },
     {
       "company": "Pure Storage",
@@ -1770,18 +1770,18 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/purestorage/jobs",
       "error": null,
       "jobs_found": 57,
-      "duration_seconds": 0.43
+      "duration_seconds": 0.57
     },
     {
       "company": "Cloudera",
       "careers_url": "https://cloudera.wd5.myworkdayjobs.com/External_Career",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://cloudera.wd5.myworkdayjobs.com/External_Career",
       "error": null,
       "jobs_found": 3,
-      "duration_seconds": 8.52
+      "duration_seconds": 12.75
     },
     {
       "company": "Alteryx",
@@ -1791,8 +1791,8 @@
       "http_status": 200,
       "final_url": "https://alteryx.wd108.myworkdayjobs.com/AlteryxCareers",
       "error": null,
-      "jobs_found": 17,
-      "duration_seconds": 3.25
+      "jobs_found": 18,
+      "duration_seconds": 3.66
     },
     {
       "company": "Datadog",
@@ -1802,8 +1802,8 @@
       "http_status": 200,
       "final_url": "https://boards-api.greenhouse.io/v1/boards/datadog/jobs",
       "error": null,
-      "jobs_found": 46,
-      "duration_seconds": 0.52
+      "jobs_found": 45,
+      "duration_seconds": 0.56
     },
     {
       "company": "PagerDuty",
@@ -1814,7 +1814,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/pagerduty/jobs",
       "error": null,
       "jobs_found": 6,
-      "duration_seconds": 0.29
+      "duration_seconds": 0.3
     },
     {
       "company": "Asana",
@@ -1825,7 +1825,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/asana/jobs",
       "error": null,
       "jobs_found": 14,
-      "duration_seconds": 0.41
+      "duration_seconds": 0.35
     },
     {
       "company": "Figma",
@@ -1836,7 +1836,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/figma/jobs",
       "error": null,
       "jobs_found": 26,
-      "duration_seconds": 0.43
+      "duration_seconds": 0.49
     },
     {
       "company": "Vercel",
@@ -1847,7 +1847,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/vercel/jobs",
       "error": null,
       "jobs_found": 29,
-      "duration_seconds": 0.49
+      "duration_seconds": 0.31
     },
     {
       "company": "Anthropic",
@@ -1858,7 +1858,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/anthropic/jobs",
       "error": null,
       "jobs_found": 197,
-      "duration_seconds": 0.9
+      "duration_seconds": 0.74
     },
     {
       "company": "Intel",
@@ -1868,8 +1868,8 @@
       "http_status": 200,
       "final_url": "https://intel.wd1.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 88,
-      "duration_seconds": 65.7
+      "jobs_found": 87,
+      "duration_seconds": 60.3
     },
     {
       "company": "Micron Technology",
@@ -1879,8 +1879,8 @@
       "http_status": 200,
       "final_url": "https://micron.wd1.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 79,
-      "duration_seconds": 83.76
+      "jobs_found": 70,
+      "duration_seconds": 69.94
     },
     {
       "company": "KLA",
@@ -1890,8 +1890,8 @@
       "http_status": 200,
       "final_url": "https://kla.wd1.myworkdayjobs.com/Search",
       "error": null,
-      "jobs_found": 108,
-      "duration_seconds": 39.05
+      "jobs_found": 55,
+      "duration_seconds": 47.04
     },
     {
       "company": "Marvell Technology",
@@ -1901,30 +1901,30 @@
       "http_status": 429,
       "final_url": "https://marvell.wd1.myworkdayjobs.com/MarvellCareers",
       "error": null,
-      "jobs_found": 16,
-      "duration_seconds": 12.53
+      "jobs_found": 30,
+      "duration_seconds": 25.99
     },
     {
       "company": "Cadence Design Systems",
       "careers_url": "https://cadence.wd1.myworkdayjobs.com/External_Careers",
       "ats_type": "workday",
-      "status": "reachable",
-      "http_status": 200,
+      "status": "api_reachable",
+      "http_status": 429,
       "final_url": "https://cadence.wd1.myworkdayjobs.com/External_Careers",
       "error": null,
-      "jobs_found": 24,
-      "duration_seconds": 37.13
+      "jobs_found": 9,
+      "duration_seconds": 21.18
     },
     {
       "company": "Analog Devices",
       "careers_url": "https://analogdevices.wd1.myworkdayjobs.com/External",
       "ats_type": "workday",
-      "status": "http_error",
+      "status": "api_reachable",
       "http_status": 429,
       "final_url": "https://analogdevices.wd1.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 0,
-      "duration_seconds": 3.48
+      "jobs_found": 19,
+      "duration_seconds": 30.16
     },
     {
       "company": "GlobalFoundries",
@@ -1934,8 +1934,8 @@
       "http_status": 429,
       "final_url": "https://globalfoundries.wd1.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 9,
-      "duration_seconds": 11.87
+      "jobs_found": 22,
+      "duration_seconds": 21.19
     },
     {
       "company": "Logitech",
@@ -1946,7 +1946,7 @@
       "final_url": "https://logitech.wd5.myworkdayjobs.com/Logitech",
       "error": null,
       "jobs_found": 7,
-      "duration_seconds": 7.54
+      "duration_seconds": 6.79
     },
     {
       "company": "Motorola Solutions",
@@ -1956,8 +1956,8 @@
       "http_status": 200,
       "final_url": "https://motorolasolutions.wd5.myworkdayjobs.com/Careers",
       "error": null,
-      "jobs_found": 76,
-      "duration_seconds": 37.38
+      "jobs_found": 77,
+      "duration_seconds": 36.08
     },
     {
       "company": "Autodesk",
@@ -1967,19 +1967,19 @@
       "http_status": 429,
       "final_url": "https://autodesk.wd1.myworkdayjobs.com/Ext",
       "error": null,
-      "jobs_found": 5,
-      "duration_seconds": 18.35
+      "jobs_found": 4,
+      "duration_seconds": 15.94
     },
     {
       "company": "PTC",
       "careers_url": "https://ptc.wd1.myworkdayjobs.com/PTC",
       "ats_type": "workday",
-      "status": "reachable",
-      "http_status": 200,
+      "status": "api_reachable",
+      "http_status": 429,
       "final_url": "https://ptc.wd1.myworkdayjobs.com/PTC",
       "error": null,
       "jobs_found": 15,
-      "duration_seconds": 19.68
+      "duration_seconds": 21.62
     },
     {
       "company": "Trimble",
@@ -1989,8 +1989,8 @@
       "http_status": 429,
       "final_url": "https://trimble.wd1.myworkdayjobs.com/TrimbleCareers",
       "error": null,
-      "jobs_found": 16,
-      "duration_seconds": 14.14
+      "jobs_found": 23,
+      "duration_seconds": 20.49
     },
     {
       "company": "Bentley Systems",
@@ -2000,19 +2000,19 @@
       "http_status": 200,
       "final_url": "https://bentleysystems.wd5.myworkdayjobs.com/bentley",
       "error": null,
-      "jobs_found": 3,
-      "duration_seconds": 13.68
+      "jobs_found": 7,
+      "duration_seconds": 13.5
     },
     {
       "company": "Epicor",
       "careers_url": "https://epicorsoftware.wd5.myworkdayjobs.com/epicorjobs",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://epicorsoftware.wd5.myworkdayjobs.com/epicorjobs",
       "error": null,
-      "jobs_found": 2,
-      "duration_seconds": 4.8
+      "jobs_found": 3,
+      "duration_seconds": 5.63
     },
     {
       "company": "Duck Creek Technologies",
@@ -2023,7 +2023,7 @@
       "final_url": "https://duckcreek.wd1.myworkdayjobs.com/duckcreekcareers",
       "error": null,
       "jobs_found": 7,
-      "duration_seconds": 4.08
+      "duration_seconds": 5.65
     },
     {
       "company": "Workiva",
@@ -2034,7 +2034,7 @@
       "final_url": "https://workiva.wd503.myworkdayjobs.com/careers",
       "error": null,
       "jobs_found": 8,
-      "duration_seconds": 4.23
+      "duration_seconds": 4.2
     },
     {
       "company": "Gusto",
@@ -2045,7 +2045,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/gusto/jobs",
       "error": null,
       "jobs_found": 39,
-      "duration_seconds": 0.34
+      "duration_seconds": 0.42
     },
     {
       "company": "Greenhouse",
@@ -2056,7 +2056,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/greenhouse/jobs",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 0.25
+      "duration_seconds": 0.31
     },
     {
       "company": "Samsara",
@@ -2067,7 +2067,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/samsara/jobs",
       "error": null,
       "jobs_found": 55,
-      "duration_seconds": 0.67
+      "duration_seconds": 0.6
     },
     {
       "company": "MRI Software",
@@ -2078,18 +2078,18 @@
       "final_url": "https://mrisoftware.wd501.myworkdayjobs.com/External_CareerSite",
       "error": null,
       "jobs_found": 1,
-      "duration_seconds": 2.45
+      "duration_seconds": 2.63
     },
     {
       "company": "Proofpoint",
       "careers_url": "https://proofpoint.wd5.myworkdayjobs.com/proofpointcareers",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://proofpoint.wd5.myworkdayjobs.com/proofpointcareers",
       "error": null,
-      "jobs_found": 6,
-      "duration_seconds": 23.34
+      "jobs_found": 7,
+      "duration_seconds": 11.64
     },
     {
       "company": "Airbnb",
@@ -2100,7 +2100,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/airbnb/jobs",
       "error": null,
       "jobs_found": 43,
-      "duration_seconds": 0.49
+      "duration_seconds": 0.48
     },
     {
       "company": "Lyft",
@@ -2111,7 +2111,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/lyft/jobs",
       "error": null,
       "jobs_found": 16,
-      "duration_seconds": 0.42
+      "duration_seconds": 0.46
     },
     {
       "company": "Travelport",
@@ -2122,7 +2122,7 @@
       "final_url": "https://ejzg.fa.us6.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 2.91
+      "duration_seconds": 1.78
     },
     {
       "company": "Avis Budget Group",
@@ -2133,7 +2133,7 @@
       "final_url": "https://avisbudget.wd1.myworkdayjobs.com/ABG_Careers",
       "error": null,
       "jobs_found": 6,
-      "duration_seconds": 2.43
+      "duration_seconds": 8.05
     },
     {
       "company": "General Motors",
@@ -2143,8 +2143,8 @@
       "http_status": 200,
       "final_url": "https://generalmotors.wd5.myworkdayjobs.com/Careers_GM",
       "error": null,
-      "jobs_found": 166,
-      "duration_seconds": 47.67
+      "jobs_found": 246,
+      "duration_seconds": 60.93
     },
     {
       "company": "Ford",
@@ -2154,8 +2154,8 @@
       "http_status": 200,
       "final_url": "https://efds.fa.em5.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
-      "jobs_found": 77,
-      "duration_seconds": 4.96
+      "jobs_found": 73,
+      "duration_seconds": 5.21
     },
     {
       "company": "Valeo",
@@ -2166,7 +2166,7 @@
       "final_url": "https://valeo.wd3.myworkdayjobs.com/valeo_jobs",
       "error": null,
       "jobs_found": 10,
-      "duration_seconds": 28.58
+      "duration_seconds": 41.67
     },
     {
       "company": "Cummins",
@@ -2176,8 +2176,8 @@
       "http_status": 200,
       "final_url": "https://fa-espx-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
-      "jobs_found": 9,
-      "duration_seconds": 3.73
+      "jobs_found": 10,
+      "duration_seconds": 3.46
     },
     {
       "company": "Waymo",
@@ -2188,7 +2188,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/waymo/jobs",
       "error": null,
       "jobs_found": 158,
-      "duration_seconds": 0.42
+      "duration_seconds": 0.53
     },
     {
       "company": "CarGurus",
@@ -2199,7 +2199,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/cargurus/jobs",
       "error": null,
       "jobs_found": 14,
-      "duration_seconds": 0.25
+      "duration_seconds": 0.27
     },
     {
       "company": "Comcast",
@@ -2209,19 +2209,19 @@
       "http_status": 200,
       "final_url": "https://comcast.wd115.myworkdayjobs.com/Comcast_Careers",
       "error": null,
-      "jobs_found": 57,
-      "duration_seconds": 6.38
+      "jobs_found": 56,
+      "duration_seconds": 6.64
     },
     {
       "company": "Warner Bros. Discovery",
       "careers_url": "https://warnerbros.wd5.myworkdayjobs.com/global",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://warnerbros.wd5.myworkdayjobs.com/global",
       "error": null,
-      "jobs_found": 18,
-      "duration_seconds": 18.49
+      "jobs_found": 22,
+      "duration_seconds": 14.26
     },
     {
       "company": "Sony",
@@ -2232,7 +2232,7 @@
       "final_url": "https://sonyglobal.wd1.myworkdayjobs.com/SonyGlobalCareers",
       "error": null,
       "jobs_found": 8,
-      "duration_seconds": 3.49
+      "duration_seconds": 3.19
     },
     {
       "company": "Discord",
@@ -2243,7 +2243,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/discord/jobs",
       "error": null,
       "jobs_found": 25,
-      "duration_seconds": 0.25
+      "duration_seconds": 0.28
     },
     {
       "company": "Hearst",
@@ -2254,7 +2254,7 @@
       "final_url": "https://eevd.fa.us6.oraclecloud.com/hcmUI/CandidateExperience/errors/404",
       "error": null,
       "jobs_found": 17,
-      "duration_seconds": 3.12
+      "duration_seconds": 2.84
     },
     {
       "company": "Dow Jones",
@@ -2265,18 +2265,18 @@
       "final_url": "https://dowjones.wd1.myworkdayjobs.com/Dow_Jones_Career",
       "error": null,
       "jobs_found": 8,
-      "duration_seconds": 4.06
+      "duration_seconds": 25.86
     },
     {
       "company": "iHeartMedia",
       "careers_url": "https://iheartmedia.wd5.myworkdayjobs.com/External_iHM",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://iheartmedia.wd5.myworkdayjobs.com/External_iHM",
       "error": null,
-      "jobs_found": 17,
-      "duration_seconds": 9.01
+      "jobs_found": 18,
+      "duration_seconds": 15.06
     },
     {
       "company": "Live Nation Entertainment",
@@ -2287,7 +2287,7 @@
       "final_url": "https://livenation.wd503.myworkdayjobs.com/LNExternalSite",
       "error": null,
       "jobs_found": 43,
-      "duration_seconds": 7.4
+      "duration_seconds": 7.74
     },
     {
       "company": "FanDuel",
@@ -2298,7 +2298,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/fanduel/jobs",
       "error": null,
       "jobs_found": 15,
-      "duration_seconds": 0.35
+      "duration_seconds": 0.44
     },
     {
       "company": "Pinterest",
@@ -2309,7 +2309,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/pinterest/jobs",
       "error": null,
       "jobs_found": 42,
-      "duration_seconds": 0.49
+      "duration_seconds": 0.37
     },
     {
       "company": "Reddit",
@@ -2320,18 +2320,18 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/reddit/jobs",
       "error": null,
       "jobs_found": 80,
-      "duration_seconds": 0.6
+      "duration_seconds": 0.37
     },
     {
       "company": "Zillow",
       "careers_url": "https://zillow.wd5.myworkdayjobs.com/Zillow_Group_External",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://zillow.wd5.myworkdayjobs.com/Zillow_Group_External",
       "error": null,
-      "jobs_found": 19,
-      "duration_seconds": 21.81
+      "jobs_found": 20,
+      "duration_seconds": 25.68
     },
     {
       "company": "Duolingo",
@@ -2342,7 +2342,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/duolingo/jobs",
       "error": null,
       "jobs_found": 11,
-      "duration_seconds": 0.39
+      "duration_seconds": 0.33
     },
     {
       "company": "Coca-Cola",
@@ -2353,7 +2353,7 @@
       "final_url": "https://coke.wd1.myworkdayjobs.com/coca-cola-careers",
       "error": null,
       "jobs_found": 14,
-      "duration_seconds": 8.62
+      "duration_seconds": 9.37
     },
     {
       "company": "Unilever",
@@ -2364,7 +2364,7 @@
       "final_url": "https://unilever.wd3.myworkdayjobs.com/Unilever_Experienced_Professionals",
       "error": null,
       "jobs_found": 2,
-      "duration_seconds": 5.32
+      "duration_seconds": 5.09
     },
     {
       "company": "General Mills",
@@ -2375,7 +2375,7 @@
       "final_url": "https://genmills.wd1.myworkdayjobs.com/GMI_External_Careers",
       "error": null,
       "jobs_found": 10,
-      "duration_seconds": 9.65
+      "duration_seconds": 9.9
     },
     {
       "company": "Tyson Foods",
@@ -2385,8 +2385,8 @@
       "http_status": 429,
       "final_url": "https://tysonfoods.wd5.myworkdayjobs.com/TSN",
       "error": null,
-      "jobs_found": 14,
-      "duration_seconds": 9.01
+      "jobs_found": 15,
+      "duration_seconds": 7.33
     },
     {
       "company": "Campbell Soup",
@@ -2397,7 +2397,7 @@
       "final_url": "https://campbellsoup.wd5.myworkdayjobs.com/ExternalCareers_GlobalSite",
       "error": null,
       "jobs_found": 12,
-      "duration_seconds": 8.09
+      "duration_seconds": 8.49
     },
     {
       "company": "J.M. Smucker",
@@ -2408,7 +2408,7 @@
       "final_url": "https://smucker.wd5.myworkdayjobs.com/US_External_Careers",
       "error": null,
       "jobs_found": 6,
-      "duration_seconds": 5.1
+      "duration_seconds": 5.63
     },
     {
       "company": "Clorox",
@@ -2419,7 +2419,7 @@
       "final_url": "https://clorox.wd1.myworkdayjobs.com/Clorox",
       "error": null,
       "jobs_found": 5,
-      "duration_seconds": 2.81
+      "duration_seconds": 5.18
     },
     {
       "company": "Church & Dwight",
@@ -2429,8 +2429,8 @@
       "http_status": 200,
       "final_url": "https://churchdwight.wd1.myworkdayjobs.com/chdcareers",
       "error": null,
-      "jobs_found": 3,
-      "duration_seconds": 2.58
+      "jobs_found": 4,
+      "duration_seconds": 7.83
     },
     {
       "company": "Dine Brands",
@@ -2452,7 +2452,7 @@
       "final_url": "https://shakeshack.wd5.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 2.16
+      "duration_seconds": 2.9
     },
     {
       "company": "C.H. Robinson",
@@ -2463,7 +2463,7 @@
       "final_url": "https://chrobinson.wd5.myworkdayjobs.com/CHRobinson",
       "error": null,
       "jobs_found": 10,
-      "duration_seconds": 4.03
+      "duration_seconds": 5.81
     },
     {
       "company": "J.B. Hunt",
@@ -2474,7 +2474,7 @@
       "final_url": "https://jbhunt.wd501.myworkdayjobs.com/Careers",
       "error": null,
       "jobs_found": 5,
-      "duration_seconds": 2.82
+      "duration_seconds": 2.84
     },
     {
       "company": "CSX",
@@ -2485,7 +2485,7 @@
       "final_url": "https://fa-eowa-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CSXCareers",
       "error": null,
       "jobs_found": 2,
-      "duration_seconds": 1.67
+      "duration_seconds": 1.86
     },
     {
       "company": "Old Dominion Freight Line",
@@ -2496,7 +2496,7 @@
       "final_url": "https://odfl.wd1.myworkdayjobs.com/ODFL_Careers",
       "error": null,
       "jobs_found": 2,
-      "duration_seconds": 5.14
+      "duration_seconds": 10.8
     },
     {
       "company": "Americold",
@@ -2507,7 +2507,7 @@
       "final_url": "https://fa-ewwt-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_6001",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 2.19
+      "duration_seconds": 1.78
     },
     {
       "company": "Stord",
@@ -2518,7 +2518,7 @@
       "final_url": "https://stord.wd503.myworkdayjobs.com/Stord_External_Career",
       "error": null,
       "jobs_found": 15,
-      "duration_seconds": 3.3
+      "duration_seconds": 4.89
     },
     {
       "company": "Shell USA",
@@ -2529,7 +2529,7 @@
       "final_url": "https://shell.wd3.myworkdayjobs.com/ShellCareers",
       "error": null,
       "jobs_found": 3,
-      "duration_seconds": 5.32
+      "duration_seconds": 5.35
     },
     {
       "company": "Williams Companies",
@@ -2540,7 +2540,7 @@
       "final_url": "https://williams.wd5.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 16,
-      "duration_seconds": 3.45
+      "duration_seconds": 2.74
     },
     {
       "company": "Duke Energy",
@@ -2551,7 +2551,7 @@
       "final_url": "https://dukeenergy.wd1.myworkdayjobs.com/Search",
       "error": null,
       "jobs_found": 7,
-      "duration_seconds": 2.33
+      "duration_seconds": 2.15
     },
     {
       "company": "Xcel Energy",
@@ -2562,7 +2562,7 @@
       "final_url": "https://xcelenergy.wd1.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 12,
-      "duration_seconds": 2.8
+      "duration_seconds": 7.89
     },
     {
       "company": "GE Vernova",
@@ -2572,8 +2572,8 @@
       "http_status": 200,
       "final_url": "https://gevernova.wd5.myworkdayjobs.com/Vernova_ExternalSite",
       "error": null,
-      "jobs_found": 81,
-      "duration_seconds": 50.74
+      "jobs_found": 71,
+      "duration_seconds": 50.1
     },
     {
       "company": "Honeywell",
@@ -2583,8 +2583,8 @@
       "http_status": 200,
       "final_url": "https://ibqbjb.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
-      "jobs_found": 31,
-      "duration_seconds": 3.43
+      "jobs_found": 30,
+      "duration_seconds": 3.39
     },
     {
       "company": "Emerson",
@@ -2595,7 +2595,7 @@
       "final_url": "https://hdjq.fa.us2.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
       "jobs_found": 25,
-      "duration_seconds": 3.81
+      "duration_seconds": 3.73
     },
     {
       "company": "Rockwell Automation",
@@ -2606,7 +2606,7 @@
       "final_url": "https://rockwellautomation.wd1.myworkdayjobs.com/External_Rockwell_Automation",
       "error": null,
       "jobs_found": 36,
-      "duration_seconds": 15.44
+      "duration_seconds": 17.92
     },
     {
       "company": "3M",
@@ -2617,7 +2617,7 @@
       "final_url": "https://3m.wd1.myworkdayjobs.com/Search",
       "error": null,
       "jobs_found": 33,
-      "duration_seconds": 8.06
+      "duration_seconds": 9.33
     },
     {
       "company": "Johnson Controls",
@@ -2627,8 +2627,8 @@
       "http_status": 200,
       "final_url": "https://jci.wd5.myworkdayjobs.com/JCI",
       "error": null,
-      "jobs_found": 23,
-      "duration_seconds": 23.71
+      "jobs_found": 37,
+      "duration_seconds": 41.51
     },
     {
       "company": "Carrier",
@@ -2638,8 +2638,8 @@
       "http_status": 200,
       "final_url": "https://carrier.wd5.myworkdayjobs.com/jobs",
       "error": null,
-      "jobs_found": 42,
-      "duration_seconds": 28.56
+      "jobs_found": 32,
+      "duration_seconds": 30.96
     },
     {
       "company": "Dow",
@@ -2650,7 +2650,7 @@
       "final_url": "https://dow.wd1.myworkdayjobs.com/ExternalCareers",
       "error": null,
       "jobs_found": 1,
-      "duration_seconds": 2.45
+      "duration_seconds": 2.91
     },
     {
       "company": "Goodyear",
@@ -2661,7 +2661,7 @@
       "final_url": "https://goodyear.wd1.myworkdayjobs.com/GoodyearCareers",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 1.73
+      "duration_seconds": 2.42
     },
     {
       "company": "Cushman & Wakefield",
@@ -2672,18 +2672,18 @@
       "final_url": "https://cw.wd1.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 97,
-      "duration_seconds": 20.87
+      "duration_seconds": 27.16
     },
     {
       "company": "Prologis",
       "careers_url": "https://prologis.wd5.myworkdayjobs.com/Prologis_External_Careers",
       "ats_type": "workday",
-      "status": "reachable",
-      "http_status": 200,
+      "status": "api_reachable",
+      "http_status": 429,
       "final_url": "https://prologis.wd5.myworkdayjobs.com/Prologis_External_Careers",
       "error": null,
       "jobs_found": 5,
-      "duration_seconds": 4.53
+      "duration_seconds": 6.79
     },
     {
       "company": "Invitation Homes",
@@ -2694,7 +2694,7 @@
       "final_url": "https://invitationhomes.wd503.myworkdayjobs.com/INVH",
       "error": null,
       "jobs_found": 1,
-      "duration_seconds": 1.86
+      "duration_seconds": 1.94
     },
     {
       "company": "CoreLogic/Cotality",
@@ -2705,7 +2705,7 @@
       "final_url": "https://cotality.wd115.myworkdayjobs.com/Global",
       "error": null,
       "jobs_found": 4,
-      "duration_seconds": 1.98
+      "duration_seconds": 1.79
     },
     {
       "company": "RELX",
@@ -2716,7 +2716,7 @@
       "final_url": "https://relx.wd3.myworkdayjobs.com/relx",
       "error": null,
       "jobs_found": 45,
-      "duration_seconds": 26.42
+      "duration_seconds": 27.81
     },
     {
       "company": "Gartner",
@@ -2726,8 +2726,8 @@
       "http_status": 200,
       "final_url": "https://gartner.wd5.myworkdayjobs.com/EXT",
       "error": null,
-      "jobs_found": 12,
-      "duration_seconds": 9.99
+      "jobs_found": 9,
+      "duration_seconds": 10.71
     },
     {
       "company": "Equifax",
@@ -2737,19 +2737,19 @@
       "http_status": 200,
       "final_url": "https://equifax.wd5.myworkdayjobs.com/External",
       "error": null,
-      "jobs_found": 15,
-      "duration_seconds": 16.48
+      "jobs_found": 17,
+      "duration_seconds": 14.19
     },
     {
       "company": "TransUnion",
       "careers_url": "https://transunion.wd5.myworkdayjobs.com/TransUnion",
       "ats_type": "workday",
-      "status": "api_reachable",
-      "http_status": 429,
+      "status": "reachable",
+      "http_status": 200,
       "final_url": "https://transunion.wd5.myworkdayjobs.com/TransUnion",
       "error": null,
       "jobs_found": 5,
-      "duration_seconds": 8.43
+      "duration_seconds": 8.72
     },
     {
       "company": "Verisk",
@@ -2759,8 +2759,8 @@
       "http_status": 200,
       "final_url": "https://fa-ewmy-saasfaprod1.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_1",
       "error": null,
-      "jobs_found": 18,
-      "duration_seconds": 2.67
+      "jobs_found": 17,
+      "duration_seconds": 2.77
     },
     {
       "company": "CoStar",
@@ -2771,7 +2771,7 @@
       "final_url": "https://costar.wd1.myworkdayjobs.com/CoStarCareers",
       "error": null,
       "jobs_found": 51,
-      "duration_seconds": 11.61
+      "duration_seconds": 21.76
     },
     {
       "company": "Wolters Kluwer",
@@ -2782,7 +2782,7 @@
       "final_url": "https://wk.wd3.myworkdayjobs.com/External",
       "error": null,
       "jobs_found": 35,
-      "duration_seconds": 25.27
+      "duration_seconds": 25.79
     },
     {
       "company": "Pearson",
@@ -2793,7 +2793,7 @@
       "final_url": "https://hccz.fa.em3.oraclecloud.com/hcmUI/CandidateExperience/en/sites/CX_2",
       "error": null,
       "jobs_found": 14,
-      "duration_seconds": 3.01
+      "duration_seconds": 3.04
     },
     {
       "company": "Renaissance Learning",
@@ -2804,7 +2804,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/renaissancelearning-nam/jobs",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 0.38
+      "duration_seconds": 0.4
     },
     {
       "company": "Pluralsight",
@@ -2815,7 +2815,7 @@
       "final_url": "https://pluralsight.wd1.myworkdayjobs.com/Careers",
       "error": null,
       "jobs_found": 0,
-      "duration_seconds": 1.62
+      "duration_seconds": 1.59
     },
     {
       "company": "Boeing",
@@ -2825,8 +2825,8 @@
       "http_status": 200,
       "final_url": "https://boeing.wd1.myworkdayjobs.com/EXTERNAL_CAREERS",
       "error": null,
-      "jobs_found": 208,
-      "duration_seconds": 40.94
+      "jobs_found": 209,
+      "duration_seconds": 41.91
     },
     {
       "company": "Honeywell Aerospace",
@@ -2836,8 +2836,8 @@
       "http_status": 200,
       "final_url": "https://icfcjb.fa.ocs.oraclecloud.com/hcmUI/CandidateExperience/en/sites/Aerospace",
       "error": null,
-      "jobs_found": 44,
-      "duration_seconds": 2.99
+      "jobs_found": 38,
+      "duration_seconds": 2.96
     },
     {
       "company": "SpaceX",
@@ -2848,7 +2848,7 @@
       "final_url": "https://boards-api.greenhouse.io/v1/boards/spacex/jobs",
       "error": null,
       "jobs_found": 1399,
-      "duration_seconds": 1.97
+      "duration_seconds": 2.03
     },
     {
       "company": "Blue Origin",
@@ -2858,8 +2858,8 @@
       "http_status": 200,
       "final_url": "https://blueorigin.wd5.myworkdayjobs.com/BlueOrigin",
       "error": null,
-      "jobs_found": 280,
-      "duration_seconds": 50.01
+      "jobs_found": 275,
+      "duration_seconds": 48.96
     },
     {
       "company": "Northrop Grumman",
@@ -2869,8 +2869,8 @@
       "http_status": 200,
       "final_url": "https://ngc.wd1.myworkdayjobs.com/Northrop_Grumman_External_Site",
       "error": null,
-      "jobs_found": 476,
-      "duration_seconds": 83.2
+      "jobs_found": 408,
+      "duration_seconds": 63.32
     },
     {
       "company": "RTX/Raytheon",
@@ -2880,8 +2880,8 @@
       "http_status": 200,
       "final_url": "https://globalhr.wd5.myworkdayjobs.com/REC_RTX_Ext_Gateway",
       "error": null,
-      "jobs_found": 411,
-      "duration_seconds": 79.59
+      "jobs_found": 399,
+      "duration_seconds": 83.9
     }
   ]
 }
